@@ -1,0 +1,25 @@
+<!-- <button 
+  (click)="resize()"
+  (mousedown)="onWindowPress($event)"
+  (mousemove)="onWindowDrag($event)"
+  [style.top.px] = "y"
+  [style.left.px] = 'x'
+  [style.width.px] = 'width'
+  [style.height.px] = 'height'
+  
+>{{ text }}</button> -->
+
+<div style="border: 1px solid black; position: fixed"
+  
+  (mousedown)="onWindowPress($event)"
+  (mousemove)="onWindowDrag($event)"
+  (mouseup)="onWindowUp($event)"
+  [style.top.px] = "y"
+  [style.left.px] = 'x'
+  [style.width.px] = 'width'
+  [style.height.px] = 'height'
+  
+>{{ text }}</div>
+
+<!-- [style.margin-left.px] = 'x'
+  [style.margin-top.px] = 'y' -->

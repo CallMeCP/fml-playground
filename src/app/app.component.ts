@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  btnArr: number[] = [];
+
+
+  genButton() {
+    this.btnArr.push(1);
+  }
+
+  over(e) {
+    console.log(e.type);
+  }
 }
