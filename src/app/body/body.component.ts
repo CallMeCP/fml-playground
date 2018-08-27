@@ -53,7 +53,7 @@ export class BodyComponent implements OnInit {
       fontFamily: this.fontFamily,
     };
 
-    this.propertyService.properties$.emit(fmlBody);
+    this.propertyService.viewToProperty$.emit(fmlBody);
   }
 
   resize() {
@@ -70,13 +70,14 @@ export class BodyComponent implements OnInit {
     this.emitNewValues();
 
     // Listen to Properties panel changes
-    if(this.propToSrv$ == null) {
-      console.log("listen to property service");
+    if(this.propToSrv$ === null || this.propToSrv$ === undefined) {
+      
       this.propToSrv$ = this.propertyService.propertyToView$.subscribe(
         properties => {
           
           if (properties.componentId !== this.componentId) {
             this.propToSrv$.unsubscribe();
+            this.propToSrv$ = undefined;
           }else {
             this.componentType = properties.componentType;
             this.x = properties.x;
@@ -117,10 +118,6 @@ export class BodyComponent implements OnInit {
 
   onWindowUp(event: MouseEvent) {
     this.draggingWindow = false;
-  }
-
-  onPassedby(event: MouseEvent) {
-    // console.log("over");
   }
 
 }

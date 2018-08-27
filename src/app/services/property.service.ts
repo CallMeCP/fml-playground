@@ -5,7 +5,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class PropertyService {
 
-  properties$: EventEmitter<any> = new EventEmitter();
+  //  Sync HTML component changes to Property Panel
+  viewToProperty$: EventEmitter<any> = new EventEmitter();
+  
+  // Sync Property Panel changes to HTML component
   propertyToView$: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
