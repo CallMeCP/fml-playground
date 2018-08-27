@@ -33,30 +33,65 @@
           <h3 mat-subheader>Properties</h3>
 
           <mat-list-item>
-            <mat-label>Type: </mat-label>
+            <mat-label fxFlex="300">Type: </mat-label>
             <mat-form-field>
               <input matInput value="Body">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label>width: </mat-label>
+            <mat-label fxFlex="300">X: </mat-label>
             <mat-form-field>
-              <input matInput value="0">
+              <input matInput [(ngModel)]="x" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label>width: </mat-label>
+            <mat-label fxFlex="300">Y: </mat-label>
             <mat-form-field>
-              <input matInput value="0">
+              <input matInput [(ngModel)]="y" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label>Height: </mat-label>
+            <mat-label fxFlex="300">width: </mat-label>
             <mat-form-field>
-              <input matInput value="0">
+              <input matInput [(ngModel)]="width" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-label fxFlex="300">Height: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="height" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-label fxFlex="300">BG Color: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="bgColor" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-label style="width: 150px">Font Color: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="fontColor" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-label fxFlex="300">Font Size: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="fontSize" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-label fxFlex="300">Font Family: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="fontFamily" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
       </mat-list>
@@ -64,11 +99,13 @@
 
   <!-- Content area -->
   <mat-sidenav-content>
-    <!-- Screen body -->
-    <app-body></app-body>
+    <div>
+      <!-- Screen body -->
+      <app-body></app-body>
 
-    <!-- Button -->
-    <app-button *ngFor="let btn of btnArr"></app-button>
+      <!-- Button -->
+      <app-button *ngFor="let btn of btnArr"></app-button>
+    </div>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

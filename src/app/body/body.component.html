@@ -1,11 +1,14 @@
-<div style="border: 1px solid black; position: fixed"
+<div style="border: 1px solid black; position: absolute;"
 
   (mousedown)="onWindowPress($event)"
   (mousemove)="onWindowDrag($event)"
   (mouseup)="onWindowUp($event)"
   [style.top.px] = "y"
-  [style.left.px] = 'x'
-  [style.width.px] = 'width'
-  [style.height.px] = 'height'
-  
-></div>
+  [style.left.px] = "x"
+  [style.width.px] = "width"
+  [style.height.px] = "height"
+  [style.background-color] = "bgColor"
+  [style.color] = "fontColor" 
+  [style.font-size.px] = "fontSize"
+  [style.font-family] = "fontFamily"
+>AAA</div>

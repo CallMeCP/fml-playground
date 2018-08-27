@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PropertyService } from '../services/property.service';
+import { FmlBody } from '../interfaces/FmlBody.interface';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-body',
@@ -8,10 +11,21 @@ import { Component, OnInit } from '@angular/core';
 export class BodyComponent implements OnInit {
 
   // Default values
-  x: number = 162 + 20;
-  y: number = 64 + 20;
+  componentId: string = "BODY_1";   //  Hardcode, as there is only always one body container
+  componentType: string = "Body";
+  // x: number = 160 + 20;
+  // y: number = 64 + 20;
+  x: number = 10;
+  y: number = 10;
   width: number = 800;
   height: number = 600;
+  bgColor: string = "white";
+  fontColor: string = 'black';
+  fontSize: number = 12;
+  fontFamily: string = 'Times New Roman';
+
+  // Observable
+  propToSrv$: Subscription;
 
   px: number;
   py: number;
@@ -19,9 +33,27 @@ export class BodyComponent implements OnInit {
 
   counter: number = 0;
 
-  constructor() { }
+  constructor(
+    private propertyService: PropertyService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  emitNewValues() {
+    const fmlBody: FmlBody = {
+      componentId: this.componentId,
+      componentType: this.componentType,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      bgColor: this.bgColor,
+      fontColor: this.fontColor,
+      fontSize: this.fontSize,
+      fontFamily: this.fontFamily,
+    };
+
+    this.propertyService.properties$.emit(fmlBody);
   }
 
   resize() {
@@ -33,18 +65,44 @@ export class BodyComponent implements OnInit {
   }
 
   onWindowPress(event: MouseEvent) {
-    console.log("pressing");
+    // console.log("pressing");
+    // Emit new values
+    this.emitNewValues();
+
+    // Listen to Properties panel changes
+    if(this.propToSrv$ == null) {
+      console.log("listen to property service");
+      this.propToSrv$ = this.propertyService.propertyToView$.subscribe(
+        properties => {
+          
+          if (properties.componentId !== this.componentId) {
+            this.propToSrv$.unsubscribe();
+          }else {
+            this.componentType = properties.componentType;
+            this.x = properties.x;
+            this.y = properties.y;
+            this.width = properties.width;
+            this.height = properties.height;
+            this.bgColor = properties.bgColor;
+            this.fontColor = properties.fontColor;
+            this.fontSize = properties.fontSize;
+            this.fontFamily = properties.fontFamily;
+          }
+        }
+      );
+    }
+
     this.draggingWindow = true;
     this.px = event.clientX;
     this.py = event.clientY;
   }
 
   onWindowDrag(event: MouseEvent) {
-    console.log("drag");
+    // console.log("drag");
     if (!this.draggingWindow) {
       return;
     }
-    console.log("real drag");
+    // console.log("real drag");
     let offsetX = event.clientX - this.px;
     let offsetY = event.clientY - this.py;
 
@@ -53,6 +111,8 @@ export class BodyComponent implements OnInit {
     this.px = event.clientX;
     this.py = event.clientY;
 
+    this.emitNewValues();
+
   }
 
   onWindowUp(event: MouseEvent) {
@@ -60,7 +120,7 @@ export class BodyComponent implements OnInit {
   }
 
   onPassedby(event: MouseEvent) {
-    console.log("over");
+    // console.log("over");
   }
 
 }
