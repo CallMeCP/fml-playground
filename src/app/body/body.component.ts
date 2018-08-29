@@ -22,7 +22,7 @@ export class BodyComponent implements OnInit {
   bgColor: string = "white";
   fontColor: string = 'black';
   fontSize: number = 12;
-  fontFamily: string = 'Times New Roman';
+  fontFamily: string = 'times new roman';
 
   // Observable
   propToSrv$: Subscription;
@@ -37,7 +37,9 @@ export class BodyComponent implements OnInit {
     private propertyService: PropertyService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.updateFinalFml();
+  }
 
   emitNewValues() {
     const fmlBody: FmlBody = {
@@ -54,6 +56,7 @@ export class BodyComponent implements OnInit {
     };
 
     this.propertyService.viewToProperty$.emit(fmlBody);
+    this.updateFinalFml();
   }
 
   resize() {
@@ -79,6 +82,7 @@ export class BodyComponent implements OnInit {
             this.propToSrv$.unsubscribe();
             this.propToSrv$ = undefined;
           }else {
+            // Set properties
             this.componentType = properties.componentType;
             this.x = properties.x;
             this.y = properties.y;
@@ -88,6 +92,9 @@ export class BodyComponent implements OnInit {
             this.fontColor = properties.fontColor;
             this.fontSize = properties.fontSize;
             this.fontFamily = properties.fontFamily;
+
+            // Update final FML
+            this.updateFinalFml();
           }
         }
       );
@@ -118,6 +125,23 @@ export class BodyComponent implements OnInit {
 
   onWindowUp(event: MouseEvent) {
     this.draggingWindow = false;
+  }
+
+  updateFinalFml() {
+    this.propertyService.updateFmlBody(
+      {
+        componentId: this.componentId,
+        componentType: this.componentType,
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height,
+        bgColor: this.bgColor,
+        fontColor: this.fontColor,
+        fontSize: this.fontSize,
+        fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
+      }
+    );
   }
 
 }

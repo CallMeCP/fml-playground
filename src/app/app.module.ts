@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -30,6 +30,7 @@ import { SignatureComponent } from './signature/signature.component';
     MatFormFieldModule,
     FormsModule,
     FlexLayoutModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

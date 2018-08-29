@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { PropertyService } from './services/property.service';
+import { FmlBody } from './interfaces/FmlBody.interface';
+import { FmlSignature } from './interfaces/FmlSignature.interface';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,46 @@ import { PropertyService } from './services/property.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // title = 'app';
+  
+  // Options available
+  colorCodes = [
+    {value: 'black', viewValue: 'Black'},
+    {value: 'brown', viewValue: 'Brown'},
+    {value: 'red', viewValue: 'Red'},
+    {value: 'orange', viewValue: 'Orange'},
+    {value: 'yellow', viewValue: 'Yellow'},
+    {value: 'green', viewValue: 'Green'},
+    {value: 'blue', viewValue: 'Blue'},
+    {value: 'violet', viewValue: 'Violet'},
+    {value: 'grey', viewValue: 'Grey'},
+    {value: 'white', viewValue: 'White'},
+    {value: 'transparent', viewValue: 'Transparent'}
+  ];
+
+  fontFamilies = [
+    {value: 'courier', viewValue: 'Courier'},
+    {value: 'times new roman', viewValue: 'Times_Roman'},
+    {value: 'helvetica', viewValue: 'Helvetica'},
+  ];
+
+  lineWeights = [
+    {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
+    {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
+    {value: 7, viewValue: '7'}, {value: 8, viewValue: '8'}, {value: 9, viewValue: '9'},
+    {value: 10, viewValue: '10'}, {value: 11, viewValue: '11'}, {value: 12, viewValue: '12'},
+    {value: 13, viewValue: '13'}, {value: 14, viewValue: '14'}, {value: 15, viewValue: '15'},
+    {value: 16, viewValue: '16'}, {value: 17, viewValue: '17'}, {value: 18, viewValue: '18'},
+    {value: 19, viewValue: '19'}, {value: 20, viewValue: '20'}, {value: 21, viewValue: '21'},
+  ];
+
+  signatureIds = [
+    {value: "NEW_APP_SIG_ID", viewValue: "NEW_APP_SIG_ID"}, 
+    {value: "PRI_AUTH_SIG_ID", viewValue: "PRI_AUTH_SIG_ID"}, 
+    {value: "SEN_NAME_SIG_ID", viewValue: "SEN_NAME_SIG_ID"},
+    {value: "POX_SIG_ID", viewValue: "POX_SIG_ID"},
+    {value: "PEP_SIG_ID", viewValue: "PEP_SIG_ID"},
+  ];
+
 
   // Button related
   btnArr: number[] = [];
@@ -42,6 +83,10 @@ export class AppComponent {
   showFontFamily: boolean = false;
   showSignatureId: boolean = false;
   showWeight: boolean = false;
+
+  // Final properties
+  // finalBodyProp: FmlBody;
+  // finalSignatureProp: FmlSignature[];
 
   constructor(
     private propertyService: PropertyService
@@ -132,6 +177,10 @@ export class AppComponent {
 
   genSignatureBlock() {
     this.sigArr.push(++this.sigId);
+  }
+
+  genFml() {
+    this.propertyService.genFml();
   }
 
   over(e) {

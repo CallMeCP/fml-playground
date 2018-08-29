@@ -24,6 +24,9 @@
       <mat-list-item>
         <button mat-stroked-button>Textbox</button>
       </mat-list-item>
+      <mat-list-item>
+        <button mat-stroked-button (click)="genFml()">GenFML</button>
+      </mat-list-item>
     </mat-list>
   </mat-sidenav>
 
@@ -35,7 +38,7 @@
           <mat-list-item>
             <mat-label fxFlex="300">ID: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="componentId">
+              <input matInput disabled [(ngModel)]="componentId">
             </mat-form-field>
           </mat-list-item>
 
@@ -70,14 +73,23 @@
           <mat-list-item *ngIf="showBgColor">
             <mat-label fxFlex="300">BG Color: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="bgColor" (change)="updateView()">
+              <!-- <input matInput [(ngModel)]="bgColor" (change)="updateView()"> -->
+              <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()">
+                <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
+                  {{colorCode.viewValue}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontColor">
             <mat-label style="width: 150px">Font Color: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="fontColor" (change)="updateView()">
+              <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()">
+                <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
+                  {{colorCode.viewValue}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </mat-list-item>
 
@@ -91,7 +103,35 @@
           <mat-list-item *ngIf="showFontFamily">
             <mat-label fxFlex="300">Font Family: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="fontFamily" (change)="updateView()">
+              <!-- <input matInput [(ngModel)]="fontFamily" (change)="updateView()"> -->
+              <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()">
+                <mat-option *ngFor="let fontf of fontFamilies" [value]="fontf.value">
+                  {{fontf.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showWeight">
+            <mat-label fxFlex="300">Line Weight: </mat-label>
+            <mat-form-field>
+              <!-- <input matInput [(ngModel)]="weight" (change)="updateView()"> -->
+              <mat-select [(ngModel)]="weight" (selectionChange)="updateView()">
+                <mat-option *ngFor="let wht of lineWeights" [value]="wht.value">
+                  {{wht.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showSignatureId">
+            <mat-label fxFlex="300">Signature ID: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="signatureId" (selectionChange)="updateView()">
+                <mat-option *ngFor="let sig of signatureIds" [value]="sig.value">
+                  {{sig.viewValue}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </mat-list-item>
       </mat-list>

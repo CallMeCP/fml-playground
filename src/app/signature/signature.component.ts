@@ -19,7 +19,7 @@ export class SignatureComponent implements OnInit {
   y: number = 10;
   width: number = 214;
   height: number = 63;
-  weight: number = 100;
+  weight: number = 5;
   bgColor: string = 'white';
   fontColor: string = 'black';  //  line color aka signature colour
   signatureId: string = 'NEW_APP_SIG_ID';
@@ -38,6 +38,7 @@ export class SignatureComponent implements OnInit {
   ngOnInit() {
     // Set Signature ID
     this.componentId = `SIGNATURE_${this.sigId}`;
+    this.updateFinalFml();
   }
 
   emitNewValues() {
@@ -55,6 +56,7 @@ export class SignatureComponent implements OnInit {
     };
 
     this.propertyService.viewToProperty$.emit(fmlSignature);
+    this.updateFinalFml();
   }
 
   onWindowPress(event: MouseEvent) {
@@ -71,6 +73,7 @@ export class SignatureComponent implements OnInit {
             this.propToSrv$ = undefined;
             
           }else {
+            // Set properties
             this.componentType = properties.componentType;
             this.x = properties.x;
             this.y = properties.y;
@@ -80,6 +83,9 @@ export class SignatureComponent implements OnInit {
             this.bgColor = properties.bgColor;
             this.fontColor = properties.fontColor;
             this.signatureId = properties.signatureId;
+
+            // Update final FML
+            this.updateFinalFml();
           }
         }
       );
@@ -109,6 +115,21 @@ export class SignatureComponent implements OnInit {
 
   onWindowUp(event: MouseEvent) {
     this.draggingWindow = false;
+  }
+
+  updateFinalFml() {
+    this.propertyService.updateFmlSignature({
+      componentId: this.componentId,
+      componentType: this.componentType,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      weight: this.weight,
+      bgColor: this.bgColor,
+      fontColor: this.fontColor,
+      signatureId: this.signatureId
+    });
   }
 
 }

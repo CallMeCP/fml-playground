@@ -7,7 +7,25 @@
   [style.left.px] = "x"
   [style.width.px] = "width"
   [style.height.px] = "height"
-  [style.weight] = 'weight'
+  [style.font-weight] = 'weight'
   [style.background-color] = "bgColor"
   [style.color] = "fontColor"
->{{signatureId}}</div>
+>
+  <!-- <div style="position:absolute;">{{signatureId}}</div> -->
+  <div style="position:absolute; font-size: 10px">{{signatureId}}</div>
+
+  <div style="position: absolute;"
+    [style.background-color] = "fontColor"
+    [style.height.px] = "weight"
+    [style.width.px] = "width"
+    [style.margin-top.px] = "(height-weight)/2"
+  ></div>
+  <div style="position: absolute; text-align: center"
+    [style.background-color] = "fontColor"
+    [style.height.px] = "height"
+    [style.width.px] = "weight"
+    [style.margin-left.px] = "(width-weight)/2"
+  >  
+  </div>
+  <!-- <div style="width: 100px; height: 10px; background-color: black"></div> -->
+</div>
