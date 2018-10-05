@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BodyComponent } from './body/body.component';
 import { FormsModule } from '@angular/forms';
 import { SignatureComponent } from './signature/signature.component';
+import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,13 @@ import { SignatureComponent } from './signature/signature.component';
     MatFormFieldModule,
     FormsModule,
     FlexLayoutModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

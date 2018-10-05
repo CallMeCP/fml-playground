@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { FmlBody } from '../interfaces/FmlBody.interface';
 import { FmlSignature } from '../interfaces/FmlSignature.interface';
+import { MatDialog } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,9 @@ export class PropertyService {
   fmlBodyProp: FmlBody;
   fmlSignatureProp: FmlSignature[] = [];
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   updateFmlBody(fmlBody: FmlBody) {
     this.fmlBodyProp = fmlBody;
@@ -62,5 +65,6 @@ export class PropertyService {
     // Construct Body last
     // console.log('Body: ', this.fmlBodyProp);
     console.log(bodyStr);
+    
   }
 }
