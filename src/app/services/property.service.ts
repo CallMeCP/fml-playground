@@ -55,12 +55,12 @@ export class PropertyService {
     // Construct body
     const bodyStr: string =
       `
-      <fml>
-        <body width=${body.width*0.75} height=${body.height*0.75} bgcolor=${body.bgColor} font=${body.fontFamily} 
-          size=${body.fontSize} color=${body.fontColor}>
-          ${sigStr}
-        </body>
-      </fml>`; 
+<fml>
+  <body width=${body.width*0.75} height=${body.height*0.75} bgcolor=${body.bgColor} font=${body.fontFamily} 
+    size=${body.fontSize} color=${body.fontColor}>
+    ${sigStr}
+  </body>
+</fml>`; 
 
     // console.log(bodyStr);
     return bodyStr;
