@@ -4,9 +4,10 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<!-- left size nav -->
 <mat-sidenav-container class="example-container">
   <!-- Component side nav -->
-  <mat-sidenav class="mat-elevation-z8" opened mode="side">
+  <mat-sidenav opened mode="side" class="left-sidenav mat-elevation-z8">
     <mat-list>
       <h3 mat-subheader>Components</h3>
       <mat-list-item>
@@ -31,49 +32,48 @@
   </mat-sidenav>
 
   <!-- Properties side nav -->
-  <mat-sidenav opened mode="side" position="end" class="mat-elevation-z8">
+  <mat-sidenav opened mode="side" position="end" class="right-sidenav mat-elevation-z8">
       <mat-list>
           <h3 mat-subheader>Properties</h3>
 
           <mat-list-item>
-            <mat-label fxFlex="300">ID: </mat-label>
+            <mat-label>ID: </mat-label>
             <mat-form-field>
               <input matInput disabled [(ngModel)]="componentId">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label fxFlex="300">X: </mat-label>
+            <mat-label>X: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="x" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label fxFlex="300">Y: </mat-label>
+            <mat-label>Y: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="y" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label fxFlex="300">width: </mat-label>
+            <mat-label>width: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="width" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
-            <mat-label fxFlex="300">Height: </mat-label>
+            <mat-label>Height: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="height" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showBgColor">
-            <mat-label fxFlex="300">BG Color: </mat-label>
+            <mat-label>BG Color: </mat-label>
             <mat-form-field>
-              <!-- <input matInput [(ngModel)]="bgColor" (change)="updateView()"> -->
               <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
                   {{colorCode.viewValue}}
@@ -83,7 +83,7 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontColor">
-            <mat-label style="width: 150px">Font Color: </mat-label>
+            <mat-label>Font Color: </mat-label>
             <mat-form-field>
               <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
@@ -94,16 +94,15 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontSize">
-            <mat-label fxFlex="300">Font Size: </mat-label>
+            <mat-label>Font Size: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="fontSize" (change)="updateView()">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontFamily">
-            <mat-label fxFlex="300">Font Family: </mat-label>
+            <mat-label>Font Family: </mat-label>
             <mat-form-field>
-              <!-- <input matInput [(ngModel)]="fontFamily" (change)="updateView()"> -->
               <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()">
                 <mat-option *ngFor="let fontf of fontFamilies" [value]="fontf.value">
                   {{fontf.viewValue}}
@@ -113,9 +112,8 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showWeight">
-            <mat-label fxFlex="300">Line Weight: </mat-label>
+            <mat-label>Line Weight: </mat-label>
             <mat-form-field>
-              <!-- <input matInput [(ngModel)]="weight" (change)="updateView()"> -->
               <mat-select [(ngModel)]="weight" (selectionChange)="updateView()">
                 <mat-option *ngFor="let wht of lineWeights" [value]="wht.value">
                   {{wht.viewValue}}
@@ -125,7 +123,7 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showSignatureId">
-            <mat-label fxFlex="300">Signature ID: </mat-label>
+            <mat-label>Signature ID: </mat-label>
             <mat-form-field>
               <mat-select [(ngModel)]="signatureId" (selectionChange)="updateView()">
                 <mat-option *ngFor="let sig of signatureIds" [value]="sig.value">

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>FML Script</h2>
+
+<mat-dialog-content style="white-space:pre-wrap">
+  {{ data.fmlScript }}
+</mat-dialog-content>
+
+<mat-dialog-actions class="button-center">
+  <button mat-raised-button color="primary" (click)="copyToClipboard()">Copy</button>
+  <button mat-raised-button color="warn" (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

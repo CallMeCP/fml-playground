@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PropertyService } from './services/property.service';
 import { FmlBody } from './interfaces/FmlBody.interface';
 import { FmlSignature } from './interfaces/FmlSignature.interface';
+import { MatDialog } from '@angular/material';
+import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -89,7 +91,8 @@ export class AppComponent {
   // finalSignatureProp: FmlSignature[];
 
   constructor(
-    private propertyService: PropertyService
+    private propertyService: PropertyService,
+    private dialog: MatDialog
   ) {
     this.propertyService.viewToProperty$.subscribe(
       properties => {
@@ -180,7 +183,14 @@ export class AppComponent {
   }
 
   genFml() {
-    this.propertyService.genFml();
+    const fmlStr = this.propertyService.genFml();
+    this.dialog.open(GenFmlDialogComponent, {
+      width: '90vw',
+      height: '90vh',
+      data: {
+        fmlScript: fmlStr
+      }
+    });
   }
 
   over(e) {

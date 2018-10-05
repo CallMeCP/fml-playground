@@ -62,9 +62,8 @@ export class PropertyService {
         </body>
       </fml>`; 
 
-    // Construct Body last
-    // console.log('Body: ', this.fmlBodyProp);
-    console.log(bodyStr);
+    // console.log(bodyStr);
+    return bodyStr;
     
   }
 }

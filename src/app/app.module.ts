@@ -11,6 +11,7 @@ import { BodyComponent } from './body/body.component';
 import { FormsModule } from '@angular/forms';
 import { SignatureComponent } from './signature/signature.component';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/
     TextfieldComponent,
     ButtonComponent,
     BodyComponent,
-    SignatureComponent
+    SignatureComponent,
+    GenFmlDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -33,6 +35,9 @@ import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/
     FlexLayoutModule,
     MatSelectModule,
     MatDialogModule
+  ],
+  entryComponents: [
+    GenFmlDialogComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

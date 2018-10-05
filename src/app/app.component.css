@@ -6,6 +6,36 @@
   right: 0;
 }
 
+.left-sidenav {
+  width:180px; 
+  height: (100vh-64px); 
+  overflow:auto;
+}
+
+.right-sidenav {
+  width:250px; 
+  height: (100vh-64px); 
+  overflow: auto;
+}
+
+mat-list mat-list-item,
+mat-list mat-list-item button {
+  font-size: 12px;
+  flex-direction: row;
+}
+
+mat-list mat-list-item mat-label {
+  flex: 1 1 100%;
+  max-width: 40%;
+}
+
+mat-list mat-list-item mat-form-field {
+  flex: 1 1 100%;
+  max-width: 60%;
+}
+
+
+
 /* mat-list-item {
   margin-left: 15px;
 } */
