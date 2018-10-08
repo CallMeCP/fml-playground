@@ -14,6 +14,12 @@
     <mat-list>
       <h3 mat-subheader>Components</h3>
       <mat-list-item>
+        <button mat-stroked-button (click)="genLabelBlock()">Label</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-stroked-button>Textbox</button>
+      </mat-list-item>
+      <mat-list-item>
         <button mat-stroked-button (click)="genButton()">Next Button</button>
       </mat-list-item>
       <mat-list-item>
@@ -24,9 +30,6 @@
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button>Check Box</button>
-      </mat-list-item>
-      <mat-list-item>
-        <button mat-stroked-button>Textbox</button>
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genFml()">GenFML</button>
@@ -135,6 +138,23 @@
               </mat-select>
             </mat-form-field>
           </mat-list-item>
+
+          <mat-list-item *ngIf="showBold">
+            <mat-label>Bold: </mat-label>
+              <mat-checkbox [(ngModel)]="bold" (change)="updateView()"></mat-checkbox>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showItalic">
+            <mat-label>Italic: </mat-label>
+              <mat-checkbox [(ngModel)]="italic" (change)="updateView()"></mat-checkbox>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showContent">
+            <mat-label>Content: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="content" (change)="updateView()">
+            </mat-form-field>
+          </mat-list-item>
       </mat-list>
   </mat-sidenav>
 
@@ -150,6 +170,9 @@
 
       <!-- Signature -->
       <app-signature [sigId]="sigId" *ngFor="let sigId of sigArr"></app-signature>
+
+      <!-- Labels -->
+      <app-label [lblId]="lblId" *ngFor="let lblId of lblArr"></app-label>
 
     </div>
   </mat-sidenav-content>

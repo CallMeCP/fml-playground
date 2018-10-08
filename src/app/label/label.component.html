@@ -1,0 +1,18 @@
+<div style="border: 1px dotted black; position:absolute;"
+  (mousedown)="onWindowPress($event)"
+  (mousemove)="onWindowDrag($event)"
+  (mouseup)="onWindowUp($event)"
+  [style.top.px] = "y"
+  [style.left.px] = "x"
+  [style.width.px] = "width"
+  [style.height.px] = "height"
+  [style.background-color] = "bgColor"
+  [style.color] = "fontColor" 
+  [style.font-size.px] = "fontSize"
+  [style.font-family] = "fontFamily"
+  [style.z-index] = "zIndex"
+  [style.font-style] = "italic? 'italic': 'normal'"
+  [style.font-weight] = "bold? 'bold': 'normal'"
+>
+  {{ content }}
+</div>

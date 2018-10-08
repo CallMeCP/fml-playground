@@ -11,7 +11,7 @@ import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+// ===================================================================================
   // Options available
   colorCodes = [
     {value: 'black', viewValue: 'Black'},
@@ -51,7 +51,7 @@ export class AppComponent {
     {value: "PEP_SIG_ID", viewValue: "PEP_SIG_ID"},
   ];
 
-
+// ===================================================================================================
   // Button related
   btnArr: number[] = [];
 
@@ -59,6 +59,11 @@ export class AppComponent {
   sigId: number = 0;
   sigArr: number[] = [];
 
+  // Label related
+  lblId: number = 0;
+  lblArr: number[] = [];
+
+// ==================================================================================================
   // Possible properties, just list all component types
   // Update Constructor() and UpdateView() when update this
   componentId: string = '';
@@ -73,6 +78,9 @@ export class AppComponent {
   fontFamily: string = '';
   signatureId: string = '';
   weight: number = 0;
+  content: string = '';
+  bold: boolean = false;
+  italic: boolean = false;
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -85,6 +93,9 @@ export class AppComponent {
   showFontFamily: boolean = false;
   showSignatureId: boolean = false;
   showWeight: boolean = false;
+  showContent: boolean = false;
+  showBold: boolean = false;
+  showItalic: boolean = false;
 
   // Final properties
   // finalBodyProp: FmlBody;
@@ -110,6 +121,9 @@ export class AppComponent {
         this.fontFamily = properties.fontFamily || "";
         this.signatureId = properties.signatureId || "";
         this.weight = properties.weight || 0;
+        this.content = properties.content || "";
+        this.bold = properties.bold || false;
+        this.italic = properties.italic || false;
 
         // Update Property Panel
         this.resetPropertyView();
@@ -118,6 +132,8 @@ export class AppComponent {
           this.showBodyProperties();
         else if (this.componentType === 'Signature')
           this.showSignatureProperties();
+        else if (this.componentType === 'Label')
+          this.showLabelProperties();
       }
     );
   }
@@ -135,7 +151,10 @@ export class AppComponent {
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
       signatureId: this.signatureId,
-      weight: this.weight
+      weight: this.weight,
+      content: this.content,
+      bold: this.bold,
+      italic: this.italic
     });
   }
 
@@ -150,6 +169,9 @@ export class AppComponent {
     this.showFontFamily = false;
     this.showSignatureId = false;
     this.showWeight = false;
+    this.showContent = false;
+    this.showBold = false;
+    this.showItalic = false;
   }
 
   showBodyProperties() {
@@ -174,6 +196,20 @@ export class AppComponent {
     this.showSignatureId = true;
   }
 
+  showLabelProperties() {
+    this.showX = true;
+    this.showY = true;
+    this.showWidth = true;
+    this.showHeight = true;
+    this.showBgColor = true;
+    this.showFontColor = true;
+    this.showFontSize = true;
+    this.showFontFamily = true;
+    this.showContent = true;
+    this.showBold = true;
+    this.showItalic = true;
+  }
+
   genButton() {
     this.btnArr.push(1);
   }
@@ -182,11 +218,15 @@ export class AppComponent {
     this.sigArr.push(++this.sigId);
   }
 
+  genLabelBlock() {
+    this.lblArr.push(++this.lblId);
+  }
+
   genFml() {
     const fmlStr = this.propertyService.genFml();
     this.dialog.open(GenFmlDialogComponent, {
       width: '90vw',
-      height: '90vh',
+      height: '80vh',
       data: {
         fmlScript: fmlStr
       }

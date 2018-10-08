@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { SignatureComponent } from './signature/signature.component';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
+import { LabelComponent } from './label/label.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component
     ButtonComponent,
     BodyComponent,
     SignatureComponent,
-    GenFmlDialogComponent
+    GenFmlDialogComponent,
+    LabelComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -34,7 +36,8 @@ import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component
     FormsModule,
     FlexLayoutModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     GenFmlDialogComponent

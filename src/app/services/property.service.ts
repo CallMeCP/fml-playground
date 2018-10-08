@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { FmlBody } from '../interfaces/FmlBody.interface';
 import { FmlSignature } from '../interfaces/FmlSignature.interface';
 import { MatDialog } from '@angular/material';
+import { FmlLabel } from '../label/label.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class PropertyService {
   // Final FML Components Property
   fmlBodyProp: FmlBody;
   fmlSignatureProp: FmlSignature[] = [];
+  fmlLabelProp: FmlLabel[] = [];
 
   constructor(
     private dialog: MatDialog
@@ -34,11 +36,20 @@ export class PropertyService {
     this.fmlSignatureProp[index-1] = fmlSig;
   }
 
+  updateFmlLabel(fmlLbl: FmlLabel) {
+    let splitStr: string[] = fmlLbl.componentId.split("_");
+
+    // e.g. "LABEL_1"
+    const index = parseInt(splitStr[1]);
+    this.fmlLabelProp[index-1] = fmlLbl;
+  }
+
   genFml() {
     // Create references to Body container x and y
     const bodyX: number = this.fmlBodyProp.x;
     const bodyY: number = this.fmlBodyProp.y;
     const body: FmlBody = this.fmlBodyProp;
+    const PP: number = 0.75;          // convert point? pixel?
 
     // Construct Signatures
     let sigStr: string = ``;
@@ -46,10 +57,22 @@ export class PropertyService {
     this.fmlSignatureProp.map(sig => {
       const str:string =
         `<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
-          weight=${sig.weight} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>
-      `;
+          weight=${sig.weight} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
 
       sigStr += str;
+    });
+
+    // Construct Label
+    let lblStr: string = ``;
+
+    this.fmlLabelProp.map(lbl => {
+      const str: string =
+        `<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width} h=${lbl.height} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
+            font=${lbl.fontFamily} sz=${lbl.fontSize}>
+          ${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
+        </t>\n\t`;
+
+      lblStr += str;
     });
 
     // Construct body
@@ -59,10 +82,10 @@ export class PropertyService {
   <body width=${body.width*0.75} height=${body.height*0.75} bgcolor=${body.bgColor} font=${body.fontFamily} 
     size=${body.fontSize} color=${body.fontColor}>
     ${sigStr}
+    ${lblStr}
   </body>
 </fml>`; 
 
-    // console.log(bodyStr);
     return bodyStr;
     
   }
