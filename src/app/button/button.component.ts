@@ -1,4 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PropertyService } from '../services/property.service';
+import { FmlButton } from '../interfaces/FmlButton.interface';
 
 @Component({
   selector: 'app-button',
@@ -6,25 +9,55 @@ import { Component, OnInit, HostListener } from '@angular/core';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent implements OnInit {
-  text: string = "Button";
+  
+  // Passed in from outside
+  @Input() btnId;
+  
+  // Label default properties
+  componentId: string;
+  componentType: string = 'Button';
   x: number = 10;
-  y: number = 64;
-  width: number = 200;
-  height: number = 100;
+  y: number = 10;
+  width: number = 100;
+  height: number = 25;
+  zIndex: number = 100;
+  buttonId: string = 'NEXT'
+  content: string = 'Button';
+
+  // Observable
+  propToSrv$: Subscription;
 
   px: number;
   py: number;
   draggingWindow: boolean = false;
 
-  counter: number = 0;
-
-  constructor() { }
+  constructor(
+    private propertyService: PropertyService
+  ) { }
 
   ngOnInit() {
+    // Set Signature ID
+    this.componentId = `BUTTON_${this.btnId}`;
+    this.updateFinalFml();
+  }
+
+  emitNewValues() {
+    const fmlButton: FmlButton = {
+      componentId: this.componentId,
+      componentType: this.componentType,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      buttonId: this.buttonId,
+      content: this.content,
+    };
+
+    this.propertyService.viewToProperty$.emit(fmlButton);
+    this.updateFinalFml();
   }
 
   resize() {
-    this.text = (++this.counter).toString();
     this.x = ++this.x;
     this.y = ++this.y;
     this.width = ++this.width;
@@ -32,18 +65,48 @@ export class ButtonComponent implements OnInit {
   }
 
   onWindowPress(event: MouseEvent) {
-    console.log("pressing");
+    this.zIndex = 999;
+
+    // Emit new values
+    this.emitNewValues();
+
+    // Listen to Properties panel changes
+    if(this.propToSrv$ === null || this.propToSrv$ === undefined) {
+      
+      this.propToSrv$ = this.propertyService.propertyToView$.subscribe(
+        properties => {
+          
+          if (properties.componentId !== this.componentId) {
+            this.propToSrv$.unsubscribe();
+            this.propToSrv$ = undefined;
+          }else {
+            // Set properties
+            this.componentType = properties.componentType;
+            this.x = properties.x;
+            this.y = properties.y;
+            this.width = properties.width;
+            this.height = properties.height;
+            this.buttonId = properties.buttonId;
+            this.content = properties.content;
+
+            // Update final FML
+            this.updateFinalFml();
+          }
+        }
+      );
+    }
+
     this.draggingWindow = true;
     this.px = event.clientX;
     this.py = event.clientY;
   }
 
   onWindowDrag(event: MouseEvent) {
-    console.log("drag");
+    
     if (!this.draggingWindow) {
       return;
     }
-    console.log("real drag");
+  
     let offsetX = event.clientX - this.px;
     let offsetY = event.clientY - this.py;
 
@@ -52,16 +115,28 @@ export class ButtonComponent implements OnInit {
     this.px = event.clientX;
     this.py = event.clientY;
 
+    this.emitNewValues();
+
   }
 
   onWindowUp(event: MouseEvent) {
+    this.zIndex = 100;
     this.draggingWindow = false;
   }
 
-  onPassedby(event: MouseEvent) {
-    console.log("over");
+  updateFinalFml() {
+    this.propertyService.updateFmlButton(
+      {
+        componentId: this.componentId,
+        componentType: this.componentType,
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height,
+        buttonId: this.buttonId,
+        content: this.content,
+      }
+    );
   }
-
-  // @HostListener('document: mouseup', ['$event'])
 
 }

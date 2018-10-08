@@ -1,8 +1,10 @@
 export interface FmlButton {
+    componentId: string;
+    componentType: string;
     x: number;
     y: number;
     width: number;
     height: number;
-    btnId: string;
-    btnLabel: string;
+    buttonId: string;
+    content: string;
 }

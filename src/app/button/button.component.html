@@ -1,16 +1,6 @@
-<!-- <button 
-  (click)="resize()"
-  (mousedown)="onWindowPress($event)"
-  (mousemove)="onWindowDrag($event)"
-  [style.top.px] = "y"
-  [style.left.px] = 'x'
-  [style.width.px] = 'width'
-  [style.height.px] = 'height'
-  
->{{ text }}</button> -->
-
-<div style="border: 1px solid black; position: absolute; user-select: none;"
-  
+<div style="border: 1px solid black; position: absolute; 
+      display: flex; align-items: center; justify-content: center"
+  class="unselectable"
   (mousedown)="onWindowPress($event)"
   (mousemove)="onWindowDrag($event)"
   (mouseup)="onWindowUp($event)"
@@ -18,20 +8,5 @@
   [style.left.px] = 'x'
   [style.width.px] = 'width'
   [style.height.px] = 'height'
-  
->{{ text }}</div>
-
-<!-- <button style="border: 1px solid black; position: fixed"
-  
-  (mousedown)="onWindowPress($event)"
-  (mousemove)="onWindowDrag($event)"
-  (mouseup)="onWindowUp($event)"
-  [style.top.px] = "y"
-  [style.left.px] = 'x'
-  [style.width.px] = 'width'
-  [style.height.px] = 'height'
-  
->{{ text }}</button> -->
-
-<!-- [style.margin-left.px] = 'x'
-  [style.margin-top.px] = 'y' -->
+  [style.z-index] = 'zIndex'
+>{{ content }}</div>

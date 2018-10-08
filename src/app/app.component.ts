@@ -51,8 +51,19 @@ export class AppComponent {
     {value: "PEP_SIG_ID", viewValue: "PEP_SIG_ID"},
   ];
 
+  buttonIds = [
+    {value: "BACK", viewValue: "BACK"},
+    {value: "NEXT", viewValue: "NEXT"},
+    {value: "NEW_APP_RESET_ID", viewValue: "NEW_APP_RESET_ID"},
+    {value: "PRI_AUTH_RESET_ID", viewValue: "PRI_AUTH_RESET_ID"},
+    {value: "SEN_NAME_RESET_ID", viewValue: "SEN_NAME_RESET_ID"},
+    {value: "POX_RESET_ID", viewValue: "POX_RESET_ID"},
+    {value: "PEP_RESET_ID", viewValue: "PEP_RESET_ID"}
+  ]
+
 // ===================================================================================================
   // Button related
+  btnId: number = 0;
   btnArr: number[] = [];
 
   // Signature related
@@ -81,6 +92,7 @@ export class AppComponent {
   content: string = '';
   bold: boolean = false;
   italic: boolean = false;
+  buttonId: string = "";
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -96,6 +108,7 @@ export class AppComponent {
   showContent: boolean = false;
   showBold: boolean = false;
   showItalic: boolean = false;
+  showButtonId: boolean = false;
 
   // Final properties
   // finalBodyProp: FmlBody;
@@ -124,6 +137,7 @@ export class AppComponent {
         this.content = properties.content || "";
         this.bold = properties.bold || false;
         this.italic = properties.italic || false;
+        this.buttonId = properties.buttonId || "";
 
         // Update Property Panel
         this.resetPropertyView();
@@ -134,6 +148,8 @@ export class AppComponent {
           this.showSignatureProperties();
         else if (this.componentType === 'Label')
           this.showLabelProperties();
+        else if (this.componentType === 'Button')
+          this.showButtonProperties();
       }
     );
   }
@@ -154,7 +170,8 @@ export class AppComponent {
       weight: this.weight,
       content: this.content,
       bold: this.bold,
-      italic: this.italic
+      italic: this.italic,
+      buttonId: this.buttonId
     });
   }
 
@@ -172,6 +189,7 @@ export class AppComponent {
     this.showContent = false;
     this.showBold = false;
     this.showItalic = false;
+    this.showButtonId = false;
   }
 
   showBodyProperties() {
@@ -210,8 +228,17 @@ export class AppComponent {
     this.showItalic = true;
   }
 
+  showButtonProperties() {
+    this.showX = true;
+    this.showY = true;
+    this.showWidth = true;
+    this.showHeight = true;
+    this.showButtonId = true;
+    this.showContent = true;
+  }
+
   genButton() {
-    this.btnArr.push(1);
+    this.btnArr.push(++this.btnId);
   }
 
   genSignatureBlock() {
@@ -226,7 +253,7 @@ export class AppComponent {
     const fmlStr = this.propertyService.genFml();
     this.dialog.open(GenFmlDialogComponent, {
       width: '90vw',
-      height: '80vh',
+      height: '90vh',
       data: {
         fmlScript: fmlStr
       }

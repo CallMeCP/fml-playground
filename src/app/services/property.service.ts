@@ -3,6 +3,7 @@ import { FmlBody } from '../interfaces/FmlBody.interface';
 import { FmlSignature } from '../interfaces/FmlSignature.interface';
 import { MatDialog } from '@angular/material';
 import { FmlLabel } from '../label/label.interface';
+import { FmlButton } from '../interfaces/FmlButton.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class PropertyService {
   fmlBodyProp: FmlBody;
   fmlSignatureProp: FmlSignature[] = [];
   fmlLabelProp: FmlLabel[] = [];
+  fmlButtonProp: FmlButton[] = [];
 
   constructor(
     private dialog: MatDialog
@@ -42,6 +44,15 @@ export class PropertyService {
     // e.g. "LABEL_1"
     const index = parseInt(splitStr[1]);
     this.fmlLabelProp[index-1] = fmlLbl;
+  }
+
+  updateFmlButton(fmlBtn: FmlButton) {
+    let splitStr: string[] = fmlBtn.componentId.split("_");
+
+    // e.g. "BUTTON_1"
+    const index = parseInt(splitStr[1]);
+    this.fmlButtonProp[index-1] = fmlBtn;
+
   }
 
   genFml() {
@@ -75,6 +86,18 @@ export class PropertyService {
       lblStr += str;
     });
 
+    // Construct Button
+    let btnStr: string = ``;
+
+    this.fmlButtonProp.map(btn => {
+      const str: string = 
+      `<button x=${(btn.x-bodyX)*PP} y=${(btn.y-bodyY)*PP} w=${btn.width*PP} h=${btn.height*PP} id=${btn.buttonId}>
+        ${btn.content}
+      </button>\n\t`;
+
+      btnStr += str;
+    });
+
     // Construct body
     const bodyStr: string =
       `
@@ -83,6 +106,7 @@ export class PropertyService {
     size=${body.fontSize} color=${body.fontColor}>
     ${sigStr}
     ${lblStr}
+    ${btnStr}
   </body>
 </fml>`; 
 

@@ -20,10 +20,7 @@
         <button mat-stroked-button>Textbox</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-stroked-button (click)="genButton()">Next Button</button>
-      </mat-list-item>
-      <mat-list-item>
-        <button mat-stroked-button>Back Button</button>
+        <button mat-stroked-button (click)="genButton()">Button</button>
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genSignatureBlock()">Signature Block</button>
@@ -139,6 +136,17 @@
             </mat-form-field>
           </mat-list-item>
 
+          <mat-list-item *ngIf="showButtonId">
+            <mat-label>Button ID: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="buttonId" (selectionChange)="updateView()">
+                <mat-option *ngFor="let btn of buttonIds" [value]="btn.value">
+                  {{btn.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
           <mat-list-item *ngIf="showBold">
             <mat-label>Bold: </mat-label>
               <mat-checkbox [(ngModel)]="bold" (change)="updateView()"></mat-checkbox>
@@ -166,7 +174,7 @@
       <app-body></app-body>
 
       <!-- Button -->
-      <app-button *ngFor="let btn of btnArr"></app-button>
+      <app-button [btnId]="btnId" *ngFor="let btn of btnArr"></app-button>
 
       <!-- Signature -->
       <app-signature [sigId]="sigId" *ngFor="let sigId of sigArr"></app-signature>
