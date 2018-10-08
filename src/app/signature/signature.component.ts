@@ -22,6 +22,7 @@ export class SignatureComponent implements OnInit {
   weight: number = 5;
   bgColor: string = 'white';
   fontColor: string = 'black';  //  line color aka signature colour
+  zIndex: number = 100;
   signatureId: string = 'NEW_APP_SIG_ID';
 
   // Observable
@@ -60,6 +61,8 @@ export class SignatureComponent implements OnInit {
   }
 
   onWindowPress(event: MouseEvent) {
+    this.zIndex = 999;
+
     // Emit new values
     this.emitNewValues();
 
@@ -97,6 +100,8 @@ export class SignatureComponent implements OnInit {
   }
 
   onWindowDrag(event: MouseEvent) {
+    // this.zIndex = 999;
+
     if (!this.draggingWindow) {
       return;
     }
@@ -114,6 +119,7 @@ export class SignatureComponent implements OnInit {
   }
 
   onWindowUp(event: MouseEvent) {
+    this.zIndex = 100;
     this.draggingWindow = false;
   }
 
