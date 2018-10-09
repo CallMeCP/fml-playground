@@ -16,6 +16,8 @@ export class ButtonComponent implements OnInit {
   // Label default properties
   componentId: string;
   componentType: string = 'Button';
+  initX: number = 10;
+  initY: number =10;
   x: number = 10;
   y: number = 10;
   width: number = 100;
@@ -23,6 +25,7 @@ export class ButtonComponent implements OnInit {
   zIndex: number = 100;
   buttonId: string = 'NEXT'
   content: string = 'Button';
+  tx: number = 0;
 
   // Observable
   propToSrv$: Subscription;
@@ -107,13 +110,15 @@ export class ButtonComponent implements OnInit {
       return;
     }
   
-    let offsetX = event.clientX - this.px;
-    let offsetY = event.clientY - this.py;
+    // let offsetX = event.clientX - this.px;
+    // let offsetY = event.clientY - this.py;
 
-    this.x += offsetX;
-    this.y += offsetY;
-    this.px = event.clientX;
-    this.py = event.clientY;
+    // this.x += offsetX;
+    // this.y += offsetY;
+    // this.px = event.clientX;
+    // this.py = event.clientY;
+    this.x = event.x;
+    this.y = event.y;
 
     this.emitNewValues();
 
@@ -122,6 +127,13 @@ export class ButtonComponent implements OnInit {
   onWindowUp(event: MouseEvent) {
     this.zIndex = 100;
     this.draggingWindow = false;
+  }
+
+  onResizing(event) {
+    this.width = event.size.width;
+    this.height = event.size.height;
+
+    this.emitNewValues();
   }
 
   updateFinalFml() {

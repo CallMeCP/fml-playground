@@ -12,3 +12,7 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
     -o-user-select: none;
     user-select: none;
 }
+
+.ng-draggable {
+    cursor: move;
+}

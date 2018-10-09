@@ -13,6 +13,7 @@ import { SignatureComponent } from './signature/signature.component';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
 import { LabelComponent } from './label/label.component';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LabelComponent } from './label/label.component';
     FlexLayoutModule,
     MatSelectModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    AngularDraggableModule
   ],
   entryComponents: [
     GenFmlDialogComponent

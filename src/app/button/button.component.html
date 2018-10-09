@@ -1,11 +1,14 @@
 <div style="border: 1px solid black; position: absolute; 
       display: flex; align-items: center; justify-content: center"
   class="unselectable"
+  ngDraggable
+  ngResizable
+  (rzResizing)="onResizing($event)"
   (mousedown)="onWindowPress($event)"
-  (mousemove)="onWindowDrag($event)"
+  (movingOffset)="onWindowDrag($event)"
   (mouseup)="onWindowUp($event)"
-  [style.top.px] = "y"
-  [style.left.px] = 'x'
+  [style.top.px] = "initY"
+  [style.left.px] = 'initX'
   [style.width.px] = 'width'
   [style.height.px] = 'height'
   [style.z-index] = 'zIndex'
