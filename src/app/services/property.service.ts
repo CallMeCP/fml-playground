@@ -66,36 +66,42 @@ export class PropertyService {
     let sigStr: string = ``;
 
     this.fmlSignatureProp.map(sig => {
-      const str:string =
-        `<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
-          weight=${sig.weight} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
+      if (!sig.deleted) {
+        const str:string =
+          `<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
+            weight=${sig.weight} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
 
-      sigStr += str;
+        sigStr += str;
+      }
     });
 
     // Construct Label
     let lblStr: string = ``;
 
     this.fmlLabelProp.map(lbl => {
-      const str: string =
-        `<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width} h=${lbl.height} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
-            font=${lbl.fontFamily} sz=${lbl.fontSize}>
-          ${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
-        </t>\n\t`;
+      if (!lbl.deleted) {
+        const str: string =
+          `<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width} h=${lbl.height} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
+              font=${lbl.fontFamily} sz=${lbl.fontSize}>
+            ${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
+          </t>\n\t`;
 
-      lblStr += str;
+        lblStr += str;
+      }
     });
 
     // Construct Button
     let btnStr: string = ``;
 
     this.fmlButtonProp.map(btn => {
-      const str: string = 
-      `<button x=${(btn.x-bodyX)*PP} y=${(btn.y-bodyY)*PP} w=${btn.width*PP} h=${btn.height*PP} id=${btn.buttonId}>
-        ${btn.content}
-      </button>\n\t`;
+      if (!btn.deleted) {
+        const str: string = 
+        `<button x=${(btn.x-bodyX)*PP} y=${(btn.y-bodyY)*PP} w=${btn.width*PP} h=${btn.height*PP} id=${btn.buttonId}>
+          ${btn.content}
+        </button>\n\t`;
 
-      btnStr += str;
+        btnStr += str;
+      }
     });
 
     // Construct body

@@ -30,6 +30,7 @@ export class LabelComponent implements OnInit {
   content: string = 'content';
   bold: boolean = false;
   italic: boolean = false;
+  deleted: boolean = false;
 
   // Observable
   propToSrv$: Subscription;
@@ -62,7 +63,8 @@ export class LabelComponent implements OnInit {
       fontFamily: this.fontFamily,
       content: this.content,
       bold: this.bold,
-      italic: this.italic
+      italic: this.italic,
+      deleted: this.deleted
     };
 
     this.propertyService.viewToProperty$.emit(fmlLabel);
@@ -106,6 +108,7 @@ export class LabelComponent implements OnInit {
             this.content = properties.content;
             this.bold = properties.bold;
             this.italic = properties.italic;
+            this.deleted = properties.deleted;
 
             // Update final FML
             this.updateFinalFml();
@@ -167,7 +170,8 @@ export class LabelComponent implements OnInit {
         fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
         content: this.content,
         bold: this.bold,
-        italic: this.italic
+        italic: this.italic,
+        deleted: this.deleted
       }
     );
   }

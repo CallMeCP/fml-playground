@@ -49,35 +49,35 @@
           <mat-list-item>
             <mat-label>X: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="x" (change)="updateView()">
+              <input matInput [(ngModel)]="x" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Y: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="y" (change)="updateView()">
+              <input matInput [(ngModel)]="y" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>width: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="width" (change)="updateView()">
+              <input matInput [(ngModel)]="width" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Height: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="height" (change)="updateView()">
+              <input matInput [(ngModel)]="height" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showBgColor">
             <mat-label>BG Color: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
                   {{colorCode.viewValue}}
                 </mat-option>
@@ -88,7 +88,7 @@
           <mat-list-item *ngIf="showFontColor">
             <mat-label>Font Color: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
                   {{colorCode.viewValue}}
                 </mat-option>
@@ -99,14 +99,14 @@
           <mat-list-item *ngIf="showFontSize">
             <mat-label>Font Size: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="fontSize" (change)="updateView()">
+              <input matInput [(ngModel)]="fontSize" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontFamily">
             <mat-label>Font Family: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let fontf of fontFamilies" [value]="fontf.value">
                   {{fontf.viewValue}}
                 </mat-option>
@@ -117,7 +117,7 @@
           <mat-list-item *ngIf="showWeight">
             <mat-label>Line Weight: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="weight" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="weight" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let wht of lineWeights" [value]="wht.value">
                   {{wht.viewValue}}
                 </mat-option>
@@ -128,7 +128,7 @@
           <mat-list-item *ngIf="showSignatureId">
             <mat-label>Signature ID: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="signatureId" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="signatureId" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let sig of signatureIds" [value]="sig.value">
                   {{sig.viewValue}}
                 </mat-option>
@@ -139,7 +139,7 @@
           <mat-list-item *ngIf="showButtonId">
             <mat-label>Button ID: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="buttonId" (selectionChange)="updateView()">
+              <mat-select [(ngModel)]="buttonId" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let btn of buttonIds" [value]="btn.value">
                   {{btn.viewValue}}
                 </mat-option>
@@ -149,19 +149,23 @@
 
           <mat-list-item *ngIf="showBold">
             <mat-label>Bold: </mat-label>
-              <mat-checkbox [(ngModel)]="bold" (change)="updateView()"></mat-checkbox>
+              <mat-checkbox [(ngModel)]="bold" (change)="updateView()" [disabled]="deleted"></mat-checkbox>
           </mat-list-item>
 
           <mat-list-item *ngIf="showItalic">
             <mat-label>Italic: </mat-label>
-              <mat-checkbox [(ngModel)]="italic" (change)="updateView()"></mat-checkbox>
+              <mat-checkbox [(ngModel)]="italic" (change)="updateView()" [disabled]="deleted"></mat-checkbox>
           </mat-list-item>
 
           <mat-list-item *ngIf="showContent">
             <mat-label>Content: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="content" (change)="updateView()">
+              <input matInput [(ngModel)]="content" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showDelete">
+            <button mat-stroked-button color="warn" (click)="delete()" [disabled]="deleted">Delete</button>
           </mat-list-item>
       </mat-list>
   </mat-sidenav>

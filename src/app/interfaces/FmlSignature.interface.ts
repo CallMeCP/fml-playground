@@ -9,4 +9,5 @@ export interface FmlSignature {
     bgColor: string;
     fontColor: string;  //  line color aka signature colour
     signatureId: string;
+    deleted: boolean;
 }

@@ -26,6 +26,7 @@ export class ButtonComponent implements OnInit {
   buttonId: string = 'NEXT'
   content: string = 'Button';
   tx: number = 0;
+  deleted: boolean = false;
 
   // Observable
   propToSrv$: Subscription;
@@ -54,6 +55,7 @@ export class ButtonComponent implements OnInit {
       height: this.height,
       buttonId: this.buttonId,
       content: this.content,
+      deleted: this.deleted
     };
 
     this.propertyService.viewToProperty$.emit(fmlButton);
@@ -91,6 +93,7 @@ export class ButtonComponent implements OnInit {
             this.height = properties.height;
             this.buttonId = properties.buttonId;
             this.content = properties.content;
+            this.deleted = properties.deleted;
 
             // Update final FML
             this.updateFinalFml();
@@ -147,6 +150,7 @@ export class ButtonComponent implements OnInit {
         height: this.height,
         buttonId: this.buttonId,
         content: this.content,
+        deleted: this.deleted
       }
     );
   }

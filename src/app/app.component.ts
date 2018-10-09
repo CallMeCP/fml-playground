@@ -93,6 +93,7 @@ export class AppComponent {
   bold: boolean = false;
   italic: boolean = false;
   buttonId: string = "";
+  deleted: boolean = false;
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -109,6 +110,7 @@ export class AppComponent {
   showBold: boolean = false;
   showItalic: boolean = false;
   showButtonId: boolean = false;
+  showDelete: boolean = false;
 
   // Final properties
   // finalBodyProp: FmlBody;
@@ -138,6 +140,7 @@ export class AppComponent {
         this.bold = properties.bold || false;
         this.italic = properties.italic || false;
         this.buttonId = properties.buttonId || "";
+        this.deleted = properties.deleted || false;
 
         // Update Property Panel
         this.resetPropertyView();
@@ -171,7 +174,8 @@ export class AppComponent {
       content: this.content,
       bold: this.bold,
       italic: this.italic,
-      buttonId: this.buttonId
+      buttonId: this.buttonId,
+      deleted: this.deleted
     });
   }
 
@@ -190,6 +194,7 @@ export class AppComponent {
     this.showBold = false;
     this.showItalic = false;
     this.showButtonId = false;
+    this.showDelete = false;
   }
 
   showBodyProperties() {
@@ -212,6 +217,7 @@ export class AppComponent {
     this.showBgColor = true;
     this.showFontColor = true;
     this.showSignatureId = true;
+    this.showDelete = true;
   }
 
   showLabelProperties() {
@@ -226,6 +232,7 @@ export class AppComponent {
     this.showContent = true;
     this.showBold = true;
     this.showItalic = true;
+    this.showDelete = true;
   }
 
   showButtonProperties() {
@@ -235,6 +242,7 @@ export class AppComponent {
     this.showHeight = true;
     this.showButtonId = true;
     this.showContent = true;
+    this.showDelete = true;
   }
 
   genButton() {
@@ -258,6 +266,11 @@ export class AppComponent {
         fmlScript: fmlStr
       }
     });
+  }
+
+  delete() {
+    this.deleted = true;
+    this.updateView();
   }
 
   over(e) {

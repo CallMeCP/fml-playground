@@ -26,6 +26,7 @@ export class SignatureComponent implements OnInit {
   fontColor: string = 'black';  //  line color aka signature colour
   zIndex: number = 100;
   signatureId: string = 'NEW_APP_SIG_ID';
+  deleted: boolean = false;
 
   // Observable
   propToSrv$: Subscription;
@@ -55,7 +56,8 @@ export class SignatureComponent implements OnInit {
       weight: this.weight,
       bgColor: this.bgColor,
       fontColor: this.fontColor,
-      signatureId: this.signatureId
+      signatureId: this.signatureId,
+      deleted: this.deleted
     };
 
     this.propertyService.viewToProperty$.emit(fmlSignature);
@@ -88,6 +90,7 @@ export class SignatureComponent implements OnInit {
             this.bgColor = properties.bgColor;
             this.fontColor = properties.fontColor;
             this.signatureId = properties.signatureId;
+            this.deleted = properties.deleted;
 
             // Update final FML
             this.updateFinalFml();
@@ -146,7 +149,8 @@ export class SignatureComponent implements OnInit {
       weight: this.weight,
       bgColor: this.bgColor,
       fontColor: this.fontColor,
-      signatureId: this.signatureId
+      signatureId: this.signatureId,
+      deleted: this.deleted
     });
   }
 

@@ -7,4 +7,5 @@ export interface FmlButton {
     height: number;
     buttonId: string;
     content: string;
+    deleted: boolean;
 }
