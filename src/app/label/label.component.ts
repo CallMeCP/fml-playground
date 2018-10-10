@@ -176,4 +176,12 @@ export class LabelComponent implements OnInit {
     );
   }
 
+  getBgColString(): string {
+    return this.propertyService.getColourString(this.bgColor);
+  }
+
+  getFontColString(): string {
+    return this.propertyService.getColourString(this.fontColor);
+  }
+
 }

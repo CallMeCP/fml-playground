@@ -19,16 +19,16 @@ export class AppComponent implements OnInit {
   // Options available
   colorCodes = [
     {value: 'black', viewValue: 'Black'},
-    {value: 'brown', viewValue: 'Brown'},
-    {value: 'red', viewValue: 'Red'},
-    {value: 'orange', viewValue: 'Orange'},
-    {value: 'yellow', viewValue: 'Yellow'},
-    {value: 'green', viewValue: 'Green'},
     {value: 'blue', viewValue: 'Blue'},
-    {value: 'violet', viewValue: 'Violet'},
+    {value: 'brown', viewValue: 'Brown'},
+    {value: 'green', viewValue: 'Green'},
     {value: 'grey', viewValue: 'Grey'},
+    {value: 'orange', viewValue: 'Orange'},
+    {value: 'red', viewValue: 'Red'},
+    {value: 'transparent', viewValue: 'Transparent'},
+    {value: 'violet', viewValue: 'Violet'},
     {value: 'white', viewValue: 'White'},
-    {value: 'transparent', viewValue: 'Transparent'}
+    {value: 'yellow', viewValue: 'Yellow'}
   ];
 
   fontFamilies = [

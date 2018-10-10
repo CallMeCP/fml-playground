@@ -154,4 +154,12 @@ export class SignatureComponent implements OnInit {
     });
   }
 
+  getBgColString(): string {
+    return this.propertyService.getColourString(this.bgColor);
+  }
+
+  getFontColString(): string {
+    return this.propertyService.getColourString(this.fontColor);
+  }
+
 }

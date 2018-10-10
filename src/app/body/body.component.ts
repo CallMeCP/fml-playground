@@ -48,13 +48,10 @@ export class BodyComponent implements OnInit {
   drawGrid() {
     // Init grids array
     this.gridArr = [];
-    console.log('square:' + this.width/10 + ' ' + this.height/10);
-    // console.log('width: ',this.width, 'height:', this,this.height);
     const totalSquares = Math.floor(this.width/ 10) * Math.floor(this.height/10);
     for (let index = 0; index < totalSquares; index++) {
       this.gridArr.push(1);
     }
-    console.log(this.gridArr.length);
   }
 
   emitNewValues() {
@@ -160,6 +157,14 @@ export class BodyComponent implements OnInit {
 
     // Redraw grids
     this.drawGrid();
+  }
+
+  getBgColString(): string {
+    return this.propertyService.getColourString(this.bgColor);
+  }
+
+  getFontColString(): string {
+    return this.propertyService.getColourString(this.fontColor);
   }
 
 }

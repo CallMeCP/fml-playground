@@ -28,6 +28,52 @@ export class PropertyService {
     private dialog: MatDialog
   ) { }
 
+  // Some of the colour name use in FML is differnt from what we found on internet CSS colour
+  getColourString(colour: string): string {
+    let rgbStr: string = '';
+
+    switch (colour) {
+      case 'black':
+        rgbStr = 'rgb(0,     0,      0)';    
+        break;
+      case 'brown':
+        rgbStr = 'rgb(153,   51,     0)';    
+        break;
+      case 'red':
+        rgbStr = 'rgb(255,   0,      0)';    
+        break;
+      case 'orange':
+        rgbStr = 'rgb(255,   153,    0)';    
+        break;
+      case 'yellow':
+        rgbStr = 'rgb(255,   255,    0)';    
+        break;
+      case 'green':
+        rgbStr = 'rgb(0,     255,    0)';    
+        break;
+      case 'blue':
+        rgbStr = 'rgb(0,     0,      255)';    
+        break;
+      case 'violet':
+        rgbStr = 'rgb(255,   0,      255)';    
+        break;
+      case 'grey':
+        rgbStr = 'rgb(150,   150,    150)';    
+        break;
+      case 'white':
+        rgbStr = 'rgb(255,   255,    255)';    
+        break;
+      // case 'transparent':
+      //   rgbStr = 'rgb(0,     0,      0,      255)';    
+      //   break;
+    
+      default:
+        break;
+    }
+
+    return rgbStr;
+  }
+
   updateFmlBody(fmlBody: FmlBody) {
     this.fmlBodyProp = fmlBody;
   }

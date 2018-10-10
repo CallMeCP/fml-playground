@@ -12,21 +12,21 @@
   [style.width.px] = "width"
   [style.height.px] = "height"
   [style.font-weight] = 'weight'
-  [style.background-color] = "bgColor"
-  [style.color] = "fontColor"
+  [style.background-color] = "getBgColString()"
+  [style.color] = "getFontColString()"
   [style.z-index] = "zIndex"
 >
   <!-- <div style="position:absolute;">{{signatureId}}</div> -->
   <div style="position:absolute; font-size: 10px">{{signatureId}}</div>
 
   <div style="position: absolute;"
-    [style.background-color] = "fontColor"
+    [style.background-color] = "getBgColString()"
     [style.height.px] = "weight"
     [style.width.px] = "width"
     [style.margin-top.px] = "(height-weight)/2"
   ></div>
   <div style="position: absolute; text-align: center"
-    [style.background-color] = "fontColor"
+    [style.background-color] = "getBgColString()"
     [style.height.px] = "height"
     [style.width.px] = "weight"
     [style.margin-left.px] = "(width-weight)/2"
