@@ -44,7 +44,7 @@ export class LabelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Signature ID
+    // Set Label ID
     this.componentId = `LABEL_${this.lblId}`;
     this.updateFinalFml();
   }

@@ -1,1 +1,25 @@
-<button (click)="createElement()">Add element</button>
+<div style="position:absolute; border-style: solid; border-color: black;
+    display: flex; align-items: center;"
+  *ngIf="!deleted"
+  class ="unselectable"
+  ngDraggable
+  ngResizable
+  (rzResizing)="onResizing($event)"
+  (mousedown)="onWindowPress($event)"
+  (movingOffset)="onWindowDrag($event)"
+  (mouseup)="onWindowUp($event)"
+  [style.top.px] = "initY"
+  [style.left.px] = "initX"
+  [style.width.px] = "width"
+  [style.height.px] = "height"
+  [style.background-color] = "bgColor"
+  [style.color] = "fontColor" 
+  [style.font-size.px] = "fontSize"
+  [style.font-family] = "fontFamily"
+  [style.z-index] = "zIndex"
+  [style.font-style] = "italic? 'italic': 'normal'"
+  [style.font-weight] = "bold? 'bold': 'normal'"
+  [style.border-width.px] = "borderSize"
+>
+  {{ symbolId }}
+</div>

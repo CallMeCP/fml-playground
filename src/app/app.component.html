@@ -17,7 +17,7 @@
         <button mat-stroked-button (click)="genLabelBlock()">Label</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-stroked-button>Textbox</button>
+        <button mat-stroked-button (click)="genTextfield()">Textfield</button>
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genButton()">Button</button>
@@ -125,6 +125,17 @@
             </mat-form-field>
           </mat-list-item>
 
+          <mat-list-item *ngIf="showBorderSize">
+            <mat-label>BorderSize: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="borderSize" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let bdsz of borderSizes" [value]="bdsz.value">
+                  {{bdsz.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
           <mat-list-item *ngIf="showSignatureId">
             <mat-label>Signature ID: </mat-label>
             <mat-form-field>
@@ -144,6 +155,18 @@
                   {{btn.viewValue}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+          
+          <mat-list-item *ngIf="showSymbolId">
+            <mat-label>Symbol ID: </mat-label>
+            <mat-form-field>
+              <input matInput [formControl]="symControl" (change)="updateView()" [value]="symbolId" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option style="font-size: 12px" *ngFor="let option of filteredSymbolOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </mat-list-item>
 
@@ -185,6 +208,9 @@
 
       <!-- Labels -->
       <app-label [lblId]="lblId" *ngFor="let lblId of lblArr"></app-label>
+
+      <!-- Textfields -->
+      <app-textfield [txtId]="txtId" *ngFor="let txtId of txtArr"></app-textfield>
 
     </div>
   </mat-sidenav-content>

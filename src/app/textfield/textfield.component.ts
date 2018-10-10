@@ -1,4 +1,7 @@
-import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PropertyService } from '../services/property.service';
+import { FmlTextField } from './textfield.interface';
 
 @Component({
   selector: 'app-textfield',
@@ -7,23 +10,174 @@ import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 })
 export class TextfieldComponent implements OnInit {
 
-  cusEle: any = [];
+  // Passed in from outside
+  @Input() txtId;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
+  // Textfield default properties
+  componentId: string;
+  componentType: string = 'Textfield';
+  initX: number = 10;
+  initY: number =10;
+  x: number = 10;
+  y: number = 10;
+  width: number = 100;
+  height: number = 20;
+  bgColor: string = 'white';
+  fontColor: string = 'black';
+  fontSize: number = 12;
+  fontFamily: string = 'times new roman';
+  zIndex: number = 100;
+  content: string = 'textfield';
+  bold: boolean = false;
+  italic: boolean = false;
+  deleted: boolean = false;
+  borderSize: number = 1;
+  symbolId: string = '';
+  pfId: string = '';
+
+  // Observable
+  propToSrv$: Subscription;
+
+  px: number;
+  py: number;
+  draggingWindow: boolean = false;
+
+  constructor(
+    private propertyService: PropertyService
+  ) { }
 
   ngOnInit() {
+    // Set Textfield ID
+    this.componentId = `TEXTFIELD_${this.txtId}`;
+    this.updateFinalFml();
   }
 
-  createElement() {
-    const div = this.renderer.createElement('div');
-    const text = this.renderer.createText('hello');
+  emitNewValues() {
+    const fmlTextfield: FmlTextField = {
+      componentId: this.componentId,
+      componentType: this.componentType,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      bgColor: this.bgColor,
+      fontColor: this.fontColor,
+      fontSize: this.fontSize,
+      fontFamily: this.fontFamily,
+      content: this.content,
+      bold: this.bold,
+      italic: this.italic,
+      deleted: this.deleted,
+      borderSize: this.borderSize,
+      pfId: this.pfId,
+      symbolId: this.symbolId
+    };
+
+    this.propertyService.viewToProperty$.emit(fmlTextfield);
+    this.updateFinalFml();
+  }
+
+  onWindowPress(event: MouseEvent) {
+    this.zIndex = 999;
+
+    // Emit new values
+    this.emitNewValues();
+
+    // Listen to Properties panel changes
+    if(this.propToSrv$ === null || this.propToSrv$ === undefined) {
+      
+      this.propToSrv$ = this.propertyService.propertyToView$.subscribe(
+        properties => {
+          
+          if (properties.componentId !== this.componentId) {
+            this.propToSrv$.unsubscribe();
+            this.propToSrv$ = undefined;
+          }else {
+            // Set properties
+            this.componentType = properties.componentType;
+            this.x = properties.x;
+            this.y = properties.y;
+            this.width = properties.width;
+            this.height = properties.height;
+            this.bgColor = properties.bgColor;
+            this.fontColor = properties.fontColor;
+            this.fontSize = properties.fontSize;
+            this.fontFamily = properties.fontFamily;
+            this.content = properties.content;
+            this.bold = properties.bold;
+            this.italic = properties.italic;
+            this.deleted = properties.deleted;
+            this.borderSize = properties.borderSize;
+            this.pfId = properties.pfId;
+            this.symbolId = properties.symbolId;
+
+            // Update final FML
+            this.updateFinalFml();
+          }
+        }
+      );
+    }
+
+    this.draggingWindow = true;
+    this.px = event.clientX;
+    this.py = event.clientY;
+  }
+
+  onWindowDrag(event: MouseEvent) {
+    
+    if (!this.draggingWindow) {
+      return;
+    }
   
-    this.renderer.appendChild(div, text);
-    this.renderer.appendChild(this.el.nativeElement, div);
-    this.cusEle.push(div);
-    console.log(this.cusEle);
-    this.cusEle[0].style.fontSize = "20"; 
-    // console.log("hello");
+    // let offsetX = event.clientX - this.px;
+    // let offsetY = event.clientY - this.py;
+
+    // this.x += offsetX;
+    // this.y += offsetY;
+    // this.px = event.clientX;
+    // this.py = event.clientY;
+
+    this.x = event.x;
+    this.y = event.y;
+
+    this.emitNewValues();
+
+  }
+
+  onWindowUp(event: MouseEvent) {
+    this.zIndex = 100;
+    this.draggingWindow = false;
+  }
+
+  onResizing(event) {
+    this.width = event.size.width;
+    this.height = event.size.height;
+  
+    this.emitNewValues();
+  }
+
+  updateFinalFml() {
+    this.propertyService.updateFmlTextfield(
+      {
+        componentId: this.componentId,
+        componentType: this.componentType,
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height,
+        bgColor: this.bgColor,
+        fontColor: this.fontColor,
+        fontSize: this.fontSize,
+        fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
+        content: this.content,
+        bold: this.bold,
+        italic: this.italic,
+        deleted: this.deleted,
+        borderSize: this.borderSize,
+        pfId: this.pfId,
+        symbolId: this.symbolId
+      }
+    );
   }
 
 }

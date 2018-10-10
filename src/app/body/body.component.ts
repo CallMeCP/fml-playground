@@ -10,6 +10,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class BodyComponent implements OnInit {
 
+  // For grid line looping
+  gridArr: number[] = [];
+
   // Default values
   componentId: string = "BODY_1";   //  Hardcode, as there is only always one body container
   componentType: string = "Body";
@@ -38,7 +41,20 @@ export class BodyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.drawGrid();
     this.updateFinalFml();
+  }
+
+  drawGrid() {
+    // Init grids array
+    this.gridArr = [];
+    console.log('square:' + this.width/10 + ' ' + this.height/10);
+    // console.log('width: ',this.width, 'height:', this,this.height);
+    const totalSquares = Math.floor(this.width/ 10) * Math.floor(this.height/10);
+    for (let index = 0; index < totalSquares; index++) {
+      this.gridArr.push(1);
+    }
+    console.log(this.gridArr.length);
   }
 
   emitNewValues() {
@@ -68,7 +84,6 @@ export class BodyComponent implements OnInit {
   }
 
   onWindowPress(event: MouseEvent) {
-    // console.log("pressing");
     // Emit new values
     this.emitNewValues();
 
@@ -142,6 +157,9 @@ export class BodyComponent implements OnInit {
         fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
       }
     );
+
+    // Redraw grids
+    this.drawGrid();
   }
 
 }

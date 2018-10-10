@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PropertyService } from './services/property.service';
 import { FmlBody } from './interfaces/FmlBody.interface';
 import { FmlSignature } from './interfaces/FmlSignature.interface';
 import { MatDialog } from '@angular/material';
 import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
+import { FormControl } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  
 // ===================================================================================
   // Options available
   colorCodes = [
@@ -37,10 +41,6 @@ export class AppComponent {
     {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
     {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
     {value: 7, viewValue: '7'}, {value: 8, viewValue: '8'}, {value: 9, viewValue: '9'},
-    {value: 10, viewValue: '10'}, {value: 11, viewValue: '11'}, {value: 12, viewValue: '12'},
-    {value: 13, viewValue: '13'}, {value: 14, viewValue: '14'}, {value: 15, viewValue: '15'},
-    {value: 16, viewValue: '16'}, {value: 17, viewValue: '17'}, {value: 18, viewValue: '18'},
-    {value: 19, viewValue: '19'}, {value: 20, viewValue: '20'}, {value: 21, viewValue: '21'},
   ];
 
   signatureIds = [
@@ -61,6 +61,54 @@ export class AppComponent {
     {value: "PEP_RESET_ID", viewValue: "PEP_RESET_ID"}
   ]
 
+  borderSizes = [
+    {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
+    {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
+  ];
+
+  symControl = new FormControl();
+  filteredSymbolOptions: Observable<string[]>;
+  symControlSub: Subscription;
+  symbolIds: string[] = [
+    'REAL_DATE', 'REAL_TIME', 'REAL_DATE_TIME', 'CUST_DATE', 'USER_ID', 'USER_NAME', 'CUST_ID',
+    'CUST_NAME', 'CUST_TITLE', 'VINYL_TYPE', 'CUST_TYPE', 'NAS_NAME', 'NAS_TITLE', 'NAS_LANG',
+    'OPCN_NAME[0]', 'OPCN_NAME[1]', 'OPCN_NAME[2]', 'OPCN_NAME[3]', 'OPCN_NAME[4]', 'OPCN_NAME[5]', 
+    'OPCN_TITLE[0]', 'OPCN_TITLE[1]', 'OPCN_TITLE[2]', 'OPCN_TITLE[3]', 'OPCN_TITLE[4]', 'OPCN_TITLE[5]', 
+    'OPCN_LANG[0]', 'OPCN_LANG[1]', 'OPCN_LANG[2]', 'OPCN_LANG[3]', 'OPCN_LANG[4]', 'OPCN_LANG[5]', 
+    'OPCN_TYPE[0]', 'OPCN_TYPE[1]', 'OPCN_TYPE[2]', 'OPCN_TYPE[3]', 'OPCN_TYPE[4]', 'OPCN_TYPE[5]',  
+    'ID_DOC_NO[0]', 'ID_DOC_NO[1]', 'ID_DOC_NO[2]', 'ID_DOC_NO[3]', 
+    'ID_TYPE[0]', 'ID_TYPE[1]', 'ID_TYPE[2]', 'ID_TYPE[3]', 
+    'ID_ISS_AUTH[0]', 'ID_ISS_AUTH[1]', 'ID_ISS_AUTH[2]', 'ID_ISS_AUTH[3]', 
+    'ID_ISS_DATE[0]', 'ID_ISS_DATE[1]', 'ID_ISS_DATE[2]', 'ID_ISS_DATE[3]', 
+    'ID_EXP_DATE[0]', 'ID_EXP_DATE[1]', 'ID_EXP_DATE[2]', 'ID_EXP_DATE[3]', 
+    'NATIONALITY', 'SPONSOR_ID', 'SPONSOR_TITLE', 'SPONSOR_NAME', 'CUST_DOB', 'GENDER', 'PREF_LANG', 'PF.PCM',
+    'EMAIL', 'EMAIL_STATUS', 
+    'TEL_DESC[0]', 'TEL_DESC[1]', 'TEL_DESC[2]', 'TEL_DESC[3]', 'TEL_DESC[4]', 'TEL_DESC[5]', 
+    'TEL_NO[0]', 'TEL_NO[1]', 'TEL_NO[2]', 'TEL_NO[3]', 'TEL_NO[4]', 'TEL_NO[5]', 
+    'SMS_STATUS', 'VOICE_STATUS',
+    'AD_STATUS', 
+    'AD_DESC[0]', 'AD_DESC[1]', 'AD_DESC[2]', 'AD_DESC[3]', 
+    'AD_1[0]', 'AD_1[1]', 'AD_1[2]', 'AD_1[3]',
+    'AD_2[0]', 'AD_2[1]', 'AD_2[2]', 'AD_2[3]', 
+    'AD_3[0]', 'AD_3[1]', 'AD_3[2]', 'AD_3[3]', 
+    'AD_CITY[0]', 'AD_CITY[1]', 'AD_CITY[2]', 'AD_CITY[3]',
+    'AD_STATE[0]', 'AD_STATE[1]', 'AD_STATE[2]', 'AD_STATE[3]', 
+    'AD_COUNTRY[0]', 'AD_COUNTRY[1]', 'AD_COUNTRY[2]', 'AD_COUNTRY[3]', 
+    'AD_POSTCODE[0]', 'AD_POSTCODE[1]', 'AD_POSTCODE[2]', 'AD_POSTCODE[3]',
+    'AD_LANG[0]', 'AD_LANG[1]', 'AD_LANG[2]', 'AD_LANG[3]',
+    'REC_USER_ID', 'REC_NAME', 'APP_USER_ID',
+    'APP_NAME', 'PEP_DESIG', 'PEP_YEAR_APPTD', 'PEP_TENURE_VAL', 'PEP_TENURE_UNITS',   
+  ];
+
+  variables: string[] = [
+    'ID_PRI_ID_FLAG[0]', 
+    'TEL_SMS[0]', 
+    'TEL_VOICE[0]', 
+    'AD_REGION_ID[0]', 
+    'AD_INTL_MAIL[0]', 
+    'AD_DOM_MAIL[0]'
+  ];
+
 // ===================================================================================================
   // Button related
   btnId: number = 0;
@@ -73,6 +121,10 @@ export class AppComponent {
   // Label related
   lblId: number = 0;
   lblArr: number[] = [];
+
+  // Textfield related
+  txtId: number = 0;
+  txtArr: number[] = [];
 
 // ==================================================================================================
   // Possible properties, just list all component types
@@ -94,6 +146,9 @@ export class AppComponent {
   italic: boolean = false;
   buttonId: string = "";
   deleted: boolean = false;
+  borderSize: number = 1;
+  pfId: string = '';
+  symbolId: string = '';
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -111,10 +166,9 @@ export class AppComponent {
   showItalic: boolean = false;
   showButtonId: boolean = false;
   showDelete: boolean = false;
-
-  // Final properties
-  // finalBodyProp: FmlBody;
-  // finalSignatureProp: FmlSignature[];
+  showBorderSize: boolean = false;
+  showSymbolId: boolean = false;
+  showPfId: boolean = false;
 
   constructor(
     private propertyService: PropertyService,
@@ -141,6 +195,14 @@ export class AppComponent {
         this.italic = properties.italic || false;
         this.buttonId = properties.buttonId || "";
         this.deleted = properties.deleted || false;
+        this.borderSize = properties.borderSize || 1;
+        this.pfId = properties.pfId || '';
+        this.symbolId = properties.symbolId || '';
+
+        // Reset Symbol controls
+        if (this.symControlSub != null) {
+          this.symControlSub.unsubscribe();
+        }
 
         // Update Property Panel
         this.resetPropertyView();
@@ -153,8 +215,14 @@ export class AppComponent {
           this.showLabelProperties();
         else if (this.componentType === 'Button')
           this.showButtonProperties();
+        else if (this.componentType === 'Textfield')
+          this.showTextfieldProperties();
       }
     );
+  }
+
+  ngOnInit() {
+   
   }
 
   updateView() {
@@ -175,7 +243,10 @@ export class AppComponent {
       bold: this.bold,
       italic: this.italic,
       buttonId: this.buttonId,
-      deleted: this.deleted
+      deleted: this.deleted,
+      borderSize: this.borderSize,
+      pfId: this.pfId,
+      symbolId: this.symbolId
     });
   }
 
@@ -195,6 +266,9 @@ export class AppComponent {
     this.showItalic = false;
     this.showButtonId = false;
     this.showDelete = false;
+    this.showBorderSize = false;
+    this.showPfId = false;
+    this.showSymbolId = false;
   }
 
   showBodyProperties() {
@@ -245,6 +319,37 @@ export class AppComponent {
     this.showDelete = true;
   }
 
+  showTextfieldProperties() {
+    this.showX = true;
+    this.showY = true;
+    this.showWidth = true;
+    this.showHeight = true;
+    this.showBgColor = true;
+    this.showFontColor = true;
+    this.showFontSize = true;
+    this.showFontFamily = true;
+    this.showContent = true;
+    this.showBold = true;
+    this.showItalic = true;
+    this.showDelete = true;
+    this.showBorderSize = true;
+    this.showPfId = true;
+    this.showSymbolId = true;
+
+    // Symbol control subscription
+    this.symControlSub = this.symControl.valueChanges.subscribe(sym => {
+      this.symbolId = sym;
+      this.updateView();
+    });
+    
+    // Symbol Filtering
+    this.filteredSymbolOptions = this.symControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterSymbols(value))
+      );
+  }
+
   genButton() {
     this.btnArr.push(++this.btnId);
   }
@@ -257,10 +362,14 @@ export class AppComponent {
     this.lblArr.push(++this.lblId);
   }
 
+  genTextfield() {
+    this.txtArr.push(++this.txtId);
+  }
+
   genFml() {
     const fmlStr = this.propertyService.genFml();
     this.dialog.open(GenFmlDialogComponent, {
-      width: '90vw',
+      width: '50vw',
       height: '90vh',
       data: {
         fmlScript: fmlStr
@@ -271,6 +380,12 @@ export class AppComponent {
   delete() {
     this.deleted = true;
     this.updateView();
+  }
+
+  private _filterSymbols(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.symbolIds.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   over(e) {
