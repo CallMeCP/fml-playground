@@ -66,6 +66,12 @@ export class AppComponent implements OnInit {
     {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
   ];
 
+  textTransforms = [
+    {value: 'TOLOWER', viewValue: 'to lower'},
+    {value: 'TOUPPER', viewValue: 'TO UPPER'},
+    {value: 'TOTITLE', viewValue: 'To Title'},
+  ];
+
   symControl = new FormControl();
   filteredSymbolOptions: Observable<string[]>;
   symControlSub: Subscription;
@@ -149,6 +155,7 @@ export class AppComponent implements OnInit {
   borderSize: number = 1;
   pfId: string = '';
   symbolId: string = '';
+  textConv: string = '';
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -169,6 +176,7 @@ export class AppComponent implements OnInit {
   showBorderSize: boolean = false;
   showSymbolId: boolean = false;
   showPfId: boolean = false;
+  showTextConv: boolean = false;
 
   constructor(
     private propertyService: PropertyService,
@@ -198,6 +206,7 @@ export class AppComponent implements OnInit {
         this.borderSize = properties.borderSize || 1;
         this.pfId = properties.pfId || '';
         this.symbolId = properties.symbolId || '';
+        this.textConv = properties.textConv || 'TOLOWER';
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -246,7 +255,8 @@ export class AppComponent implements OnInit {
       deleted: this.deleted,
       borderSize: this.borderSize,
       pfId: this.pfId,
-      symbolId: this.symbolId
+      symbolId: this.symbolId,
+      textConv: this.textConv
     });
   }
 
@@ -269,6 +279,7 @@ export class AppComponent implements OnInit {
     this.showBorderSize = false;
     this.showPfId = false;
     this.showSymbolId = false;
+    this.showTextConv = false;
   }
 
   showBodyProperties() {
@@ -335,6 +346,7 @@ export class AppComponent implements OnInit {
     this.showBorderSize = true;
     this.showPfId = true;
     this.showSymbolId = true;
+    this.showTextConv = true;
 
     // Symbol control subscription
     this.symControlSub = this.symControl.valueChanges.subscribe(sym => {

@@ -34,6 +34,7 @@ export class TextfieldComponent implements OnInit {
   borderSize: number = 1;
   symbolId: string = '';
   pfId: string = '';
+  textConv: string = 'TOLOWER';
 
   // Observable
   propToSrv$: Subscription;
@@ -70,7 +71,8 @@ export class TextfieldComponent implements OnInit {
       deleted: this.deleted,
       borderSize: this.borderSize,
       pfId: this.pfId,
-      symbolId: this.symbolId
+      symbolId: this.symbolId,
+      textConv: this.textConv
     };
 
     this.propertyService.viewToProperty$.emit(fmlTextfield);
@@ -110,6 +112,7 @@ export class TextfieldComponent implements OnInit {
             this.borderSize = properties.borderSize;
             this.pfId = properties.pfId;
             this.symbolId = properties.symbolId;
+            this.textConv = properties.textConv;
 
             // Update final FML
             this.updateFinalFml();
@@ -175,7 +178,8 @@ export class TextfieldComponent implements OnInit {
         deleted: this.deleted,
         borderSize: this.borderSize,
         pfId: this.pfId,
-        symbolId: this.symbolId
+        symbolId: this.symbolId,
+        textConv: this.textConv
       }
     );
   }

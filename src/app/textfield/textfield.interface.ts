@@ -16,4 +16,5 @@ export interface FmlTextField {
     borderSize: number;
     symbolId: string;
     pfId: string;
+    textConv: string;
 }

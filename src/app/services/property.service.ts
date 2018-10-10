@@ -60,7 +60,7 @@ export class PropertyService {
   updateFmlTextfield(fmlTxt: FmlTextField) {
     let splitStr: string[] = fmlTxt.componentId.split("_");
 
-    // e.g. "BUTTON_1"
+    // e.g. "TEXTFIELD_1"
     const index = parseInt(splitStr[1]);
     this.fmlTextfieldProp[index-1] = fmlTxt;
 
@@ -113,7 +113,7 @@ export class PropertyService {
               font=${txt.fontFamily} sz=${txt.fontSize*PP}>
               <t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
                 <t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
-                  ${txt.bold?'<bo>': ''}${txt.italic?'<i>':''} <ins sym=${txt.symbolId}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
+                  ${txt.bold?'<bo>': ''}${txt.italic?'<i>':''} <ins sym=${txt.symbolId} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
                 </t>
               </t>
           </t>\n\t`;
