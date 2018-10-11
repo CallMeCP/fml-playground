@@ -170,6 +170,13 @@
             </mat-form-field>
           </mat-list-item>
 
+          <mat-list-item *ngIf="showPfId">
+            <mat-label>Pref Flag Id: </mat-label>
+            <mat-form-field>
+              <input matInput [(ngModel)]="pfId" (change)="updateView()" [disabled]="deleted">
+            </mat-form-field>
+          </mat-list-item>
+
           <mat-list-item *ngIf="showTextConv">
               <mat-label>Text Conv: </mat-label>
               <mat-form-field>

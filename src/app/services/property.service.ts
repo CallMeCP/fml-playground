@@ -136,7 +136,7 @@ export class PropertyService {
       if (!sig.deleted) {
         const str:string =
           `<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
-            weight=${sig.weight} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
+            weight=${sig.weight*PP} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
 
         sigStr += str;
       }
@@ -158,23 +158,22 @@ export class PropertyService {
     });
 
     // Construct Textfield
-    let txStr: string = ``;
+    let txtStr: string = ``;
 
     this.fmlTextfieldProp.map(txt => {
       if (!txt.deleted) {
         const BS: number = txt.borderSize;
 
         const str: string =
-          `<t x=${(txt.x-bodyX-BS)*PP} y=${(txt.y-bodyY-BS)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK 
-              font=${txt.fontFamily} sz=${txt.fontSize*PP}>
+          `<t x=${(txt.x-bodyX-BS)*PP} y=${(txt.y-bodyY-BS)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
               <t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
                 <t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
-                  ${txt.bold?'<bo>': ''}${txt.italic?'<i>':''} <ins sym=${txt.symbolId} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
+                  ${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
                 </t>
               </t>
           </t>\n\t`;
 
-        lblStr += str;
+        txtStr += str;
       }
     });
 
@@ -216,11 +215,17 @@ export class PropertyService {
     const bodyStr: string =
       `
 <fml>
-  <body width=${body.width*0.75} height=${body.height*0.75} bgcolor=${body.bgColor} font=${body.fontFamily} 
-    size=${body.fontSize} color=${body.fontColor}>
+  <body width=${body.width*PP} height=${body.height*PP} bgcolor=${body.bgColor} font=${body.fontFamily} 
+    size=${body.fontSize*PP} color=${body.fontColor}>
+    <!-- Signatures -->
     ${sigStr}
+    <!-- Labels -->
     ${lblStr}
+    <!-- Buttons -->
     ${btnStr}
+    <!-- Textboxes -->
+    ${txtStr}
+    <!-- Checkboxes -->
     ${chkStr}
   </body>
 </fml>`; 
