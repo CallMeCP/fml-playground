@@ -237,24 +237,18 @@ export class AppComponent implements OnInit {
         this.comparison = properties.comparison || '';
         this.compareTo = properties.compareTo || '';
 
-        console.log('symbol id:',this.symbolId);
-        console.log('var id:', this.varId);
-
         // Reset Symbol controls
         if (this.symControlSub != null) {
-          console.log('unsubscribe symControl');
           this.symControlSub.unsubscribe();
         }
 
         // Reset Symbol2 controls
         if (this.sym2ControlSub != null) {
-          console.log('unsubscribe symControl');
           this.sym2ControlSub.unsubscribe();
         }
 
         // Reset Variable controls
         if (this.varControlSub != null) {
-          console.log('unsubscribe varControl');
           this.varControlSub.unsubscribe();
         }
 

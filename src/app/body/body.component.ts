@@ -118,11 +118,9 @@ export class BodyComponent implements OnInit {
   }
 
   onWindowDrag(event: MouseEvent) {
-    // console.log("drag");
     if (!this.draggingWindow) {
       return;
     }
-    // console.log("real drag");
     let offsetX = event.clientX - this.px;
     let offsetY = event.clientY - this.py;
 
