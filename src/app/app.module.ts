@@ -14,6 +14,7 @@ import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/
 import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component';
 import { LabelComponent } from './label/label.component';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AngularDraggableModule } from 'angular2-draggable';
     BodyComponent,
     SignatureComponent,
     GenFmlDialogComponent,
-    LabelComponent
+    LabelComponent,
+    CheckboxComponent
   ],
   imports: [
     BrowserAnimationsModule,

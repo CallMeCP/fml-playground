@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { FmlLabel } from '../label/label.interface';
 import { FmlButton } from '../interfaces/FmlButton.interface';
 import { FmlTextField } from '../textfield/textfield.interface';
+import { FmlCheckbox } from '../checkbox/checkbox.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class PropertyService {
   fmlLabelProp: FmlLabel[] = [];
   fmlButtonProp: FmlButton[] = [];
   fmlTextfieldProp: FmlTextField[] = [];
+  fmlCheckboxProp: FmlCheckbox[] = [];
 
   constructor(
     private dialog: MatDialog
@@ -112,6 +114,14 @@ export class PropertyService {
 
   }
 
+  updateFmlCheckbox(fmlChk: FmlCheckbox) {
+    let splitStr: string[] = fmlChk.componentId.split("_");
+
+    // e.g. "TEXTFIELD_1"
+    const index = parseInt(splitStr[1]);
+    this.fmlCheckboxProp[index-1] = fmlChk;
+  }
+
   genFml() {
     // Create references to Body container x and y
     const bodyX: number = this.fmlBodyProp.x;
@@ -168,6 +178,26 @@ export class PropertyService {
       }
     });
 
+    // Construct Checkbox
+    let chkStr: string = ``;
+
+    this.fmlCheckboxProp.map(chk => {
+      if (!chk.deleted) {
+        const BS: number = chk.borderSize;
+
+        const str: string =
+          `<t x=${(chk.x-bodyX-BS)*PP} y=${(chk.y-bodyY-BS)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
+              <t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>
+                <t w=${chk.width*PP} x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
+                  <if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>
+                </t>
+              </t>
+          </t>\n\t`;
+
+        chkStr += str;
+      }
+    });
+
     // Construct Button
     let btnStr: string = ``;
 
@@ -191,6 +221,7 @@ export class PropertyService {
     ${sigStr}
     ${lblStr}
     ${btnStr}
+    ${chkStr}
   </body>
 </fml>`; 
 

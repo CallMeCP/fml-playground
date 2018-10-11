@@ -73,8 +73,10 @@ export class AppComponent implements OnInit {
   ];
 
   symControl = new FormControl();
+  sym2Control = new FormControl();
   filteredSymbolOptions: Observable<string[]>;
   symControlSub: Subscription;
+  sym2ControlSub: Subscription;
   symbolIds: string[] = [
     'REAL_DATE', 'REAL_TIME', 'REAL_DATE_TIME', 'CUST_DATE', 'USER_ID', 'USER_NAME', 'CUST_ID',
     'CUST_NAME', 'CUST_TITLE', 'VINYL_TYPE', 'CUST_TYPE', 'NAS_NAME', 'NAS_TITLE', 'NAS_LANG',
@@ -106,13 +108,27 @@ export class AppComponent implements OnInit {
     'APP_NAME', 'PEP_DESIG', 'PEP_YEAR_APPTD', 'PEP_TENURE_VAL', 'PEP_TENURE_UNITS',   
   ];
 
+  varControl = new FormControl();
+  filteredVarOptions: Observable<string[]>;
+  varControlSub: Subscription;
   variables: string[] = [
-    'ID_PRI_ID_FLAG[0]', 
-    'TEL_SMS[0]', 
-    'TEL_VOICE[0]', 
-    'AD_REGION_ID[0]', 
-    'AD_INTL_MAIL[0]', 
-    'AD_DOM_MAIL[0]'
+    'ID_PRI_ID_FLAG[0]', 'ID_PRI_ID_FLAG[1]', 'ID_PRI_ID_FLAG[2]', 'ID_PRI_ID_FLAG[3]',
+    'TEL_SMS[0]', 'TEL_SMS[1]', 'TEL_SMS[2]', 'TEL_SMS[3]', 'TEL_SMS[4]', 'TEL_SMS[5]', 
+    'TEL_VOICE[0]', 'TEL_VOICE[1]', 'TEL_VOICE[2]', 'TEL_VOICE[3]', 'TEL_VOICE[4]', 'TEL_VOICE[5]', 
+    'AD_REGION_ID[0]', 'AD_REGION_ID[1]', 'AD_REGION_ID[2]', 'AD_REGION_ID[3]', 
+    'AD_INTL_MAIL[0]', 'AD_INTL_MAIL[1]', 'AD_INTL_MAIL[2]', 'AD_INTL_MAIL[3]', 
+    'AD_DOM_MAIL[0]', 'AD_DOM_MAIL[1]', 'AD_DOM_MAIL[2]', 'AD_DOM_MAIL[3]', 
+  ];
+
+  comparisons = [
+    {value:'<eq>', viewValue: 'Equal to'},
+    {value:'<ne>', viewValue: 'Not equal to'},
+    {value:'<gt>', viewValue: 'Greater than'},
+    {value:'<ge>', viewValue: 'Greater or equal than'},
+    {value:'<lt>', viewValue: 'Less than'},
+    {value:'<le>', viewValue: 'Less or equal than'},
+    // {value:'<not>', viewValue: 'Not'},
+    {value:'<matches>', viewValue: 'Matches'},
   ];
 
 // ===================================================================================================
@@ -131,6 +147,10 @@ export class AppComponent implements OnInit {
   // Textfield related
   txtId: number = 0;
   txtArr: number[] = [];
+
+  // Checkboxes related
+  chkboxId: number = 0;
+  chkboxArr: number[] = [];
 
 // ==================================================================================================
   // Possible properties, just list all component types
@@ -155,7 +175,10 @@ export class AppComponent implements OnInit {
   borderSize: number = 1;
   pfId: string = '';
   symbolId: string = '';
+  varId: string = '';
   textConv: string = '';
+  comparison: string = '';
+  compareTo: string = '';
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -176,7 +199,10 @@ export class AppComponent implements OnInit {
   showBorderSize: boolean = false;
   showSymbolId: boolean = false;
   showPfId: boolean = false;
+  showVarId: boolean = false;
   showTextConv: boolean = false;
+  showComparison: boolean = false;
+  showCompareTo: boolean  = false;
 
   constructor(
     private propertyService: PropertyService,
@@ -206,11 +232,30 @@ export class AppComponent implements OnInit {
         this.borderSize = properties.borderSize || 1;
         this.pfId = properties.pfId || '';
         this.symbolId = properties.symbolId || '';
+        this.varId = properties.varId || '';
         this.textConv = properties.textConv || 'TOLOWER';
+        this.comparison = properties.comparison || '';
+        this.compareTo = properties.compareTo || '';
+
+        console.log('symbol id:',this.symbolId);
+        console.log('var id:', this.varId);
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
+          console.log('unsubscribe symControl');
           this.symControlSub.unsubscribe();
+        }
+
+        // Reset Symbol2 controls
+        if (this.sym2ControlSub != null) {
+          console.log('unsubscribe symControl');
+          this.sym2ControlSub.unsubscribe();
+        }
+
+        // Reset Variable controls
+        if (this.varControlSub != null) {
+          console.log('unsubscribe varControl');
+          this.varControlSub.unsubscribe();
         }
 
         // Update Property Panel
@@ -226,6 +271,8 @@ export class AppComponent implements OnInit {
           this.showButtonProperties();
         else if (this.componentType === 'Textfield')
           this.showTextfieldProperties();
+        else if (this.componentType === 'Checkbox')
+          this.showCheckboxProperties();
       }
     );
   }
@@ -256,7 +303,10 @@ export class AppComponent implements OnInit {
       borderSize: this.borderSize,
       pfId: this.pfId,
       symbolId: this.symbolId,
-      textConv: this.textConv
+      varId: this.varId,
+      textConv: this.textConv,
+      comparison: this.comparison,
+      compareTo: this.compareTo
     });
   }
 
@@ -279,7 +329,10 @@ export class AppComponent implements OnInit {
     this.showBorderSize = false;
     this.showPfId = false;
     this.showSymbolId = false;
+    this.showVarId = false;
     this.showTextConv = false;
+    this.showComparison = false;
+    this.showCompareTo = false;
   }
 
   showBodyProperties() {
@@ -362,6 +415,49 @@ export class AppComponent implements OnInit {
       );
   }
 
+  showCheckboxProperties() {
+    this.showX = true;
+    this.showY = true;
+    this.showWidth = true;
+    this.showHeight = true;
+    this.showBgColor = true;
+    this.showFontColor = true;
+    this.showFontSize = true;
+    this.showDelete = true;
+    this.showBorderSize = true;
+    this.showPfId = true;
+    // this.showVarId = true;
+    // this.showSymbolId = true;
+    this.showComparison = true;
+    this.showCompareTo = true;
+
+    // Symbol control subscription
+    this.sym2ControlSub = this.sym2Control.valueChanges.subscribe(sym => {
+      this.symbolId = sym;
+      this.updateView();
+    });
+    
+    // Symbol Filtering
+    this.filteredSymbolOptions = this.sym2Control.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterSymbols(value))
+      );
+
+      // Variable control subscription
+    this.varControlSub = this.varControl.valueChanges.subscribe(varId => {
+      this.varId = varId;
+      this.updateView();
+    });
+    
+    // Variable Filtering
+    this.filteredVarOptions = this.varControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterVariables(value))
+      );
+  }
+
   genButton() {
     this.btnArr.push(++this.btnId);
   }
@@ -376,6 +472,10 @@ export class AppComponent implements OnInit {
 
   genTextfield() {
     this.txtArr.push(++this.txtId);
+  }
+
+  genCheckbox() {
+    this.chkboxArr.push(++this.chkboxId);
   }
 
   genFml() {
@@ -398,6 +498,12 @@ export class AppComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.symbolIds.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private _filterVariables(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.variables.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   over(e) {

@@ -26,7 +26,7 @@
         <button mat-stroked-button (click)="genSignatureBlock()">Signature Block</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-stroked-button>Check Box</button>
+        <button mat-stroked-button (click)="genCheckbox()">Check Box</button>
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genFml()">GenFML</button>
@@ -198,6 +198,62 @@
             </mat-form-field>
           </mat-list-item>
 
+          <!-- Conditions -->
+          <div *ngIf="showComparison">
+            <mat-divider></mat-divider>
+            <h3 mat-subheader>Conditions (Tick when)</h3>
+            <mat-list-item>
+              <mat-label>Symbol ID: </mat-label>
+              <mat-form-field>
+                <input matInput [formControl]="sym2Control" (change)="updateView()" [value]="symbolId" [matAutocomplete]="symAuto">
+                <mat-autocomplete #symAuto="matAutocomplete">
+                  <mat-option style="font-size: 12px" *ngFor="let option of filteredSymbolOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-label>Pref Flag Id: </mat-label>
+              <mat-form-field>
+                <input matInput [(ngModel)]="pfId" (change)="updateView()" [disabled]="deleted">
+              </mat-form-field>
+            </mat-list-item>
+            
+            <mat-list-item>
+              <mat-label>Variable ID: </mat-label>
+              <mat-form-field>
+                <input matInput [formControl]="varControl" (change)="updateView()" [value]="varId" [matAutocomplete]="varAuto">
+                <mat-autocomplete #varAuto="matAutocomplete">
+                  <mat-option style="font-size: 12px" *ngFor="let varOpt of filteredVarOptions | async" [value]="varOpt">
+                    {{varOpt}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-label>Comparison: </mat-label>
+              <mat-form-field>
+                <mat-select [(ngModel)]="comparison" (selectionChange)="updateView()" [disabled]="deleted">
+                  <mat-option *ngFor="let exp of comparisons" [value]="exp.value">
+                    {{exp.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-label>Compare With: </mat-label>
+              <mat-form-field>
+                <input matInput [(ngModel)]="compareTo" (change)="updateView()" [disabled]="deleted">
+              </mat-form-field>
+            </mat-list-item>
+
+            
+          </div>
+
           <mat-list-item *ngIf="showDelete">
             <button mat-stroked-button color="warn" (click)="delete()" [disabled]="deleted">Delete</button>
           </mat-list-item>
@@ -222,6 +278,9 @@
 
       <!-- Textfields -->
       <app-textfield [txtId]="txtId" *ngFor="let txtId of txtArr"></app-textfield>
+
+      <!-- Checkboxes -->
+      <app-checkbox [chkboxId]="chkboxId" *ngFor="let chkboxId of chkboxArr"></app-checkbox>
 
     </div>
   </mat-sidenav-content>

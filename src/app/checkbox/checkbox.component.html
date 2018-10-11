@@ -1,0 +1,22 @@
+<div style="position:absolute; border-style: solid; border-color: black;
+    display: flex; align-items: center; align-self: center; align-content: center;justify-content: center"
+  *ngIf="!deleted"
+  class ="unselectable"
+  ngDraggable
+  ngResizable
+  (rzResizing)="onResizing($event)"
+  (mousedown)="onWindowPress($event)"
+  (movingOffset)="onWindowDrag($event)"
+  (mouseup)="onWindowUp($event)"
+  [style.top.px] = "initY"
+  [style.left.px] = "initX"
+  [style.width.px] = "width"
+  [style.height.px] = "height"
+  [style.background-color] = "getBgColString()"
+  [style.color] = "getFontColString()" 
+  [style.font-size.px] = "fontSize"
+  [style.z-index] = "zIndex"
+  [style.border-width.px] = "borderSize"
+>
+  ✔
+</div>
