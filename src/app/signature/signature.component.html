@@ -20,13 +20,13 @@
   <div style="position:absolute; font-size: 10px">{{signatureId}}</div>
 
   <div style="position: absolute;"
-    [style.background-color] = "getBgColString()"
+    [style.background-color] = "getFontColString()"
     [style.height.px] = "weight"
     [style.width.px] = "width"
     [style.margin-top.px] = "(height-weight)/2"
   ></div>
   <div style="position: absolute; text-align: center"
-    [style.background-color] = "getBgColString()"
+    [style.background-color] = "getFontColString()"
     [style.height.px] = "height"
     [style.width.px] = "weight"
     [style.margin-left.px] = "(width-weight)/2"
