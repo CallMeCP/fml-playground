@@ -16,8 +16,6 @@ export class BodyComponent implements OnInit {
   // Default values
   componentId: string = "BODY_1";   //  Hardcode, as there is only always one body container
   componentType: string = "Body";
-  // x: number = 160 + 20;
-  // y: number = 64 + 20;
   x: number = 10;
   y: number = 10;
   width: number = 800;
@@ -73,7 +71,6 @@ export class BodyComponent implements OnInit {
   }
 
   resize() {
-    // this.text = (++this.counter).toString();
     this.x = ++this.x;
     this.y = ++this.y;
     this.width = ++this.width;
@@ -96,8 +93,8 @@ export class BodyComponent implements OnInit {
           }else {
             // Set properties
             this.componentType = properties.componentType;
-            this.x = properties.x;
-            this.y = properties.y;
+            this.x = +properties.x;
+            this.y = +properties.y;
             this.width = properties.width;
             this.height = properties.height;
             this.bgColor = properties.bgColor;

@@ -27,6 +27,7 @@ export class SignatureComponent implements OnInit {
   zIndex: number = 100;
   signatureId: string = 'NEW_APP_SIG_ID';
   deleted: boolean = false;
+  position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
   propToSrv$: Subscription;
@@ -82,8 +83,8 @@ export class SignatureComponent implements OnInit {
           }else {
             // Set properties
             this.componentType = properties.componentType;
-            this.x = properties.x;
-            this.y = properties.y;
+            this.x = +properties.x;
+            this.y = +properties.y;
             this.width = properties.width;
             this.height = properties.height;
             this.weight = properties.weight;
@@ -91,6 +92,7 @@ export class SignatureComponent implements OnInit {
             this.fontColor = properties.fontColor;
             this.signatureId = properties.signatureId;
             this.deleted = properties.deleted;
+            this.position = {x: this.x, y: this.y};
 
             // Update final FML
             this.updateFinalFml();

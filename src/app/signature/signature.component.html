@@ -7,8 +7,7 @@
   (mousedown)="onWindowPress($event)"
   (movingOffset)="onWindowDrag($event)"
   (mouseup)="onWindowUp($event)"
-  [style.top.px] = "initY"
-  [style.left.px] = "initX"
+  [position] = "position"
   [style.width.px] = "width"
   [style.height.px] = "height"
   [style.font-weight] = 'weight'

@@ -27,7 +27,7 @@ export class ButtonComponent implements OnInit {
   content: string = 'Button';
   tx: number = 0;
   deleted: boolean = false;
-
+  position: {x: number, y: number} = {x: this.x, y: this.y};
   // Observable
   propToSrv$: Subscription;
 
@@ -87,13 +87,14 @@ export class ButtonComponent implements OnInit {
           }else {
             // Set properties
             this.componentType = properties.componentType;
-            this.x = properties.x;
-            this.y = properties.y;
+            this.x = +properties.x;
+            this.y = +properties.y;
             this.width = properties.width;
             this.height = properties.height;
             this.buttonId = properties.buttonId;
             this.content = properties.content;
             this.deleted = properties.deleted;
+            this.position = {x: this.x, y: this.y};
 
             // Update final FML
             this.updateFinalFml();

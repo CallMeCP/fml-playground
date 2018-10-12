@@ -35,6 +35,7 @@ export class TextfieldComponent implements OnInit {
   symbolId: string = '';
   pfId: string = '';
   textConv: string = 'TOLOWER';
+  position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
   propToSrv$: Subscription;
@@ -97,8 +98,8 @@ export class TextfieldComponent implements OnInit {
           }else {
             // Set properties
             this.componentType = properties.componentType;
-            this.x = properties.x;
-            this.y = properties.y;
+            this.x = +properties.x;
+            this.y = +properties.y;
             this.width = properties.width;
             this.height = properties.height;
             this.bgColor = properties.bgColor;
@@ -113,6 +114,7 @@ export class TextfieldComponent implements OnInit {
             this.pfId = properties.pfId;
             this.symbolId = properties.symbolId;
             this.textConv = properties.textConv;
+            this.position = {x: this.x, y: this.y};
 
             // Update final FML
             this.updateFinalFml();

@@ -31,6 +31,7 @@ export class LabelComponent implements OnInit {
   bold: boolean = false;
   italic: boolean = false;
   deleted: boolean = false;
+  position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
   propToSrv$: Subscription;
@@ -97,8 +98,8 @@ export class LabelComponent implements OnInit {
           }else {
             // Set properties
             this.componentType = properties.componentType;
-            this.x = properties.x;
-            this.y = properties.y;
+            this.x = +properties.x;
+            this.y = +properties.y;
             this.width = properties.width;
             this.height = properties.height;
             this.bgColor = properties.bgColor;
@@ -109,6 +110,7 @@ export class LabelComponent implements OnInit {
             this.bold = properties.bold;
             this.italic = properties.italic;
             this.deleted = properties.deleted;
+            this.position = {x: this.x, y: this.y};
 
             // Update final FML
             this.updateFinalFml();
