@@ -85,8 +85,8 @@ export class SignatureComponent implements OnInit {
             this.componentType = properties.componentType;
             this.x = +properties.x;
             this.y = +properties.y;
-            this.width = properties.width;
-            this.height = properties.height;
+            this.width = +properties.width;
+            this.height = +properties.height;
             this.weight = properties.weight;
             this.bgColor = properties.bgColor;
             this.fontColor = properties.fontColor;

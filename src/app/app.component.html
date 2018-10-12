@@ -29,6 +29,9 @@
         <button mat-stroked-button (click)="genCheckbox()">Check Box</button>
       </mat-list-item>
       <mat-list-item>
+          <button mat-stroked-button (click)="genPage()">New Page</button>
+        </mat-list-item>
+      <mat-list-item>
         <button mat-stroked-button (click)="genFml()">GenFML</button>
       </mat-list-item>
     </mat-list>
@@ -272,7 +275,7 @@
       <!-- style="transform: scale(0.8)" -->
     <div>
       <!-- Screen body -->
-      <app-body></app-body>
+      <app-body [pageId]="pageId" *ngFor="let page of pageArr"></app-body>
 
       <!-- Button -->
       <app-button [btnId]="btnId" *ngFor="let btn of btnArr"></app-button>

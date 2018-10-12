@@ -19,7 +19,7 @@ export class PropertyService {
   propertyToView$: EventEmitter<any> = new EventEmitter();
 
   // Final FML Components Property
-  fmlBodyProp: FmlBody;
+  fmlBodyProp: FmlBody[] = [];
   fmlSignatureProp: FmlSignature[] = [];
   fmlLabelProp: FmlLabel[] = [];
   fmlButtonProp: FmlButton[] = [];
@@ -77,7 +77,11 @@ export class PropertyService {
   }
 
   updateFmlBody(fmlBody: FmlBody) {
-    this.fmlBodyProp = fmlBody;
+    let splitStr: string[] = fmlBody.componentId.split("_");
+
+    // e.g. "PAGE_1"
+    const index = parseInt(splitStr[1]);
+    this.fmlBodyProp[index-1] = fmlBody;
   }
 
   updateFmlSignature(fmlSig: FmlSignature) {
@@ -123,114 +127,149 @@ export class PropertyService {
   }
 
   genFml() {
-    // Create references to Body container x and y
-    const bodyX: number = this.fmlBodyProp.x;
-    const bodyY: number = this.fmlBodyProp.y;
-    const body: FmlBody = this.fmlBodyProp;
+    // Return if no body
+    if (this.fmlBodyProp.length <= 0) {
+      return;
+    }
+
+    // Create global references to Body container x and y
+    const pageX: number = this.fmlBodyProp[0].x;
+    const pageY: number = this.fmlBodyProp[0].y;
+    const page: FmlBody = this.fmlBodyProp[0];
     const PP: number = 0.75;          // convert point? pixel?
 
-    // Construct Signatures
-    let sigStr: string = ``;
 
-    this.fmlSignatureProp.map(sig => {
-      if (!sig.deleted) {
-        const str:string =
-          `<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
-            weight=${sig.weight*PP} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\t`;
+    // Final FML script
+    let finalFmlStr: string = ``;
 
-        sigStr += str;
+    // Construct Start of body tag
+    finalFmlStr += `<fml>\n\t<body width=${page.width*PP} height=${page.height*PP} bgcolor=${page.bgColor} font=${page.fontFamily} \n\t\tsize=${page.fontSize*PP} color=${page.fontColor}>\n`;
+
+    for (let index = 0; index < this.fmlBodyProp.length; index++) {
+      // Construct page tag
+      if (index !== 0) {
+        finalFmlStr += `\n\t\t<!-- Page ${index+1} -->\n\t\t<page>\n`;
+      }else if (index == 0) {
+        finalFmlStr += `\n\t\t<!-- Page 1 -->\n`;
       }
-    });
 
-    // Construct Label
-    let lblStr: string = ``;
+      // Reference to Page Size, so that only create element that fall within the page size.
+      const pgYMin: number = this.fmlBodyProp[index].y;
+      const pgYMax: number = this.fmlBodyProp[index].y + this.fmlBodyProp[index].height;
+      const bodyX: number = this.fmlBodyProp[index].x;
+      const bodyY: number = this.fmlBodyProp[index].y;
 
-    this.fmlLabelProp.map(lbl => {
-      if (!lbl.deleted) {
-        const str: string =
-          `<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
-              font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
-            ${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
-          </t>\n\t`;
+      // Construct Signatures
+      let addedSigComment: boolean = false;
+      this.fmlSignatureProp.map(sig => {
+        if (!sig.deleted && (sig.y >= pgYMin) && (sig.y+sig.height <= pgYMax) ) {
 
-        lblStr += str;
-      }
-    });
+          if (!addedSigComment) {
+            finalFmlStr += `\t\t<!-- Signatures -->\n`;
+            addedSigComment = true;
+          }
 
-    // Construct Textfield
-    let txtStr: string = ``;
+          const str:string =
+            `\t\t<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
+              \t\twt=${sig.weight*PP} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\n`;
+  
+          finalFmlStr += str;
+        }
+      });
 
-    this.fmlTextfieldProp.map(txt => {
-      if (!txt.deleted) {
-        const BS: number = txt.borderSize;
+      // Construct Labels
+      let addedLblComment: boolean = false;
+      this.fmlLabelProp.map(lbl => {
+        if (!lbl.deleted && (lbl.y >= pgYMin) && (lbl.y + lbl.height <= pgYMax)) {
 
-        const str: string =
-          `<t x=${(txt.x-bodyX-BS)*PP} y=${(txt.y-bodyY-BS)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
-              <t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
-                <t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
-                  ${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
-                </t>
-              </t>
-          </t>\n\t`;
+          if (!addedLblComment) {
+            finalFmlStr += `\t\t<!-- Labels -->\n`;
+            addedLblComment = true;
+          }
 
-        txtStr += str;
-      }
-    });
+          const str: string =
+            `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
+                \tfont=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
+              \t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
+            \t</t>\n\n`;
 
-    // Construct Checkbox
-    let chkStr: string = ``;
+          finalFmlStr += str;
+        }
+      });
 
-    this.fmlCheckboxProp.map(chk => {
-      if (!chk.deleted) {
-        const BS: number = chk.borderSize;
+      // Construct Textfield
+      let addedTxtComment: boolean = false;
+      this.fmlTextfieldProp.map(txt => {
+        if (!txt.deleted && (txt.y >= pgYMin) && (txt.y+txt.height <= pgYMax)) {
+          const BS: number = txt.borderSize;
 
-        const str: string =
-          `<t x=${(chk.x-bodyX-BS)*PP} y=${(chk.y-bodyY-BS)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
-              <t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>
-                <t w=${chk.width*PP} x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
-                  <if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>
-                </t>
-              </t>
-          </t>\n\t`;
+          if (!addedTxtComment) {
+            finalFmlStr += `\t\t<!-- Textfields -->\n`;
+            addedTxtComment = true;
+          }
 
-        chkStr += str;
-      }
-    });
+          const str: string =
+            `\t\t<t x=${(txt.x-bodyX-BS)*PP} y=${(txt.y-bodyY-BS)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
+                \t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
+                  \t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
+                    \t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
+                  \t\t</t>
+                \t</t>
+            \t</t>\n\n`;
 
-    // Construct Button
-    let btnStr: string = ``;
+            finalFmlStr += str;
+        }
+      });
 
-    this.fmlButtonProp.map(btn => {
-      if (!btn.deleted) {
-        const str: string = 
-        `<button x=${(btn.x-bodyX)*PP} y=${(btn.y-bodyY)*PP} w=${btn.width*PP} h=${btn.height*PP} id=${btn.buttonId}>
-          ${btn.content}
-        </button>\n\t`;
+      // Construct Checkbox
+      let addedChkComment: boolean = false;
+      this.fmlCheckboxProp.map(chk => {
+        if (!chk.deleted && (chk.y >= pgYMin) && (chk.y+chk.height <= pgYMax)) {
+          const BS: number = chk.borderSize;
 
-        btnStr += str;
-      }
-    });
+          if (!addedChkComment) {
+            finalFmlStr += `\t\t<!-- Checkboxes -->\n`;
+            addedChkComment = true;
+          }
 
-    // Construct body
-    const bodyStr: string =
-      `
-<fml>
-  <body width=${body.width*PP} height=${body.height*PP} bgcolor=${body.bgColor} font=${body.fontFamily} 
-    size=${body.fontSize*PP} color=${body.fontColor}>
-    <!-- Signatures -->
-    ${sigStr}
-    <!-- Labels -->
-    ${lblStr}
-    <!-- Buttons -->
-    ${btnStr}
-    <!-- Textboxes -->
-    ${txtStr}
-    <!-- Checkboxes -->
-    ${chkStr}
-  </body>
-</fml>`; 
+          const str: string =
+            `\t\t<t x=${(chk.x-bodyX-BS)*PP} y=${(chk.y-bodyY-BS)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
+                \t<t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>
+                  \t\t<t w=${chk.width*PP} x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
+                    \t\t\t<if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>
+                  \t\t</t>
+                \t</t>
+            \t</t>\n\n`;
 
-    return bodyStr;
+          finalFmlStr += str;
+        }
+      });
+
+      // Construct Button
+      let addedBtnComment: boolean = false;
+      this.fmlButtonProp.map(btn => {
+        if (!btn.deleted && (btn.y >= pgYMin) && (btn.y+btn.height <= pgYMax)) {
+          
+          if (!addedBtnComment) {
+            finalFmlStr += `\t\t<!-- Buttons -->\n`;
+            addedBtnComment = true;
+          }
+          
+          const str: string = 
+          `\t\t<button x=${(btn.x-bodyX)*PP} y=${(btn.y-bodyY)*PP} w=${btn.width*PP} h=${btn.height*PP} id=${btn.buttonId}>
+            \t\t${btn.content}
+          \t</button>\n\n`;
+
+          finalFmlStr += str;
+        }
+      });
+      
+    }
+
+    // Construct End of Body Tag
+    finalFmlStr += `\t</body>\n</fml>`;
+
+    return finalFmlStr;
     
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PropertyService } from '../services/property.service';
 import { FmlBody } from '../interfaces/FmlBody.interface';
 import { Observable, Subscription } from 'rxjs';
@@ -10,12 +10,14 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class BodyComponent implements OnInit {
 
+  @Input() pageId;
+
   // For grid line looping
   gridArr: number[] = [];
 
   // Default values
-  componentId: string = "BODY_1";   //  Hardcode, as there is only always one body container
-  componentType: string = "Body";
+  componentId: string;   //  Hardcode, as there is only always one body container
+  componentType: string = "Page";
   x: number = 10;
   y: number = 10;
   width: number = 800;
@@ -32,14 +34,30 @@ export class BodyComponent implements OnInit {
   py: number;
   draggingWindow: boolean = false;
 
-  counter: number = 0;
-
   constructor(
     private propertyService: PropertyService
   ) { }
 
   ngOnInit() {
+    // Set Page ID
+    this.componentId = `PAGE_${this.pageId}`;
+
+    // Set position
+    if (this.pageId == 1) {
+      this.x = 10;
+      this.y = 10;
+    }else {
+      // this.x = this.pageId*this.width;
+      this.x = 10;
+      this.y = (this.pageId-1)*this.propertyService.fmlBodyProp[0].height+(10*this.pageId-1);
+      this.width = this.propertyService.fmlBodyProp[0].width;
+    }
+
+
+    // Draw Grids
     this.drawGrid();
+
+    // Update Global FML
     this.updateFinalFml();
   }
 
@@ -95,8 +113,8 @@ export class BodyComponent implements OnInit {
             this.componentType = properties.componentType;
             this.x = +properties.x;
             this.y = +properties.y;
-            this.width = properties.width;
-            this.height = properties.height;
+            this.width = +properties.width;
+            this.height = +properties.height;
             this.bgColor = properties.bgColor;
             this.fontColor = properties.fontColor;
             this.fontSize = properties.fontSize;

@@ -152,6 +152,10 @@ export class AppComponent implements OnInit {
   chkboxId: number = 0;
   chkboxArr: number[] = [];
 
+  // Page related
+  pageId: number = 0;
+  pageArr: number[] = [];
+
 // ==================================================================================================
   // Possible properties, just list all component types
   // Update Constructor() and UpdateView() when update this
@@ -255,7 +259,7 @@ export class AppComponent implements OnInit {
         // Update Property Panel
         this.resetPropertyView();
 
-        if (this.componentType === 'Body')
+        if (this.componentType === 'Page')
           this.showBodyProperties();
         else if (this.componentType === 'Signature')
           this.showSignatureProperties();
@@ -272,17 +276,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    // Generate a page on load
+    this.genPage();
   }
 
   updateView() {
     this.propertyService.propertyToView$.emit({
       componentId: this.componentId,
       componentType: this.componentType,
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
+      x: +this.x,
+      y: +this.y,
+      width: +this.width,
+      height: +this.height,
       bgColor: this.bgColor,
       fontColor: this.fontColor,
       fontSize: this.fontSize,
@@ -470,6 +475,10 @@ export class AppComponent implements OnInit {
 
   genCheckbox() {
     this.chkboxArr.push(++this.chkboxId);
+  }
+
+  genPage() {
+    this.pageArr.push(++this.pageId);
   }
 
   genFml() {

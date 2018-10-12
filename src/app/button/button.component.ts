@@ -89,8 +89,8 @@ export class ButtonComponent implements OnInit {
             this.componentType = properties.componentType;
             this.x = +properties.x;
             this.y = +properties.y;
-            this.width = properties.width;
-            this.height = properties.height;
+            this.width = +properties.width;
+            this.height = +properties.height;
             this.buttonId = properties.buttonId;
             this.content = properties.content;
             this.deleted = properties.deleted;
