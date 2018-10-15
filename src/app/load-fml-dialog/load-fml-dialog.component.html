@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>FML Script</h2>
+
+<mat-dialog-content style="white-space:pre-wrap">
+  <mat-form-field style="width: 100%; height: 100%">
+    <textarea matTextareaAutosize matInput [(ngModel)]="fmlScript" placeholder="Paste FML Script here"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions class="button-center">
+  <button mat-raised-button color="primary" (click)="onLoadClick()" >Load</button>
+  <button mat-raised-button color="warn" (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

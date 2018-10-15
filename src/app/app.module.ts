@@ -15,6 +15,7 @@ import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component
 import { LabelComponent } from './label/label.component';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { CheckboxComponent } from './checkbox/checkbox.component';
+import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
     SignatureComponent,
     GenFmlDialogComponent,
     LabelComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    LoadFmlDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -46,7 +48,8 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
     AngularDraggableModule
   ],
   entryComponents: [
-    GenFmlDialogComponent
+    GenFmlDialogComponent,
+    LoadFmlDialogComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

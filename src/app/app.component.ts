@@ -7,6 +7,7 @@ import { GenFmlDialogComponent } from './gen-fml-dialog/gen-fml-dialog.component
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -489,6 +490,17 @@ export class AppComponent implements OnInit {
       data: {
         fmlScript: fmlStr
       }
+    });
+  }
+
+  loadFml() {
+    const dialogRef = this.dialog.open(LoadFmlDialogComponent, {
+      width: '50vw',
+      height: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      console.log(res);
     });
   }
 
