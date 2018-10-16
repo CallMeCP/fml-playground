@@ -18,6 +18,9 @@ export class PropertyService {
   // Sync Property Panel changes to HTML component
   propertyToView$: EventEmitter<any> = new EventEmitter();
 
+  // Notify subscriber to load components
+  isLoadFml$: EventEmitter<boolean> = new EventEmitter();
+
   // Final FML Components Property
   fmlBodyProp: FmlBody[] = [];
   fmlSignatureProp: FmlSignature[] = [];
@@ -124,6 +127,86 @@ export class PropertyService {
     // e.g. "TEXTFIELD_1"
     const index = parseInt(splitStr[1]);
     this.fmlCheckboxProp[index-1] = fmlChk;
+  }
+
+  loadFml(fmlScript: string) {
+    // console.log('Button 1: ',this.fmlButtonProp[0]);
+    // this.fmlButtonProp.push({
+    //   componentId: 'BUTTON_1',
+    //   buttonId: 'NEXT',
+    //   componentType: 'Button',
+    //   content: 'Button',
+    //   deleted: false,
+    //   height: 25,
+    //   width: 100,
+    //   x: 10,
+    //   y: 10
+    // });
+    // this.fmlButtonProp.push({
+    //   componentId: 'BUTTON_2',
+    //   buttonId: 'BACK',
+    //   componentType: 'Button',
+    //   content: 'Button',
+    //   deleted: false,
+    //   height: 25,
+    //   width: 100,
+    //   x: 10,
+    //   y: 50
+    // });
+    // this.isLoadFml$.next(true);
+
+    const remTab = fmlScript.replace(/\n\s+/g, '');
+    const tokens = remTab.split('<').map(el => el.split('>')).reduce((acc, curr) => acc.concat(curr))
+
+    const PP: number = 0.75;
+
+    let btnId: number = 0;
+    let btn: any = {};
+
+    for (let index = 0; index < tokens.length; index++) {
+      // Row
+      const el: string = tokens[index];
+      
+      // Construct BUTTON
+      if (el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
+
+        // Get Button Properties
+        const el2 = el.split(' ');
+
+        el2.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('x=') !== -1) { btn.x = ((+str[1]) / PP + 10); console.log('Btn X: ', +str[1], 'PP: ', PP, 'Calc: ', +str[1]/PP);}
+          if (el.indexOf('y=') !== -1) { btn.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('w=') !== -1) { btn.width = +str[1] / PP; }
+          if (el.indexOf('h=') !== -1) { btn.height = +str[1] / PP; }
+          if (el.indexOf('id=') !== -1) { btn.buttonId = str[1]; }
+          if (el.indexOf('id=') !== -1) {btn.componentType = 'Button'; }
+          if (el.indexOf('id=') !== -1) {btn.componentId = `BUTTON_${++btnId}`};
+            
+        });
+
+        btn.content = tokens[index+1];
+
+        this.fmlButtonProp.push({
+          componentId: btn.componentId,
+          buttonId: btn.buttonId,
+          componentType: btn.componentType,
+          content: btn.content,
+          deleted: false,
+          height: btn.height,
+          width: btn.width,
+          x: btn.x,
+          y: btn.y
+        });
+      }
+
+      // Construct Label
+      
+    }
+
+    // Notify subscriber
+    this.isLoadFml$.next(true);
   }
 
   genFml() {

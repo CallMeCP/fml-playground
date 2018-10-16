@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.component';
+import { FmlButton } from './interfaces/FmlButton.interface';
 
 @Component({
   selector: 'app-root',
@@ -136,6 +137,8 @@ export class AppComponent implements OnInit {
   // Button related
   btnId: number = 0;
   btnArr: number[] = [];
+  btnArr2: FmlButton[] = [];
+  btnProp: FmlButton;
 
   // Signature related
   sigId: number = 0;
@@ -209,6 +212,8 @@ export class AppComponent implements OnInit {
   showComparison: boolean = false;
   showCompareTo: boolean  = false;
 
+  isLoadFmlSub$: Subscription;
+
   constructor(
     private propertyService: PropertyService,
     private dialog: MatDialog
@@ -277,6 +282,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // Load FML components
+    this.isLoadFmlSub$ = this.propertyService.isLoadFml$.subscribe((isLoad) => {
+      if (isLoad) {
+
+        // Buttons
+        this.btnArr2 = this.propertyService.fmlButtonProp.slice();
+        this.btnId = this.btnArr2.length;
+        // console.log(this.btnArr2);
+      }
+    });
+
     // Generate a page on load
     this.genPage();
   }
@@ -459,7 +476,18 @@ export class AppComponent implements OnInit {
   }
 
   genButton() {
-    this.btnArr.push(++this.btnId);
+    this.btnArr2.push({
+      componentId: '',
+      buttonId: '',
+      componentType: '',
+      content: '',
+      deleted: false,
+      height: 0,
+      width: 0,
+      x: 0,
+      y: 0
+    });
+    this.btnId++;
   }
 
   genSignatureBlock() {
@@ -500,7 +528,8 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
+      // console.log(res);
+      this.propertyService.loadFml(res);
     });
   }
 

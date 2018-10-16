@@ -12,6 +12,7 @@ export class ButtonComponent implements OnInit {
   
   // Passed in from outside
   @Input() btnId;
+  @Input() btnProp;
   
   // Label default properties
   componentId: string;
@@ -40,9 +41,22 @@ export class ButtonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Signature ID
-    this.componentId = `BUTTON_${this.btnId}`;
-    this.updateFinalFml();
+    if (this.btnProp.componentId != '') {
+      this.componentId = this.btnProp.componentId;
+      this.componentType = this.btnProp.componentType;
+      this.x = this.btnProp.x;
+      this.y = this.btnProp.y;
+      this.width = this.btnProp.width;
+      this.height = this.btnProp.height;
+      this.buttonId = this.btnProp.buttonId;
+      this.content = this.btnProp.content;
+      this.deleted = this.btnProp.deleted;
+      this.position = {x: this.x, y: this.y};
+    }else {
+      // Set Signature ID
+      this.componentId = `BUTTON_${this.btnId}`;
+      this.updateFinalFml();
+    }
   }
 
   emitNewValues() {
