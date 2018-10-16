@@ -162,6 +162,10 @@ export class PropertyService {
 
     let btnId: number = 0;
     let btn: any = {};
+    let lblId: number = 0;
+    let lbl: any = {};
+
+    console.log(tokens);
 
     for (let index = 0; index < tokens.length; index++) {
       // Row
@@ -176,7 +180,7 @@ export class PropertyService {
         el2.map(el => {
           let str = el.split('=');
 
-          if (el.indexOf('x=') !== -1) { btn.x = ((+str[1]) / PP + 10); console.log('Btn X: ', +str[1], 'PP: ', PP, 'Calc: ', +str[1]/PP);}
+          if (el.indexOf('x=') !== -1) { btn.x = ((+str[1]) / PP + 10);}
           if (el.indexOf('y=') !== -1) { btn.y = (+str[1]) / PP + 10; }
           if (el.indexOf('w=') !== -1) { btn.width = +str[1] / PP; }
           if (el.indexOf('h=') !== -1) { btn.height = +str[1] / PP; }
@@ -201,8 +205,68 @@ export class PropertyService {
         });
       }
 
-      // Construct Label
-      
+      // Construct LABEL
+      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1) {
+
+        // Get Label Properties
+        const el2 = el.split(' ');
+
+        el2.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('x=') !== -1) { lbl.x = ((+str[1]) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { lbl.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('w=') !== -1) { lbl.width = +str[1] / PP; }
+          if (el.indexOf('h=') !== -1) { lbl.height = +str[1] / PP; }
+          if (el.indexOf('bgcol=') !== -1) { lbl.bgColor = str[1]; }
+          if (el.indexOf('col=') !== -1) { lbl.fontColor = str[1]; }
+          if (el.indexOf('font=') !== -1) { lbl.fontFamily = str[1]; }
+          if (el.indexOf('sz=') !== -1) { lbl.fontSize = +str[1] / PP; }
+        });
+
+        lbl.componentType = 'Label';
+        lbl.componentId = `LABEL_${++lblId}`;
+        lbl.deleted = false;
+
+    
+        if (tokens[index+2] === 'bo' && tokens[index+4] === 'i') {
+          lbl.bold = true;
+          lbl.italic = true;
+          lbl.content = tokens[index+5];
+
+        }else if (tokens[index+2] === 'bo') {
+          lbl.bold = true;
+          lbl.italic = false;
+          lbl.content = tokens[index+3];          
+
+        }else if (tokens[index+2] === 'i'){
+          lbl.bold = false;
+          lbl.italic = true;
+          lbl.content = tokens[index+3];
+
+        }else {
+          lbl.bold = false;
+          lbl.italic = false;
+          lbl.content = tokens[index+1];
+        }
+
+        this.fmlLabelProp.push({
+          componentId: lbl.componentId,
+          componentType: lbl.componentType,
+          content: lbl.content,
+          deleted: false,
+          height: lbl.height,
+          width: lbl.width,
+          x: lbl.x,
+          y: lbl.y,
+          bold: lbl.bold,
+          italic: lbl.italic,
+          bgColor: lbl.bgColor,
+          fontColor: lbl.fontColor,
+          fontFamily: lbl.fontFamily,
+          fontSize: lbl.fontSize
+        });
+      }
     }
 
     // Notify subscriber

@@ -284,7 +284,7 @@
       <app-signature [sigId]="sigId" *ngFor="let sigId of sigArr"></app-signature>
 
       <!-- Labels -->
-      <app-label [lblId]="lblId" *ngFor="let lblId of lblArr"></app-label>
+      <app-label [lblProp]="lbl" [lblId]="lblId" *ngFor="let lbl of lblArr2"></app-label>
 
       <!-- Textfields -->
       <app-textfield [txtId]="txtId" *ngFor="let txtId of txtArr"></app-textfield>

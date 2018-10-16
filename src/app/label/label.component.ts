@@ -12,6 +12,7 @@ export class LabelComponent implements OnInit {
 
   // Passed in from outside
   @Input() lblId;
+  @Input() lblProp;
 
   // Label default properties
   componentId: string;
@@ -45,9 +46,28 @@ export class LabelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Label ID
-    this.componentId = `LABEL_${this.lblId}`;
-    this.updateFinalFml();
+    if (this.lblProp.componentId != '') {
+      console.log(this.lblProp.bgColor, this.lblProp.fontColor);
+      this.componentId = this.lblProp.componentId;
+      this.componentType = this.lblProp.componentType;
+      this.x = this.lblProp.x;
+      this.y = this.lblProp.y;
+      this.width = this.lblProp.width;
+      this.height = this.lblProp.height;
+      this.content = this.lblProp.content;
+      this.deleted = this.lblProp.deleted;
+      this.bgColor = this.lblProp.bgColor;
+      this.fontColor = this.lblProp.fontColor;
+      this.fontSize = this.lblProp.fontSize;
+      this.fontFamily = this.lblProp.fontFamily ==='times new roman'?'times_roman':this.fontFamily,
+      this.bold = this.lblProp.bold;
+      this.italic = this.lblProp.italic;
+      this.position = {x: this.x, y: this.y};
+    }else {
+      // Set Label ID
+      this.componentId = `LABEL_${this.lblId}`;
+      this.updateFinalFml();
+    }
   }
 
   emitNewValues() {

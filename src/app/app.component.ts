@@ -9,6 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.component';
 import { FmlButton } from './interfaces/FmlButton.interface';
+import { FmlLabel } from './label/label.interface';
 
 @Component({
   selector: 'app-root',
@@ -147,6 +148,8 @@ export class AppComponent implements OnInit {
   // Label related
   lblId: number = 0;
   lblArr: number[] = [];
+  lblArr2: FmlLabel[] = [];
+  lblProp: FmlLabel;
 
   // Textfield related
   txtId: number = 0;
@@ -290,7 +293,10 @@ export class AppComponent implements OnInit {
         // Buttons
         this.btnArr2 = this.propertyService.fmlButtonProp.slice();
         this.btnId = this.btnArr2.length;
-        // console.log(this.btnArr2);
+        
+        // Labels
+        this.lblArr2 = this.propertyService.fmlLabelProp.slice();
+        this.lblId = this.lblArr2.length;
       }
     });
 
@@ -495,7 +501,25 @@ export class AppComponent implements OnInit {
   }
 
   genLabelBlock() {
-    this.lblArr.push(++this.lblId);
+    this.lblArr2.push({
+      componentId: '',
+      componentType: '',
+      content: '',
+      deleted: false,
+      height: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+      fontColor: '',
+      fontFamily: '',
+      fontSize: 0,
+      bgColor: '',
+      bold: false,
+      italic: false
+    });
+
+    this.lblId++;
+    // this.lblArr.push(++this.lblId);
   }
 
   genTextfield() {
