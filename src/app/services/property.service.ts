@@ -164,6 +164,8 @@ export class PropertyService {
     let btn: any = {};
     let lblId: number = 0;
     let lbl: any = {};
+    let sigId: number = 0;
+    let sig: any = {};
 
     console.log(tokens);
 
@@ -265,6 +267,44 @@ export class PropertyService {
           fontColor: lbl.fontColor,
           fontFamily: lbl.fontFamily,
           fontSize: lbl.fontSize
+        });
+      }
+
+      // Construct SIGNATURE
+      if (el.indexOf('signature') !== -1 && el.indexOf('id=') !== -1) {
+
+        // // Get Signature Properties
+        const el2 = el.split(' ');
+
+        el2.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('x=') !== -1) { sig.x = ((+str[1]) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { sig.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('width=') !== -1) { sig.width = +str[1] / PP; }
+          if (el.indexOf('height=') !== -1) { sig.height = +str[1] / PP; }
+          if (el.indexOf('wt=') !== -1) { sig.weight = +str[1] / PP; }
+          if (el.indexOf('bgcolor=') !== -1) { sig.bgColor = str[1]; } 
+          if (el.indexOf('color=') !== -1) { sig.fontColor = str[1]; }
+          if (el.indexOf('id=') !== -1) { sig.signatureId = str[1]; }
+        });
+
+        sig.componentType = 'Signature';
+        sig.componentId = `SIGNATURE_${++sigId}`;
+        sig.deleted = false;
+
+        this.fmlSignatureProp.push({
+          componentId: sig.componentId,
+          signatureId: sig.signatureId,
+          componentType: sig.componentType,
+          deleted: false,
+          height: sig.height,
+          width: sig.width,
+          x: sig.x,
+          y: sig.y,
+          weight: sig.weight,
+          bgColor: sig.bgColor,
+          fontColor: sig.fontColor
         });
       }
     }

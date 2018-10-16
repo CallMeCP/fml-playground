@@ -11,6 +11,7 @@ import { FmlSignature } from '../interfaces/FmlSignature.interface';
 export class SignatureComponent implements OnInit {
   // Passed in from outside
   @Input() sigId;
+  @Input() sigProp;
 
   // Signature default properties
   componentId: string;
@@ -41,9 +42,24 @@ export class SignatureComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Signature ID
-    this.componentId = `SIGNATURE_${this.sigId}`;
-    this.updateFinalFml();
+    
+    if (this.sigProp.componentId != '') {
+      this.componentId = this.sigProp.componentId;
+      this.componentType = this.sigProp.componentType;
+      this.x = this.sigProp.x;
+      this.y = this.sigProp.y;
+      this.width = this.sigProp.width;
+      this.height = this.sigProp.height;
+      this.deleted = this.sigProp.deleted;
+      this.bgColor = this.sigProp.bgColor;
+      this.fontColor = this.sigProp.fontColor;
+      this.weight = this.sigProp.weight;
+      this.position = {x: this.x, y: this.y};
+    }else {
+      // Set Signature ID
+      this.componentId = `SIGNATURE_${this.sigId}`;
+      this.updateFinalFml();
+    }
   }
 
   emitNewValues() {

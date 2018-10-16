@@ -144,6 +144,8 @@ export class AppComponent implements OnInit {
   // Signature related
   sigId: number = 0;
   sigArr: number[] = [];
+  sigArr2: FmlSignature[] = [];
+  sigProp: FmlSignature;
 
   // Label related
   lblId: number = 0;
@@ -297,6 +299,10 @@ export class AppComponent implements OnInit {
         // Labels
         this.lblArr2 = this.propertyService.fmlLabelProp.slice();
         this.lblId = this.lblArr2.length;
+
+        // Signatures
+        this.sigArr2 = this.propertyService.fmlSignatureProp.slice();
+        this.sigId = this.sigArr2.length;
       }
     });
 
@@ -497,7 +503,21 @@ export class AppComponent implements OnInit {
   }
 
   genSignatureBlock() {
-    this.sigArr.push(++this.sigId);
+    this.sigArr2.push({
+      componentId: '',
+      componentType: '',
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      weight: 0,
+      bgColor: '',
+      fontColor: '',
+      signatureId: '',
+      deleted: false
+    });
+    this.sigId++;
+    // this.sigArr.push(++this.sigId);
   }
 
   genLabelBlock() {

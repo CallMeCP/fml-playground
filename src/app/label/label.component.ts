@@ -47,7 +47,6 @@ export class LabelComponent implements OnInit {
 
   ngOnInit() {
     if (this.lblProp.componentId != '') {
-      console.log(this.lblProp.bgColor, this.lblProp.fontColor);
       this.componentId = this.lblProp.componentId;
       this.componentType = this.lblProp.componentType;
       this.x = this.lblProp.x;
