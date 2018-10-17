@@ -10,6 +10,7 @@ import {map, startWith} from 'rxjs/operators';
 import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.component';
 import { FmlButton } from './interfaces/FmlButton.interface';
 import { FmlLabel } from './label/label.interface';
+import { FmlTextField } from './textfield/textfield.interface';
 
 @Component({
   selector: 'app-root',
@@ -156,6 +157,8 @@ export class AppComponent implements OnInit {
   // Textfield related
   txtId: number = 0;
   txtArr: number[] = [];
+  txtArr2: FmlTextField[] = [];
+  txtProp: FmlTextField;
 
   // Checkboxes related
   chkboxId: number = 0;
@@ -303,6 +306,10 @@ export class AppComponent implements OnInit {
         // Signatures
         this.sigArr2 = this.propertyService.fmlSignatureProp.slice();
         this.sigId = this.sigArr2.length;
+
+        // Textfields
+        this.txtArr2 = this.propertyService.fmlTextfieldProp.slice();
+        this.txtId = this.txtArr2.length;
       }
     });
 
@@ -543,7 +550,29 @@ export class AppComponent implements OnInit {
   }
 
   genTextfield() {
-    this.txtArr.push(++this.txtId);
+    this.txtArr2.push({
+      componentId: '',
+      componentType: '',
+      deleted: false,
+      height: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+      content: '',
+      fontColor: '',
+      fontFamily: '',
+      fontSize: 0,
+      bgColor: '',
+      borderSize: 0,
+      symbolId: '',
+      pfId: '',
+      textConv: '',
+      bold: false,
+      italic: false
+    });
+
+    this.txtId++;
+    // this.txtArr.push(++this.txtId);
   }
 
   genCheckbox() {

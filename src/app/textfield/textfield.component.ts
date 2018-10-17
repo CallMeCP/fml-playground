@@ -12,6 +12,7 @@ export class TextfieldComponent implements OnInit {
 
   // Passed in from outside
   @Input() txtId;
+  @Input() txtProp;
 
   // Textfield default properties
   componentId: string;
@@ -49,9 +50,32 @@ export class TextfieldComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Textfield ID
-    this.componentId = `TEXTFIELD_${this.txtId}`;
-    this.updateFinalFml();
+
+    if (this.txtProp.componentId != '') {
+      this.componentId = this.txtProp.componentId;
+      this.componentType = this.txtProp.componentType;
+      this.x = this.txtProp.x;
+      this.y = this.txtProp.y;
+      this.width = this.txtProp.width;
+      this.height = this.txtProp.height;
+      this.bgColor = this.txtProp.bgColor;
+      this.fontColor = this.txtProp.fontColor;
+      this.fontSize = this.txtProp.fontSize;
+      this.fontFamily = this.txtProp.fontFamily
+      this.content = this.txtProp.content;
+      this.bold = this.txtProp.bold;
+      this.italic = this.txtProp.italic;
+      this.deleted = this.txtProp.deleted;
+      this.borderSize = this.txtProp.borderSize;
+      this.symbolId = this.txtProp.symbolId;
+      this.pfId = this.txtProp.pfId;
+      this.textConv = this.txtProp.textConv;
+      this.position = {x: this.x, y: this.y};
+    }else {
+      // Set Textfield ID
+      this.componentId = `TEXTFIELD_${this.txtId}`;
+      this.updateFinalFml();
+    }
   }
 
   emitNewValues() {

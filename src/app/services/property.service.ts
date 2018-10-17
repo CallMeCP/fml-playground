@@ -166,6 +166,8 @@ export class PropertyService {
     let lbl: any = {};
     let sigId: number = 0;
     let sig: any = {};
+    let txtId: number = 0;
+    let txt: any = {};
 
     console.log(tokens);
 
@@ -208,8 +210,9 @@ export class PropertyService {
       }
 
       // Construct LABEL
-      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1) {
-
+      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
+          && tokens[index+2].indexOf('x=') == -1 && tokens[index+2].indexOf('y=') == -1) {
+        
         // Get Label Properties
         const el2 = el.split(' ');
 
@@ -305,6 +308,100 @@ export class PropertyService {
           weight: sig.weight,
           bgColor: sig.bgColor,
           fontColor: sig.fontColor
+        });
+      }
+
+      // Construct Textfield
+      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
+          && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1) {
+        
+        // LINE 2 - Get border size, bgcolor, color
+        const line2Tokens = tokens[index+2].split(' ');
+        line2Tokens.map(res => {
+          const tok = res.split('=');
+
+          if (res.indexOf('x=') !== -1) { txt.borderSize = +tok[1] / PP }
+          if (res.indexOf('bgcol=') !== -1) { txt.bgcol = tok[1] }
+          if (res.indexOf('col=') !== -1) { txt.col = tok[1] }
+        });
+
+        // LINE 1 - Get Textfield x, y, w, h, font family, and size
+        const line1Tokens = el.split(' ');
+        line1Tokens.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('x=') !== -1) { txt.x = (((+str[1]) + txt.borderSize*0.75) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { txt.y = ((+str[1]) + txt.borderSize*0.75) / PP + 10; }
+          if (el.indexOf('w=') !== -1) { txt.width = ((+str[1]) - txt.borderSize*2*0.75)  / PP; }
+          if (el.indexOf('h=') !== -1) { txt.height = ((+str[1] - txt.borderSize*2*0.75)) / PP; }
+          if (el.indexOf('font=') !== -1) { txt.fontFamily = str[1]; }
+          if (el.indexOf('sz=') !== -1) { txt.fontSize = +str[1] / PP; }
+        });
+
+        txt.componentType = 'Textfield';
+        txt.componentId = `TEXTFIELD_${++txtId}`;
+        txt.deleted = false;
+
+        // Get bold, italic, index of symbol position
+        if (tokens[index+6] === 'bo' && tokens[index+8] === 'i') {
+          txt.bold = true;
+          txt.italic = true;
+          txt.symPos = 10;
+
+        }else if (tokens[index+6] === 'bo') {
+          txt.bold = true;
+          txt.italic = false;
+          txt.symPos = 8;     
+
+        }else if (tokens[index+6] === 'i'){
+          txt.bold = false;
+          txt.italic = true;
+          txt.symPos = 8;
+
+        }else {
+          txt.bold = false;
+          txt.italic = false;
+          txt.symPos = 6;
+        }
+
+        // LINE 4 - Get symbol, pref, conv
+        const line4Tokens = tokens[index+txt.symPos].split(' ');
+        line4Tokens.map (res => {
+          const tok = res.split('=');
+
+          if (res.indexOf('sym=') !== -1) { 
+            txt.symbolId = tok[1];
+            txt.pfId = '';
+            
+            if (txt.symbolId.indexOf('PF.') !== -1) {
+              txt.symbolId = '';
+
+              const prefTok = tok[1].split('.');
+              txt.pfId = prefTok[1];
+            }
+          }
+          if (res.indexOf('conv=') !== -1) { txt.conv = tok[1]; }
+        });
+
+        this.fmlTextfieldProp.push({
+          componentId: txt.componentId,
+          componentType: txt.componentType,
+          content: '',
+          deleted: false,
+          height: txt.height,
+          width: txt.width,
+          x: txt.x,
+          y: txt.y,
+          bold: txt.bold,
+          italic: txt.italic,
+          bgColor: txt.bgcol,
+          fontColor: txt.col,
+          fontFamily: txt.fontFamily,
+          fontSize: txt.fontSize,
+          symbolId: txt.symbolId,
+          pfId: txt.pfId,
+          textConv: txt.conv,
+          borderSize: txt.borderSize
         });
       }
     }
