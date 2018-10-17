@@ -186,19 +186,65 @@ export class PropertyService {
     let txt: any = {};
     let chkId: number = 0;
     let chk: any = {};
+    let pageId: number = 0;
+    let page: any = {};
+    let bodyId: number = 0;
+    let body: any = {};
 
     let currentType = '';
+    let currentPage: number = 1;
+
+    this.fmlBodyProp = []; // Reset body array
 
     console.log(tokens);
 
+    // Start parsing fml script row by row. TODO: revamp to be more flexible
     for (let index = 0; index < tokens.length; index++) {
       // Row
       const el: string = tokens[index];
 
+      // Set current types. TODO - revamp when free
       if (el.indexOf('Checkboxes') !== -1) {
         currentType = 'Checkboxes';
       }
-      
+
+      // Construct Body
+      if (el.indexOf('body') !== -1) {
+        // Get page properties
+        const el2 = el.split(' ');
+        el2.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('width=') !== -1) { body.width = ((+str[1]) / PP);}
+          if (el.indexOf('height=') !== -1) { body.height = (+str[1]) / PP; }
+          if (el.indexOf('bgcolor=') !== -1) { body.bgColor = str[1]; }
+          if (el.indexOf('font=') !== -1) { body.fontFamily = str[1]; }
+          if (el.indexOf('size=') !== -1) { body.fontSize = +str[1] / PP; }
+          if (el.indexOf('color=') !== -1) { body.fontColor = str[1]; }
+        });
+      }
+
+      // Set current page, and construct Page
+      if (el.indexOf('!-- Page') !== -1) {
+        // Set current page
+        const tok = el.split(' ');
+        currentPage = +tok[2];
+
+        // Construct page
+        this.fmlBodyProp.push({
+          componentId: `PAGE_${++pageId}`,
+          componentType: 'Page',
+          x: 10,
+          y: ((currentPage-1)*body.height)+10*currentPage,
+          width: body.width,
+          height: body.height,
+          bgColor: body.bgColor,
+          fontColor: body.fontColor,
+          fontSize: body.fontSize,
+          fontFamily: body.fontFamily
+        });
+      }
+
       // Construct BUTTON
       if (el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
 
@@ -509,9 +555,10 @@ export class PropertyService {
           borderSize: chk.borderSize
         });
       }
+
     }
   
-    // console.log(this.fmlCheckboxProp);
+    // console.log(this.fmlBodyProp);
 
     // Notify subscriber
     this.isLoadFml$.next(true);

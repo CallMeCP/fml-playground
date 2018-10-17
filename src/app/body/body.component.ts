@@ -11,12 +11,13 @@ import { Observable, Subscription } from 'rxjs';
 export class BodyComponent implements OnInit {
 
   @Input() pageId;
+  @Input() pageProp;
 
   // For grid line looping
   gridArr: number[] = [];
 
   // Default values
-  componentId: string;   //  Hardcode, as there is only always one body container
+  componentId: string;
   componentType: string = "Page";
   x: number = 10;
   y: number = 10;
@@ -39,20 +40,34 @@ export class BodyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Page ID
-    this.componentId = `PAGE_${this.pageId}`;
 
-    // Set position
-    if (this.pageId == 1) {
-      this.x = 10;
-      this.y = 10;
+    if (this.pageProp.componentId !== '') {
+      this.componentId = this.pageProp.componentId;
+      this.componentType = this.pageProp.componentType;
+      this.x = this.pageProp.x;
+      this.y = this.pageProp.y;
+      this.height = this.pageProp.height;
+      this.width = this.pageProp.width;
+      this.bgColor = this.pageProp.bgColor;
+      this.fontColor = this.pageProp.fontColor;
+      this.fontSize = this.pageProp.fontSize;
+      this.fontFamily = this.pageProp.fontFamily === 'times new roman'?'times_roman':this.fontFamily;
+
     }else {
-      // this.x = this.pageId*this.width;
-      this.x = 10;
-      this.y = (this.pageId-1)*this.propertyService.fmlBodyProp[0].height+(10*this.pageId-1);
-      this.width = this.propertyService.fmlBodyProp[0].width;
-    }
+      // Set Page ID
+      this.componentId = `PAGE_${this.pageId}`;
 
+      // Set position
+      if (this.pageId == 1) {
+        this.x = 10;
+        this.y = 10;
+      }else {
+        this.x = 10;
+        this.y = (this.pageId-1)*this.propertyService.fmlBodyProp[0].height+(10*this.pageId);
+        this.width = this.propertyService.fmlBodyProp[0].width;
+        this.height = this.propertyService.fmlBodyProp[0].height;
+      }
+    }
 
     // Draw Grids
     this.drawGrid();

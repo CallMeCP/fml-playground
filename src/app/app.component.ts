@@ -171,6 +171,8 @@ export class AppComponent implements OnInit {
   // Page related
   pageId: number = 0;
   pageArr: number[] = [];
+  pageArr2: FmlBody[] = [];
+  pageProp: FmlBody;
 
 // ==================================================================================================
   // Possible properties, just list all component types
@@ -318,6 +320,10 @@ export class AppComponent implements OnInit {
         // Checkboxes
         this.chkboxArr2 = this.propertyService.fmlCheckboxProp.slice();
         this.chkboxId = this.chkboxArr2.length;
+
+        // Pages
+        this.pageArr2 = this.propertyService.fmlBodyProp.slice();
+        this.pageId = this.pageArr2.length;
       }
     });
 
@@ -607,7 +613,20 @@ export class AppComponent implements OnInit {
   }
 
   genPage() {
-    this.pageArr.push(++this.pageId);
+    this.pageArr2.push({
+      componentId: '',
+      componentType: '',
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      bgColor: '',
+      fontColor: '',
+      fontSize: 0,
+      fontFamily: '',
+    });
+    this.pageId++;
+    // this.pageArr.push(++this.pageId);
   }
 
   genFml() {

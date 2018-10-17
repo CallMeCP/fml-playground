@@ -275,7 +275,7 @@
       <!-- style="transform: scale(0.8)" -->
     <div>
       <!-- Screen body -->
-      <app-body [pageId]="pageId" *ngFor="let page of pageArr"></app-body>
+      <app-body [pageProp]="page" [pageId]="pageId" *ngFor="let page of pageArr2"></app-body>
 
       <!-- Button -->
       <app-button [btnProp]="btn" [btnId]="btnId" *ngFor="let btn of btnArr2"></app-button>
