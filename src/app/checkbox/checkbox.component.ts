@@ -12,6 +12,7 @@ export class CheckboxComponent implements OnInit {
 
   // Passed in from outside
   @Input() chkboxId;
+  @Input() chkboxProp;
 
   // Textfield default properties
   componentId: string;
@@ -47,9 +48,31 @@ export class CheckboxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Set Checkbox ID
-    this.componentId = `CHECKBOX_${this.chkboxId}`;
-    this.updateFinalFml();
+
+    if (this.chkboxProp.componentId != '') {
+      this.componentId = this.chkboxProp.componentId;
+      this.componentType = this.chkboxProp.componentType;
+      this.x = this.chkboxProp.x;
+      this.y = this.chkboxProp.y;
+      this.width = this.chkboxProp.width;
+      this.height = this.chkboxProp.height;
+      this.bgColor = this.chkboxProp.bgColor;
+      this.fontColor = this.chkboxProp.fontColor;
+      this.fontSize = this.chkboxProp.fontSize;
+      this.deleted = this.chkboxProp.deleted;
+      this.borderSize = this.chkboxProp.borderSize;
+      this.symbolId = this.chkboxProp.symbolId;
+      this.pfId = this.chkboxProp.pfId;
+      this.varId = this.chkboxProp.varId;
+      this.comparison = this.chkboxProp.comparison;
+      this.compareTo = this.chkboxProp.compareTo;
+      
+      this.position = {x: this.x, y: this.y};
+    }else {
+      // Set Checkbox ID
+      this.componentId = `CHECKBOX_${this.chkboxId}`;
+      this.updateFinalFml();
+    }
   }
 
   emitNewValues() {

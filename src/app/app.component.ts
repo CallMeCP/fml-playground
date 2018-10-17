@@ -11,6 +11,7 @@ import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.compon
 import { FmlButton } from './interfaces/FmlButton.interface';
 import { FmlLabel } from './label/label.interface';
 import { FmlTextField } from './textfield/textfield.interface';
+import { FmlCheckbox } from './checkbox/checkbox.interface';
 
 @Component({
   selector: 'app-root',
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit {
   filteredSymbolOptions: Observable<string[]>;
   symControlSub: Subscription;
   sym2ControlSub: Subscription;
+  // another copy is copied to PropertyService. TODO: Re-vamp when free
   symbolIds: string[] = [
     'REAL_DATE', 'REAL_TIME', 'REAL_DATE_TIME', 'CUST_DATE', 'USER_ID', 'USER_NAME', 'CUST_ID',
     'CUST_NAME', 'CUST_TITLE', 'VINYL_TYPE', 'CUST_TYPE', 'NAS_NAME', 'NAS_TITLE', 'NAS_LANG',
@@ -163,6 +165,8 @@ export class AppComponent implements OnInit {
   // Checkboxes related
   chkboxId: number = 0;
   chkboxArr: number[] = [];
+  chkboxArr2: FmlCheckbox[] = [];
+  chkboxProp: FmlCheckbox;
 
   // Page related
   pageId: number = 0;
@@ -310,6 +314,10 @@ export class AppComponent implements OnInit {
         // Textfields
         this.txtArr2 = this.propertyService.fmlTextfieldProp.slice();
         this.txtId = this.txtArr2.length;
+
+        // Checkboxes
+        this.chkboxArr2 = this.propertyService.fmlCheckboxProp.slice();
+        this.chkboxId = this.chkboxArr2.length;
       }
     });
 
@@ -576,7 +584,26 @@ export class AppComponent implements OnInit {
   }
 
   genCheckbox() {
-    this.chkboxArr.push(++this.chkboxId);
+    this.chkboxArr2.push({
+      componentId: '',
+      componentType: '',
+      deleted: false,
+      height: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+      fontColor: '',
+      fontSize: 0,
+      bgColor: '',
+      borderSize: 0,
+      symbolId: '',
+      pfId: '',
+      varId: '',
+      compareTo: '',
+      comparison: ''
+    });
+
+    this.chkboxId++;
   }
 
   genPage() {
@@ -601,7 +628,6 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      // console.log(res);
       this.propertyService.loadFml(res);
     });
   }

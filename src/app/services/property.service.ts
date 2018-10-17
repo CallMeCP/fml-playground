@@ -11,6 +11,46 @@ import { FmlCheckbox } from '../checkbox/checkbox.interface';
   providedIn: 'root'
 })
 export class PropertyService {
+  // Duplicate from AppComponent, re-vamp when free
+  symbolIds: string[] = [
+    'REAL_DATE', 'REAL_TIME', 'REAL_DATE_TIME', 'CUST_DATE', 'USER_ID', 'USER_NAME', 'CUST_ID',
+    'CUST_NAME', 'CUST_TITLE', 'VINYL_TYPE', 'CUST_TYPE', 'NAS_NAME', 'NAS_TITLE', 'NAS_LANG',
+    'OPCN_NAME[0]', 'OPCN_NAME[1]', 'OPCN_NAME[2]', 'OPCN_NAME[3]', 'OPCN_NAME[4]', 'OPCN_NAME[5]', 
+    'OPCN_TITLE[0]', 'OPCN_TITLE[1]', 'OPCN_TITLE[2]', 'OPCN_TITLE[3]', 'OPCN_TITLE[4]', 'OPCN_TITLE[5]', 
+    'OPCN_LANG[0]', 'OPCN_LANG[1]', 'OPCN_LANG[2]', 'OPCN_LANG[3]', 'OPCN_LANG[4]', 'OPCN_LANG[5]', 
+    'OPCN_TYPE[0]', 'OPCN_TYPE[1]', 'OPCN_TYPE[2]', 'OPCN_TYPE[3]', 'OPCN_TYPE[4]', 'OPCN_TYPE[5]',  
+    'ID_DOC_NO[0]', 'ID_DOC_NO[1]', 'ID_DOC_NO[2]', 'ID_DOC_NO[3]', 
+    'ID_TYPE[0]', 'ID_TYPE[1]', 'ID_TYPE[2]', 'ID_TYPE[3]', 
+    'ID_ISS_AUTH[0]', 'ID_ISS_AUTH[1]', 'ID_ISS_AUTH[2]', 'ID_ISS_AUTH[3]', 
+    'ID_ISS_DATE[0]', 'ID_ISS_DATE[1]', 'ID_ISS_DATE[2]', 'ID_ISS_DATE[3]', 
+    'ID_EXP_DATE[0]', 'ID_EXP_DATE[1]', 'ID_EXP_DATE[2]', 'ID_EXP_DATE[3]', 
+    'NATIONALITY', 'SPONSOR_ID', 'SPONSOR_TITLE', 'SPONSOR_NAME', 'CUST_DOB', 'GENDER', 'PREF_LANG', 'PF.PCM',
+    'EMAIL', 'EMAIL_STATUS', 
+    'TEL_DESC[0]', 'TEL_DESC[1]', 'TEL_DESC[2]', 'TEL_DESC[3]', 'TEL_DESC[4]', 'TEL_DESC[5]', 
+    'TEL_NO[0]', 'TEL_NO[1]', 'TEL_NO[2]', 'TEL_NO[3]', 'TEL_NO[4]', 'TEL_NO[5]', 
+    'SMS_STATUS', 'VOICE_STATUS',
+    'AD_STATUS', 
+    'AD_DESC[0]', 'AD_DESC[1]', 'AD_DESC[2]', 'AD_DESC[3]', 
+    'AD_1[0]', 'AD_1[1]', 'AD_1[2]', 'AD_1[3]',
+    'AD_2[0]', 'AD_2[1]', 'AD_2[2]', 'AD_2[3]', 
+    'AD_3[0]', 'AD_3[1]', 'AD_3[2]', 'AD_3[3]', 
+    'AD_CITY[0]', 'AD_CITY[1]', 'AD_CITY[2]', 'AD_CITY[3]',
+    'AD_STATE[0]', 'AD_STATE[1]', 'AD_STATE[2]', 'AD_STATE[3]', 
+    'AD_COUNTRY[0]', 'AD_COUNTRY[1]', 'AD_COUNTRY[2]', 'AD_COUNTRY[3]', 
+    'AD_POSTCODE[0]', 'AD_POSTCODE[1]', 'AD_POSTCODE[2]', 'AD_POSTCODE[3]',
+    'AD_LANG[0]', 'AD_LANG[1]', 'AD_LANG[2]', 'AD_LANG[3]',
+    'REC_USER_ID', 'REC_NAME', 'APP_USER_ID',
+    'APP_NAME', 'PEP_DESIG', 'PEP_YEAR_APPTD', 'PEP_TENURE_VAL', 'PEP_TENURE_UNITS',   
+  ];
+
+  variables: string[] = [
+    'ID_PRI_ID_FLAG[0]', 'ID_PRI_ID_FLAG[1]', 'ID_PRI_ID_FLAG[2]', 'ID_PRI_ID_FLAG[3]',
+    'TEL_SMS[0]', 'TEL_SMS[1]', 'TEL_SMS[2]', 'TEL_SMS[3]', 'TEL_SMS[4]', 'TEL_SMS[5]', 
+    'TEL_VOICE[0]', 'TEL_VOICE[1]', 'TEL_VOICE[2]', 'TEL_VOICE[3]', 'TEL_VOICE[4]', 'TEL_VOICE[5]', 
+    'AD_REGION_ID[0]', 'AD_REGION_ID[1]', 'AD_REGION_ID[2]', 'AD_REGION_ID[3]', 
+    'AD_INTL_MAIL[0]', 'AD_INTL_MAIL[1]', 'AD_INTL_MAIL[2]', 'AD_INTL_MAIL[3]', 
+    'AD_DOM_MAIL[0]', 'AD_DOM_MAIL[1]', 'AD_DOM_MAIL[2]', 'AD_DOM_MAIL[3]', 
+  ];
 
   //  Sync HTML component changes to Property Panel
   viewToProperty$: EventEmitter<any> = new EventEmitter();
@@ -130,30 +170,6 @@ export class PropertyService {
   }
 
   loadFml(fmlScript: string) {
-    // console.log('Button 1: ',this.fmlButtonProp[0]);
-    // this.fmlButtonProp.push({
-    //   componentId: 'BUTTON_1',
-    //   buttonId: 'NEXT',
-    //   componentType: 'Button',
-    //   content: 'Button',
-    //   deleted: false,
-    //   height: 25,
-    //   width: 100,
-    //   x: 10,
-    //   y: 10
-    // });
-    // this.fmlButtonProp.push({
-    //   componentId: 'BUTTON_2',
-    //   buttonId: 'BACK',
-    //   componentType: 'Button',
-    //   content: 'Button',
-    //   deleted: false,
-    //   height: 25,
-    //   width: 100,
-    //   x: 10,
-    //   y: 50
-    // });
-    // this.isLoadFml$.next(true);
 
     const remTab = fmlScript.replace(/\n\s+/g, '');
     const tokens = remTab.split('<').map(el => el.split('>')).reduce((acc, curr) => acc.concat(curr))
@@ -168,12 +184,20 @@ export class PropertyService {
     let sig: any = {};
     let txtId: number = 0;
     let txt: any = {};
+    let chkId: number = 0;
+    let chk: any = {};
+
+    let currentType = '';
 
     console.log(tokens);
 
     for (let index = 0; index < tokens.length; index++) {
       // Row
       const el: string = tokens[index];
+
+      if (el.indexOf('Checkboxes') !== -1) {
+        currentType = 'Checkboxes';
+      }
       
       // Construct BUTTON
       if (el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
@@ -313,7 +337,7 @@ export class PropertyService {
 
       // Construct Textfield
       if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
-          && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1) {
+          && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1 ) {
         
         // LINE 2 - Get border size, bgcolor, color
         const line2Tokens = tokens[index+2].split(' ');
@@ -404,7 +428,90 @@ export class PropertyService {
           borderSize: txt.borderSize
         });
       }
+
+      // Construct Checkbox
+      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 
+          && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1 
+          && tokens[index+6].indexOf('if') !== -1
+          && currentType === 'Checkboxes') {
+        
+        // LINE 2 - Get border size, bgcolor, color
+        const line2Tokens = tokens[index+2].split(' ');
+        line2Tokens.map(res => {
+          const tok = res.split('=');
+
+          if (res.indexOf('x=') !== -1) { chk.borderSize = +tok[1] / PP }
+          if (res.indexOf('bgcol=') !== -1) { chk.bgcol = tok[1] }
+          if (res.indexOf('col=') !== -1) { chk.col = tok[1] }
+        });
+
+        // LINE 1 - Get Textfield x, y, w, h, and size
+        const line1Tokens = el.split(' ');
+        line1Tokens.map(el => {
+          let str = el.split('=');
+
+          if (el.indexOf('x=') !== -1) { chk.x = (((+str[1]) + chk.borderSize*0.75) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { chk.y = ((+str[1]) + chk.borderSize*0.75) / PP + 10; }
+          if (el.indexOf('w=') !== -1) { chk.width = ((+str[1]) - chk.borderSize*2*0.75)  / PP; }
+          if (el.indexOf('h=') !== -1) { chk.height = ((+str[1] - chk.borderSize*2*0.75)) / PP; }
+          if (el.indexOf('sz=') !== -1) { chk.fontSize = +str[1] / PP; }
+        });
+
+        chk.componentType = 'Checkbox';
+        chk.componentId = `CHECKBOX_${++chkId}`;
+        chk.deleted = false;
+        
+        // Check is Symbol, Variable, or Pref Id
+        let isSymbol = this.symbolIds.includes(tokens[index+7]);
+        let isVar = this.variables.includes(tokens[index+7]);
+
+        if (isSymbol) {
+          chk.symbolId = tokens[index+7];
+          chk.pfId = '';
+          chk.varId = '';
+        }else if (isVar) {
+          chk.symbolId = '';
+          chk.pfId = '';
+          chk.varId = tokens[index+7];
+        }else {
+          chk.symbolId = '';
+          chk.pfId = tokens[index+7];
+          chk.varId = '';
+        }
+
+        // Set Comparison
+        chk.comparison = tokens[index+8];
+
+        // Set CompareTo
+        if (isVar) {
+          chk.compareTo = tokens[index+9];  
+        }else {
+          const compTok = tokens[index+9].split('"');
+          chk.compareTo = compTok[1];
+        }
+
+        this.fmlCheckboxProp.push({
+          componentId: chk.componentId,
+          componentType: chk.componentType,
+          deleted: false,
+          height: chk.height,
+          width: chk.width,
+          x: chk.x,
+          y: chk.y,
+          bgColor: chk.bgcol,
+          fontColor: chk.col,
+          fontSize: chk.fontSize,
+          symbolId: chk.symbolId,
+          pfId: chk.pfId,
+          varId: chk.varId,
+          compareTo: chk.compareTo,
+          comparison: chk.comparison,
+          borderSize: chk.borderSize
+        });
+      }
     }
+  
+    // console.log(this.fmlCheckboxProp);
 
     // Notify subscriber
     this.isLoadFml$.next(true);

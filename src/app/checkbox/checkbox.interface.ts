@@ -8,10 +8,6 @@ export interface FmlCheckbox {
     bgColor: string;
     fontColor: string;
     fontSize: number;
-    // fontFamily: string;
-    // content: string;
-    // bold: boolean;
-    // italic: boolean;
     deleted: boolean;
     borderSize: number;
     symbolId: string;
@@ -19,5 +15,4 @@ export interface FmlCheckbox {
     varId: string;
     comparison: string;
     compareTo: string;
-    // textConv: string;
 }
