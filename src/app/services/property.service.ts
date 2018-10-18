@@ -193,6 +193,7 @@ export class PropertyService {
 
     let currentType = '';
     let currentPage: number = 1;
+    let pgHgt: number = 0;         //  Page height to add on
 
     this.fmlBodyProp = []; // Reset body array
 
@@ -230,6 +231,9 @@ export class PropertyService {
         const tok = el.split(' ');
         currentPage = +tok[2];
 
+        // Calculate page height to add on on every components
+        pgHgt = ((currentPage-1)*body.height)+(10*(currentPage-1));
+
         // Construct page
         this.fmlBodyProp.push({
           componentId: `PAGE_${++pageId}`,
@@ -255,13 +259,13 @@ export class PropertyService {
           let str = el.split('=');
 
           if (el.indexOf('x=') !== -1) { btn.x = ((+str[1]) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { btn.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('y=') !== -1) { btn.y = ((+str[1]) / PP + 10) + pgHgt;}
           if (el.indexOf('w=') !== -1) { btn.width = +str[1] / PP; }
           if (el.indexOf('h=') !== -1) { btn.height = +str[1] / PP; }
           if (el.indexOf('id=') !== -1) { btn.buttonId = str[1]; }
           if (el.indexOf('id=') !== -1) {btn.componentType = 'Button'; }
           if (el.indexOf('id=') !== -1) {btn.componentId = `BUTTON_${++btnId}`};
-            
+          
         });
 
         btn.content = tokens[index+1];
@@ -290,7 +294,7 @@ export class PropertyService {
           let str = el.split('=');
 
           if (el.indexOf('x=') !== -1) { lbl.x = ((+str[1]) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { lbl.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('y=') !== -1) { lbl.y = ((+str[1]) / PP + 10) + pgHgt; }
           if (el.indexOf('w=') !== -1) { lbl.width = +str[1] / PP; }
           if (el.indexOf('h=') !== -1) { lbl.height = +str[1] / PP; }
           if (el.indexOf('bgcol=') !== -1) { lbl.bgColor = str[1]; }
@@ -353,7 +357,7 @@ export class PropertyService {
           let str = el.split('=');
 
           if (el.indexOf('x=') !== -1) { sig.x = ((+str[1]) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { sig.y = (+str[1]) / PP + 10; }
+          if (el.indexOf('y=') !== -1) { sig.y = ((+str[1]) / PP + 10) + pgHgt; }
           if (el.indexOf('width=') !== -1) { sig.width = +str[1] / PP; }
           if (el.indexOf('height=') !== -1) { sig.height = +str[1] / PP; }
           if (el.indexOf('wt=') !== -1) { sig.weight = +str[1] / PP; }
@@ -401,7 +405,7 @@ export class PropertyService {
           let str = el.split('=');
 
           if (el.indexOf('x=') !== -1) { txt.x = (((+str[1]) + txt.borderSize*0.75) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { txt.y = ((+str[1]) + txt.borderSize*0.75) / PP + 10; }
+          if (el.indexOf('y=') !== -1) { txt.y = ((+str[1]) + txt.borderSize*0.75) / PP + 10 + pgHgt; }
           if (el.indexOf('w=') !== -1) { txt.width = ((+str[1]) - txt.borderSize*2*0.75)  / PP; }
           if (el.indexOf('h=') !== -1) { txt.height = ((+str[1] - txt.borderSize*2*0.75)) / PP; }
           if (el.indexOf('font=') !== -1) { txt.fontFamily = str[1]; }
@@ -497,7 +501,7 @@ export class PropertyService {
           let str = el.split('=');
 
           if (el.indexOf('x=') !== -1) { chk.x = (((+str[1]) + chk.borderSize*0.75) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { chk.y = ((+str[1]) + chk.borderSize*0.75) / PP + 10; }
+          if (el.indexOf('y=') !== -1) { chk.y = ((+str[1]) + chk.borderSize*0.75) / PP + 10 + pgHgt; }
           if (el.indexOf('w=') !== -1) { chk.width = ((+str[1]) - chk.borderSize*2*0.75)  / PP; }
           if (el.indexOf('h=') !== -1) { chk.height = ((+str[1] - chk.borderSize*2*0.75)) / PP; }
           if (el.indexOf('sz=') !== -1) { chk.fontSize = +str[1] / PP; }
