@@ -180,6 +180,40 @@ export class PropertyService {
     return ((this.currentWorkingPage-1)*this.fmlBodyProp[0].height)+(10*(this.currentWorkingPage));
   }
 
+  updatedPageProp() {
+    // const pageArrTemps: FmlBody[] = this.fmlBodyProp.slice();
+    // this.fmlBodyProp = [];
+    
+    // for (let index = 0; index < pageArrTemps.length; index++) {
+    //   this.fmlBodyProp.push({
+    //     componentId: `PAGE_${index+1}`,
+    //     componentType: 'Page',
+    //     x: pageArrTemps[index].x,
+    //     y: ((index)*pageArrTemps[0].height)+(10*(index+1)),
+    //     width: pageArrTemps[index].width,
+    //     height: pageArrTemps[index].height,
+    //     bgColor: pageArrTemps[index].bgColor,
+    //     fontColor: pageArrTemps[index].fontColor,
+    //     fontSize: pageArrTemps[index].fontSize,
+    //     fontFamily: pageArrTemps[index].fontFamily
+    //   });
+    // }
+
+    for (let index = 1; index < this.fmlBodyProp.length; index++) {
+      this.fmlBodyProp[index].bgColor = this.fmlBodyProp[0].bgColor;
+      this.fmlBodyProp[index].fontColor = this.fmlBodyProp[0].fontColor;
+      this.fmlBodyProp[index].fontFamily = this.fmlBodyProp[0].fontFamily;
+      this.fmlBodyProp[index].fontSize = this.fmlBodyProp[0].fontSize;
+      this.fmlBodyProp[index].height = this.fmlBodyProp[0].height;
+      this.fmlBodyProp[index].width = this.fmlBodyProp[0].width;
+      this.fmlBodyProp[index].x = this.fmlBodyProp[0].x;
+      this.fmlBodyProp[index].y = ((index)*this.fmlBodyProp[0].height)+10*(index+1);
+    }
+
+    // Notify subscriber to refresh all components
+    this.isLoadFml$.next(true);
+  }
+
   loadFml(fmlScript: string) {
 
     if (fmlScript.length < 10) {

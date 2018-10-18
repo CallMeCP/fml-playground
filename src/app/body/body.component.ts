@@ -141,6 +141,11 @@ export class BodyComponent implements OnInit {
 
             // Update final FML
             this.updateFinalFml();
+
+            // Update all pages
+            if (this.componentId === 'PAGE_1') {
+              this.propertyService.updatedPageProp();
+            }
           }
         }
       );
