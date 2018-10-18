@@ -182,6 +182,10 @@ export class PropertyService {
 
   loadFml(fmlScript: string) {
 
+    if (fmlScript.length < 10) {
+      return;
+    }
+
     const remTab = fmlScript.replace(/\n\s+/g, '');
     const tokens = remTab.split('<').map(el => el.split('>')).reduce((acc, curr) => acc.concat(curr))
 
