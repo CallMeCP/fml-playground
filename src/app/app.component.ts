@@ -475,7 +475,7 @@ export class AppComponent implements OnInit {
     this.showFontSize = true;
     this.showDelete = true;
     this.showBorderSize = true;
-    this.showPfId = true;
+    // this.showPfId = true;
     // this.showVarId = true;
     // this.showSymbolId = true;
     this.showComparison = true;
