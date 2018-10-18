@@ -442,7 +442,7 @@ export class AppComponent implements OnInit {
     this.showFontColor = true;
     this.showFontSize = true;
     this.showFontFamily = true;
-    this.showContent = true;
+    // this.showContent = true;
     this.showBold = true;
     this.showItalic = true;
     this.showDelete = true;
