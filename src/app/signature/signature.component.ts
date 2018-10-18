@@ -54,6 +54,7 @@ export class SignatureComponent implements OnInit {
       this.bgColor = this.sigProp.bgColor;
       this.fontColor = this.sigProp.fontColor;
       this.weight = this.sigProp.weight;
+      this.signatureId = this.sigProp.signatureId;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Signature ID
