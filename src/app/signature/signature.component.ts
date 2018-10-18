@@ -59,6 +59,12 @@ export class SignatureComponent implements OnInit {
     }else {
       // Set Signature ID
       this.componentId = `SIGNATURE_${this.sigId}`;
+
+      // Set height based on current working page
+      this.y = this.propertyService.getCompStartY();
+      this.position = {x: this.x, y: this.y};
+
+      // Update final FML
       this.updateFinalFml();
     }
   }

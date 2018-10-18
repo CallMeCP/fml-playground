@@ -114,6 +114,10 @@ export class BodyComponent implements OnInit {
     // Emit new values
     this.emitNewValues();
 
+    // Update current working page
+    const tok  = this.componentId.split('_');
+    this.propertyService.updateCurrentPage(+tok[1]);
+
     // Listen to Properties panel changes
     if(this.propToSrv$ === null || this.propToSrv$ === undefined) {
       

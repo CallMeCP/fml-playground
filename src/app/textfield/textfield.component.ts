@@ -74,6 +74,12 @@ export class TextfieldComponent implements OnInit {
     }else {
       // Set Textfield ID
       this.componentId = `TEXTFIELD_${this.txtId}`;
+
+      // Set height based on current working page
+      this.y = this.propertyService.getCompStartY();
+      this.position = {x: this.x, y: this.y};
+
+      // Update final FML
       this.updateFinalFml();
     }
   }

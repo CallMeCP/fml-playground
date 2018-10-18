@@ -61,6 +61,9 @@ export class PropertyService {
   // Notify subscriber to load components
   isLoadFml$: EventEmitter<boolean> = new EventEmitter();
 
+  // Current page selected
+  currentWorkingPage: number = 1;
+
   // Final FML Components Property
   fmlBodyProp: FmlBody[] = [];
   fmlSignatureProp: FmlSignature[] = [];
@@ -167,6 +170,14 @@ export class PropertyService {
     // e.g. "TEXTFIELD_1"
     const index = parseInt(splitStr[1]);
     this.fmlCheckboxProp[index-1] = fmlChk;
+  }
+
+  updateCurrentPage(page: number) {
+    this.currentWorkingPage = page;
+  }
+
+  getCompStartY() {
+    return ((this.currentWorkingPage-1)*this.fmlBodyProp[0].height)+(10*(this.currentWorkingPage));
   }
 
   loadFml(fmlScript: string) {
