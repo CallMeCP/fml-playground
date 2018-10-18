@@ -64,6 +64,9 @@ export class PropertyService {
   // Current page selected
   currentWorkingPage: number = 1;
 
+  // Settings
+  showGrid: boolean = true;
+
   // Final FML Components Property
   fmlBodyProp: FmlBody[] = [];
   fmlSignatureProp: FmlSignature[] = [];
@@ -762,5 +765,11 @@ export class PropertyService {
 
     return finalFmlStr;
     
+  }
+
+  toggleGrid(showGrid: boolean) {
+    this.showGrid = showGrid;
+
+    this.isLoadFml$.next(true);
   }
 }

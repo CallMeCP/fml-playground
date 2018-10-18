@@ -23,7 +23,7 @@
         <button mat-stroked-button (click)="genButton()">Button</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-stroked-button (click)="genSignatureBlock()">Signature Block</button>
+        <button mat-stroked-button (click)="genSignatureBlock()">Signature</button>
       </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genCheckbox()">Check Box</button>
@@ -33,6 +33,12 @@
         </mat-list-item>
       <mat-list-item>
         <button mat-stroked-button (click)="genFml()">GenFML</button>
+      </mat-list-item>
+
+      <!-- Settings -->
+      <h3 mat-subheader>Settings</h3>
+      <mat-list-item>
+        <mat-slide-toggle [checked]="showGrid" (change)="toggleGrids($event)">Grid</mat-slide-toggle>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>

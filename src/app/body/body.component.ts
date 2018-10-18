@@ -15,6 +15,7 @@ export class BodyComponent implements OnInit {
 
   // For grid line looping
   gridArr: number[] = [];
+  showGrid: boolean = true;
 
   // Default values
   componentId: string;
@@ -42,6 +43,7 @@ export class BodyComponent implements OnInit {
   ngOnInit() {
 
     if (this.pageProp.componentId !== '') {
+      this.showGrid = this.propertyService.showGrid;
       this.componentId = this.pageProp.componentId;
       this.componentType = this.pageProp.componentType;
       this.x = this.pageProp.x;
@@ -54,6 +56,9 @@ export class BodyComponent implements OnInit {
       this.fontFamily = this.pageProp.fontFamily === 'times new roman'?'times_roman':this.fontFamily;
 
     }else {
+      // Set show grid
+      this.showGrid = this.propertyService.showGrid;
+
       // Set Page ID
       this.componentId = `PAGE_${this.pageId}`;
 

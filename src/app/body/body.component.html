@@ -12,7 +12,7 @@
   [style.font-size.px] = "fontSize"
   [style.font-family] = "fontFamily"
 >
-  <div fxLayout="row wrap">
+  <div fxLayout="row wrap" *ngIf="showGrid">
       <div *ngFor="let aaa of gridArr" style="border: 1px dotted silver; width: 8px; height: 8px;"></div>
   </div>
 

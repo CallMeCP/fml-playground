@@ -138,6 +138,10 @@ export class AppComponent implements OnInit {
   ];
 
 // ===================================================================================================
+// Settings
+  showGrid: boolean = true;
+
+// ===================================================================================================
   // Button related
   btnId: number = 0;
   btnArr: number[] = [];
@@ -666,6 +670,10 @@ export class AppComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.variables.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  toggleGrids(event) {
+    this.propertyService.toggleGrid(event.checked);
   }
 
   over(e) {
