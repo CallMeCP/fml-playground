@@ -1,7 +1,7 @@
 <div style="border: 1px solid black; position: absolute;"
   class ="unselectable"
   (mousedown)="onWindowPress($event)"
-  (mousemove)="onWindowDrag($event)"
+  
   (mouseup)="onWindowUp($event)"
   [style.top.px] = "y"
   [style.left.px] = "x"
@@ -17,3 +17,5 @@
   </div>
 
 </div>
+
+<!-- (mousemove)="onWindowDrag($event)" -->
