@@ -108,7 +108,7 @@
           <mat-list-item *ngIf="showFontSize">
             <mat-label>Font Size: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="fontSize" (change)="updateView()" [disabled]="deleted || disabledPageProp">
+              <input matInput type="number" min="1" [(ngModel)]="fontSize" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
