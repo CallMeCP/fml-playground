@@ -44,7 +44,18 @@
       <mat-list-item>
         <mat-label>Font Size: </mat-label>
         <mat-form-field>
-          <input matInput type="number" min="1" [(ngModel)]="globalFontSize" (change)="updateGlobalFontSize()" [disabled]="deleted || disabledPageProp">
+          <input matInput type="number" min="1" [(ngModel)]="globalFontSize" (change)="updateGlobalFontSize()">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-label>Font Family: </mat-label>
+        <mat-form-field>
+          <mat-select [(ngModel)]="globalFontFamily" (selectionChange)="updateGlobalFontFamily()">
+            <mat-option *ngFor="let fontf of fontFamilies" [value]="fontf.value">
+              {{fontf.viewValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </mat-list-item>
     </mat-list>

@@ -37,7 +37,8 @@ import { FmlCheckbox } from './checkbox/checkbox.interface';
 // _filterSymbols             Helper to filter symbols
 // _filterVariables           Helper to filter variables
 // toggleGrids                Show or hide page grids
-// updateGlobalFontSize       Set all component with same font size
+// updateGlobalFontSize       Set all components with same font size
+// updateGlobalFontFamily     Set all components with same font family
 
 @Component({
   selector: 'app-root',
@@ -168,6 +169,7 @@ export class AppComponent implements OnInit {
 // Settings
   showGrid: boolean = true;
   globalFontSize: number = 0;
+  globalFontFamily: string = 'times new roman';
 
 // ===================================================================================================
   // Button related
@@ -715,6 +717,10 @@ export class AppComponent implements OnInit {
 
   updateGlobalFontSize() {
     this.propertyService.updateGlobalFontSize(this.globalFontSize);
+  }
+
+  updateGlobalFontFamily() {
+    this.propertyService.updateGlobalFontFamily(this.globalFontFamily);
   }
 
 }
