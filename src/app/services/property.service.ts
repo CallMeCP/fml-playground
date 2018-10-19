@@ -7,6 +7,23 @@ import { FmlButton } from '../interfaces/FmlButton.interface';
 import { FmlTextField } from '../textfield/textfield.interface';
 import { FmlCheckbox } from '../checkbox/checkbox.interface';
 
+// MODULE INDEX
+// NAME                   CONTENTS
+// constructor            Empty
+// getColourString        Return R.G.B string from colour name
+// updateFmlBody          Update global FmlBody component properties
+// updateFmlSignature     Update global FmlSignature properties
+// updateFmlLabel         Update global FmlLabel properties
+// updateFmlButton        Update global FmlButton properties
+// updateFmlTextfield     Update global FmlTextfield properties
+// updateFmlCheckbox      Update global FmlCheckbox properties
+// updateCurrentPage      Update current working page, use to push new item to correct page
+// getCompStartY          Return where should a new component to place at Y position
+// updatedPageProp        Sync properties of all pages, and do a UI refresh
+// loadFml                Parse FmlScripts, create components, and do UI refresh
+// genFml                 Generate FmlScripts, and return it
+// toggleGrid             Update showGrid status, and do UI refresh
+
 @Injectable({
   providedIn: 'root'
 })
