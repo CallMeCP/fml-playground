@@ -74,8 +74,11 @@ export class ButtonComponent implements OnInit {
       this.position = {x: this.x, y: this.y};
 
       // Update final FML
-      this.updateFinalFml();
+      // this.updateFinalFml();
     }
+
+    // Update final FML
+    this.updateFinalFml();
   }
 
   emitNewValues() {
