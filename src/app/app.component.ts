@@ -92,6 +92,7 @@ export class AppComponent implements OnInit {
   ]
 
   borderSizes = [
+    {value: 0, viewValue: '0'},
     {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
     {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
   ];
@@ -223,7 +224,7 @@ export class AppComponent implements OnInit {
   italic: boolean = false;
   buttonId: string = "";
   deleted: boolean = false;
-  borderSize: number = 1;
+  borderSize: number = 0;
   pfId: string = '';
   symbolId: string = '';
   varId: string = '';
@@ -284,7 +285,7 @@ export class AppComponent implements OnInit {
         this.italic = properties.italic || false;
         this.buttonId = properties.buttonId || "";
         this.deleted = properties.deleted || false;
-        this.borderSize = properties.borderSize || 1;
+        this.borderSize = properties.borderSize || 0;
         this.pfId = properties.pfId || '';
         this.symbolId = properties.symbolId || '';
         this.varId = properties.varId || '';
