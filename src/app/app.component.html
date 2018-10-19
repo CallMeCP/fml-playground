@@ -40,6 +40,13 @@
       <mat-list-item>
         <mat-slide-toggle [checked]="showGrid" (change)="toggleGrids($event)">Grid</mat-slide-toggle>
       </mat-list-item>
+
+      <mat-list-item>
+        <mat-label>Font Size: </mat-label>
+        <mat-form-field>
+          <input matInput type="number" min="1" [(ngModel)]="globalFontSize" (change)="updateGlobalFontSize()" [disabled]="deleted || disabledPageProp">
+        </mat-form-field>
+      </mat-list-item>
     </mat-list>
   </mat-sidenav>
 

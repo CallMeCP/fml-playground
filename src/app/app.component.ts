@@ -37,6 +37,7 @@ import { FmlCheckbox } from './checkbox/checkbox.interface';
 // _filterSymbols             Helper to filter symbols
 // _filterVariables           Helper to filter variables
 // toggleGrids                Show or hide page grids
+// updateGlobalFontSize       Set all component with same font size
 
 @Component({
   selector: 'app-root',
@@ -166,6 +167,7 @@ export class AppComponent implements OnInit {
 // ===================================================================================================
 // Settings
   showGrid: boolean = true;
+  globalFontSize: number = 0;
 
 // ===================================================================================================
   // Button related
@@ -709,6 +711,10 @@ export class AppComponent implements OnInit {
 
   toggleGrids(event) {
     this.propertyService.toggleGrid(event.checked);
+  }
+
+  updateGlobalFontSize() {
+    this.propertyService.updateGlobalFontSize(this.globalFontSize);
   }
 
 }

@@ -23,6 +23,7 @@ import { FmlCheckbox } from '../checkbox/checkbox.interface';
 // loadFml                Parse FmlScripts, create components, and do UI refresh
 // genFml                 Generate FmlScripts, and return it
 // toggleGrid             Update showGrid status, and do UI refresh
+// updateGlobalFontSize   Set all component with same font size, and do UI refresh
 
 @Injectable({
   providedIn: 'root'
@@ -787,6 +788,32 @@ export class PropertyService {
   toggleGrid(showGrid: boolean) {
     this.showGrid = showGrid;
 
+    this.isLoadFml$.next(true);
+  }
+
+  updateGlobalFontSize(fontSize: number) {
+
+    // Update Labels
+    for (let index = 0; index < this.fmlLabelProp.length; index++) {
+      this.fmlLabelProp[index].fontSize = +fontSize;
+    }
+
+    // Update Textfields
+    for (let index = 0; index < this.fmlTextfieldProp.length; index++) {
+      this.fmlTextfieldProp[index].fontSize = +fontSize;
+    }
+
+    // Update Body
+    for (let index = 0; index < this.fmlBodyProp.length; index++) {
+      this.fmlBodyProp[index].fontSize = +fontSize;
+    }
+
+    // Update Checkbox
+    for (let index = 0; index < this.fmlCheckboxProp.length; index++) {
+      this.fmlCheckboxProp[index].fontSize = +fontSize;
+    }
+
+    // Notify subscriber to refresh all components
     this.isLoadFml$.next(true);
   }
 }
