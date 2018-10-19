@@ -61,7 +61,7 @@ export class TextfieldComponent implements OnInit {
       this.bgColor = this.txtProp.bgColor;
       this.fontColor = this.txtProp.fontColor;
       this.fontSize = this.txtProp.fontSize;
-      this.fontFamily = this.txtProp.fontFamily
+      this.fontFamily = this.txtProp.fontFamily==='times new roman'?'times_roman':this.fontFamily;
       this.content = this.txtProp.content;
       this.bold = this.txtProp.bold;
       this.italic = this.txtProp.italic;
