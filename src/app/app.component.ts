@@ -230,6 +230,8 @@ export class AppComponent implements OnInit {
   showComparison: boolean = false;
   showCompareTo: boolean  = false;
 
+  disabledPageProp: boolean = false;
+
   isLoadFmlSub$: Subscription;
 
   constructor(
@@ -279,6 +281,9 @@ export class AppComponent implements OnInit {
         if (this.varControlSub != null) {
           this.varControlSub.unsubscribe();
         }
+
+        // Reset disabledPageProp status
+        this.disabledPageProp = false;
 
         // Update Property Panel
         this.resetPropertyView();
@@ -398,6 +403,10 @@ export class AppComponent implements OnInit {
     this.showFontColor = true;
     this.showFontSize = true;
     this.showFontFamily = true;
+
+    if (this.componentType === 'Page' && this.componentId != 'PAGE_1') {
+      this.disabledPageProp = true;
+    }
   }
 
   showSignatureProperties() {

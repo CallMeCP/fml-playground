@@ -53,7 +53,7 @@ export class BodyComponent implements OnInit {
       this.bgColor = this.pageProp.bgColor;
       this.fontColor = this.pageProp.fontColor;
       this.fontSize = this.pageProp.fontSize;
-      this.fontFamily = this.pageProp.fontFamily === 'times new roman'?'times_roman':this.fontFamily;
+      this.fontFamily = this.pageProp.fontFamily;
 
     }else {
       // Set show grid

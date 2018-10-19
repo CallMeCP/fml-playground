@@ -58,35 +58,35 @@
           <mat-list-item>
             <mat-label>X: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="x" (change)="updateView()" [disabled]="deleted">
+              <input matInput [(ngModel)]="x" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page'">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Y: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="y" (change)="updateView()" [disabled]="deleted">
+              <input matInput [(ngModel)]="y" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page' ">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>width: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="width" (change)="updateView()" [disabled]="deleted">
+              <input matInput [(ngModel)]="width" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Height: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="height" (change)="updateView()" [disabled]="deleted">
+              <input matInput [(ngModel)]="height" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showBgColor">
             <mat-label>BG Color: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()" [disabled]="deleted">
+              <mat-select [(ngModel)]="bgColor" (selectionChange)="updateView()" [disabled]="deleted || disabledPageProp">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
                   {{colorCode.viewValue}}
                 </mat-option>
@@ -97,7 +97,7 @@
           <mat-list-item *ngIf="showFontColor">
             <mat-label>Font Color: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()" [disabled]="deleted">
+              <mat-select [(ngModel)]="fontColor" (selectionChange)="updateView()" [disabled]="deleted || disabledPageProp">
                 <mat-option *ngFor="let colorCode of colorCodes" [value]="colorCode.value">
                   {{colorCode.viewValue}}
                 </mat-option>
@@ -108,14 +108,14 @@
           <mat-list-item *ngIf="showFontSize">
             <mat-label>Font Size: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="fontSize" (change)="updateView()" [disabled]="deleted">
+              <input matInput [(ngModel)]="fontSize" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showFontFamily">
             <mat-label>Font Family: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()" [disabled]="deleted">
+              <mat-select [(ngModel)]="fontFamily" (selectionChange)="updateView()" [disabled]="deleted || disabledPageProp">
                 <mat-option *ngFor="let fontf of fontFamilies" [value]="fontf.value">
                   {{fontf.viewValue}}
                 </mat-option>
