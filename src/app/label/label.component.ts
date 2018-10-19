@@ -58,7 +58,7 @@ export class LabelComponent implements OnInit {
       this.bgColor = this.lblProp.bgColor;
       this.fontColor = this.lblProp.fontColor;
       this.fontSize = this.lblProp.fontSize;
-      this.fontFamily = this.lblProp.fontFamily==='times new roman'?'times_roman':this.fontFamily;
+      this.fontFamily = this.lblProp.fontFamily==='times_roman'?'times new roman':this.lblProp.fontFamily;
       this.bold = this.lblProp.bold;
       this.italic = this.lblProp.italic;
       this.position = {x: this.x, y: this.y};
