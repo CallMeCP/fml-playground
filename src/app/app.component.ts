@@ -13,6 +13,31 @@ import { FmlLabel } from './label/label.interface';
 import { FmlTextField } from './textfield/textfield.interface';
 import { FmlCheckbox } from './checkbox/checkbox.interface';
 
+// MODULE INDEX
+// NAME                       CONTENT
+// constructor                Listen to UI component changes
+// ngOnInit                   Generate first page, Listen whether to reload all components
+// updateView                 Push Properties panel changes to UI component
+// resetPropertyView          Hide show properties items
+// showBodyProperties         Show properties available for Page/ Body
+// showSignatureProperties    Show properties available for Signature
+// showLabelProperties        Show properties available for Label
+// showButtonProperties       Show properties available for Button
+// showTextfieldProperties    Show properties available for Textfield
+// showCheckboxProperties     Show properties available for Checkbox
+// genButton                  Generate Button component
+// genSignatureBlock          Generate Signature component
+// genLabelBlock              Generate Label component
+// genTextfield               Generate Textfield component
+// genCheckbox                Generate checkbox component
+// genPage                    Generate Page component
+// genFml                     Generate FML scripts and show in dialog
+// loadFml                    Load FML using dialog
+// delete                     Just set component to invisible, it's still in array
+// _filterSymbols             Helper to filter symbols
+// _filterVariables           Helper to filter variables
+// toggleGrids                Show or hide page grids
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -685,7 +710,4 @@ export class AppComponent implements OnInit {
     this.propertyService.toggleGrid(event.checked);
   }
 
-  over(e) {
-    console.log(e.type);
-  }
 }

@@ -1,6 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+// MODULES INDEX
+// NAME               CONTENT
+// constructor        Empty
+// ngOnInit           Empty
+// onCloseClick       Close dialog
+// copyToClipboard    Copy FML scripts to clipboard
+
 @Component({
   selector: 'app-gen-fml-dialog',
   templateUrl: './gen-fml-dialog.component.html',

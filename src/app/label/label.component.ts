@@ -3,6 +3,19 @@ import { PropertyService } from '../services/property.service';
 import { Subscription } from 'rxjs';
 import { FmlLabel } from './label.interface';
 
+// MODULE INDEX
+// NAME               CONTENT
+// constructor        empty
+// ngOnInit           Load component or create new component
+// emitNewValues      Push UI changes to Properties panel
+// onWindowPress      Sync component properties to Panel and listen for Panel changes
+// onWindowDrag       Push UI changes to Properties panel
+// onWindowUp         Restore zIndex and disable dragable
+// onResizing         Push UI changes to Properties panel
+// updateFinalFml     Update current properties to service
+// getBgColString     Return R.G.B string based on color name
+// getFontColString   Return R.G.B string based on color name
+
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',

@@ -3,6 +3,21 @@ import { PropertyService } from '../services/property.service';
 import { FmlBody } from '../interfaces/FmlBody.interface';
 import { Observable, Subscription } from 'rxjs';
 
+// MODULE INDEX
+// NAME               CONTENT
+// constructor        Empty
+// ngOnInit           Load component or create new component
+// drawGrid           Draw grids
+// emitNewValues      Push UI changes to Properties panel
+// resize             Not using anywhere
+// onWindowPress      Sync component properties to Panel and listen for Panel changes
+// onWindowDrag       Push UI changes to Properties panel
+// onWindowUp         Restore zIndex and disable dragable
+// onResizing         Push UI changes to Properties panel
+// updateFinalFml     Update current properties to service
+// getBgColString     Return R.G.B string based on color name
+// getFontColString   Return R.G.B string based on color name
+
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
