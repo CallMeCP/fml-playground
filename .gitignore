@@ -4,6 +4,8 @@
 /dist
 /tmp
 /out-tsc
+/fml-builder-darwin-x64
+/fml-builder-win32-x64
 
 # dependencies
 /node_modules

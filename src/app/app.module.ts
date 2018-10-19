@@ -53,8 +53,8 @@ import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.compon
     LoadFmlDialogComponent
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    // { provide: APP_BASE_HREF, useValue: '/' },
+    // { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })
