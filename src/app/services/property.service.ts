@@ -276,9 +276,11 @@ export class PropertyService {
       const el: string = tokens[index];
 
       // Set current types. TODO - revamp when free
-      if (el.indexOf('Checkboxes') !== -1) {
-        currentType = 'Checkboxes';
-      }
+      if (el.indexOf('Checkboxes') !== -1) { currentType = 'CHECKBOX';}
+      else if (el.indexOf('Signatures') !== -1) { currentType = 'SIGNATURE'; }
+      else if (el.indexOf('Labels') !== -1) { currentType = 'LABEL'; }
+      else if (el.indexOf('Textfields') !== -1) { currentType = 'TEXTFIELD'; }
+      else if (el.indexOf('Buttons') !== -1) { currentType = 'BUTTON'; }
 
       // Construct Body
       if (el.indexOf('body') !== -1) {
@@ -321,7 +323,7 @@ export class PropertyService {
       }
 
       // Construct BUTTON
-      if (el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
+      if (currentType === 'BUTTON' && el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
 
         // Get Button Properties
         const el2 = el.split(' ');
@@ -355,7 +357,7 @@ export class PropertyService {
       }
 
       // Construct LABEL
-      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
+      if (currentType === 'LABEL' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
           && tokens[index+2].indexOf('x=') == -1 && tokens[index+2].indexOf('y=') == -1) {
         
         // Get Label Properties
@@ -419,7 +421,7 @@ export class PropertyService {
       }
 
       // Construct SIGNATURE
-      if (el.indexOf('signature') !== -1 && el.indexOf('id=') !== -1) {
+      if (currentType === 'SIGNATURE' && el.indexOf('signature') !== -1 && el.indexOf('id=') !== -1) {
 
         // // Get Signature Properties
         const el2 = el.split(' ');
@@ -469,7 +471,7 @@ export class PropertyService {
       }
 
       // Construct Textfield
-      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
+      if (currentType === 'TEXTFIELD' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
           && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1 ) {
         
         // LINE 2 - Get border size, bgcolor, color
@@ -563,10 +565,10 @@ export class PropertyService {
       }
 
       // Construct Checkbox
-      if (el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 
+      if (currentType==='CHECKBOX' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 
           && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1 
           && tokens[index+6].indexOf('if') !== -1
-          && currentType === 'Checkboxes') {
+          ) {
         
         // LINE 2 - Get border size, bgcolor, color
         const line2Tokens = tokens[index+2].split(' ');
