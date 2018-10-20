@@ -423,11 +423,12 @@ export class PropertyService {
 
         // // Get Signature Properties
         const el2 = el.split(' ');
+        let oriX: number = 0;     //  for border purpose
 
         el2.map(el => {
           let str = el.split('=');
 
-          if (el.indexOf('x=') !== -1) { sig.x = ((+str[1]) / PP + 10);}
+          if (el.indexOf('x=') !== -1) { sig.x = ((+str[1]) / PP + 10); oriX = (+str[1])}
           if (el.indexOf('y=') !== -1) { sig.y = ((+str[1]) / PP + 10) + pgHgt; }
           if (el.indexOf('width=') !== -1) { sig.width = +str[1] / PP; }
           if (el.indexOf('height=') !== -1) { sig.height = +str[1] / PP; }
@@ -441,6 +442,16 @@ export class PropertyService {
         sig.componentId = `SIGNATURE_${++sigId}`;
         sig.deleted = false;
 
+        // Get signature border size
+        const sigBdToks = tokens[index-4].split(' ');
+        const bdToks = sigBdToks[1].split('=');
+        sig.borderSize = ( oriX - (+bdToks[1])) / PP;
+
+        // Update X and Y due too border size
+        sig.x = sig.x - sig.borderSize;
+        sig.y = sig.y - sig.borderSize;
+
+        // Push new signature component to array
         this.fmlSignatureProp.push({
           componentId: sig.componentId,
           signatureId: sig.signatureId,
@@ -452,7 +463,8 @@ export class PropertyService {
           y: sig.y,
           weight: sig.weight,
           bgColor: sig.bgColor,
-          fontColor: sig.fontColor
+          fontColor: sig.fontColor,
+          borderSize: sig.borderSize
         });
       }
 
@@ -682,11 +694,18 @@ export class PropertyService {
             addedSigComment = true;
           }
 
-          const str:string =
-            `\t\t<signature x=${(sig.x-bodyX)*0.75} y=${(sig.y-bodyY)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
+          // Signature border
+          const sigBorder: string = `\t\t<t x=${(sig.x-bodyX)*PP} y=${(sig.y-bodyY)*PP} w=${(sig.width+(sig.borderSize*2))*PP} h=${(sig.height+(sig.borderSize*2))*PP} bgcol=BLACK></t>\n`;
+
+          finalFmlStr += sigBorder;
+
+          // Signature box
+          const sigBox:string =
+            `\t\t<signature x=${(sig.x-bodyX+sig.borderSize)*0.75} y=${(sig.y-bodyY+sig.borderSize)*0.75} width=${sig.width*0.75} height=${sig.height*0.75} 
               \t\twt=${sig.weight*PP} bgcolor=${sig.bgColor} color=${sig.fontColor} id=${sig.signatureId}>\n\n`;
   
-          finalFmlStr += str;
+          finalFmlStr += sigBox;
+
         }
       });
 

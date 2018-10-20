@@ -41,6 +41,7 @@ export class SignatureComponent implements OnInit {
   zIndex: number = 100;
   signatureId: string = 'NEW_APP_SIG_ID';
   deleted: boolean = false;
+  borderSize: number = 1;
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -68,6 +69,7 @@ export class SignatureComponent implements OnInit {
       this.fontColor = this.sigProp.fontColor;
       this.weight = this.sigProp.weight;
       this.signatureId = this.sigProp.signatureId;
+      this.borderSize = this.sigProp.borderSize;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Signature ID
@@ -97,6 +99,7 @@ export class SignatureComponent implements OnInit {
       bgColor: this.bgColor,
       fontColor: this.fontColor,
       signatureId: this.signatureId,
+      borderSize: this.borderSize,
       deleted: this.deleted
     };
 
@@ -130,6 +133,7 @@ export class SignatureComponent implements OnInit {
             this.bgColor = properties.bgColor;
             this.fontColor = properties.fontColor;
             this.signatureId = properties.signatureId;
+            this.borderSize = +properties.borderSize;
             this.deleted = properties.deleted;
             this.position = {x: this.x, y: this.y};
 
@@ -191,6 +195,7 @@ export class SignatureComponent implements OnInit {
       bgColor: this.bgColor,
       fontColor: this.fontColor,
       signatureId: this.signatureId,
+      borderSize: this.borderSize,
       deleted: this.deleted
     });
   }

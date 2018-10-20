@@ -1,4 +1,4 @@
-<div style="border: 1px dotted black; position: absolute; "
+<div style="position: absolute; border-style: solid; border-color: black"
   *ngIf="!deleted"
   class ="unselectable"
   ngDraggable
@@ -14,6 +14,7 @@
   [style.background-color] = "getBgColString()"
   [style.color] = "getFontColString()"
   [style.z-index] = "zIndex"
+  [style.border-width.px] = "borderSize"
 >
   <!-- <div style="position:absolute;">{{signatureId}}</div> -->
   <div style="position:absolute; font-size: 10px">{{signatureId}}</div>

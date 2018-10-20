@@ -448,6 +448,7 @@ export class AppComponent implements OnInit {
     this.showBgColor = true;
     this.showFontColor = true;
     this.showSignatureId = true;
+    this.showBorderSize = true;
     this.showDelete = true;
   }
 
@@ -578,6 +579,7 @@ export class AppComponent implements OnInit {
       bgColor: '',
       fontColor: '',
       signatureId: '',
+      borderSize: 0,
       deleted: false
     });
     this.sigId++;
