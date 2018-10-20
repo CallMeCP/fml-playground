@@ -86,6 +86,10 @@ export class BodyComponent implements OnInit {
         this.y = (this.pageId-1)*this.propertyService.fmlBodyProp[0].height+(10*this.pageId);
         this.width = this.propertyService.fmlBodyProp[0].width;
         this.height = this.propertyService.fmlBodyProp[0].height;
+        this.bgColor = this.propertyService.fmlBodyProp[0].bgColor;
+        this.fontColor = this.propertyService.fmlBodyProp[0].fontColor;
+        this.fontFamily = this.propertyService.fmlBodyProp[0].fontFamily==='times_roman'?'times new roman':this.pageProp.fontFamily;
+
       }
     }
 
