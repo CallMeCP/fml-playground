@@ -12,9 +12,16 @@
   [style.font-size.px] = "fontSize"
   [style.font-family] = "fontFamily"
 >
-  <div fxLayout="row wrap" *ngIf="showGrid">
-      <div *ngFor="let aaa of gridArr" style="border: 1px dotted silver; width: 8px; height: 8px;"></div>
-  </div>
+  <!-- <div fxLayout="row wrap" *ngIf="showGrid">
+      <div *ngFor="let aaa of gridArr" style="border: 1px dotted hsl(0, 0%, 75%); width: 8px; height: 8px;"></div>
+  </div> -->
+
+  <div 
+    *ngIf = "showGrid"
+    style="background-image: url('../assets/box03.svg');"
+    [style.width.px] = "width"
+    [style.height.px] = "height"
+    ></div>
 
 </div>
 

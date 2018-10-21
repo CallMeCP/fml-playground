@@ -94,7 +94,7 @@ export class BodyComponent implements OnInit {
     }
 
     // Draw Grids
-    this.drawGrid();
+    // this.drawGrid();
 
     // Update Global FML
     this.updateFinalFml();
@@ -217,7 +217,7 @@ export class BodyComponent implements OnInit {
     );
 
     // Redraw grids
-    this.drawGrid();
+    // this.drawGrid();
   }
 
   getBgColString(): string {
