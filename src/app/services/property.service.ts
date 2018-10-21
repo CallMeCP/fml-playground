@@ -385,8 +385,41 @@ export class PropertyService {
         algmntToks.map(el => {
           let str = el.split('=');
           
-          if (str[0] === 'align') { lbl.horizontalAlign = str[1]; }
-          if (str[0] === 'valign') { lbl.verticalAlign = str[1]; }
+          // Convert horizontal align
+          if (str[0] === 'align') { 
+            switch (str[1]) {
+              case 'left':
+                lbl.horizontalAlign = 'right';
+                break;
+              case 'center':
+                lbl.horizontalAlign = 'center';
+                break;
+              case 'right':
+                lbl.horizontalAlign = 'left';
+                break;
+              default:
+                lbl.horizontalAlign = 'right';
+                break;
+            }
+          }
+
+          if (str[0] === 'valign') { 
+            switch (str[1]) {
+              case 'top':
+                lbl.verticalAlign = 'end';
+                break;
+              case 'center':
+                lbl.verticalAlign = 'center';
+                break;
+              case 'bottom':
+                lbl.verticalAlign = 'start';
+                break;
+              default:
+                lbl.verticalAlign = 'start';
+                break;
+            }
+          
+          }
         });
 
         // Parse bold, italic, and content

@@ -76,27 +76,8 @@ export class LabelComponent implements OnInit {
       this.fontFamily = this.lblProp.fontFamily==='times_roman'?'times new roman':this.lblProp.fontFamily;
       this.bold = this.lblProp.bold;
       this.italic = this.lblProp.italic;
-
-      if (this.lblProp.horizontalAlign === 'left') {
-        this.horizontalAlign = 'right';
-
-      }else if (this.lblProp.horizontalAlign === 'center') {
-        this.horizontalAlign = 'center';
-
-      }else if (this.lblProp.horizontalAlign === 'right') {
-        this.horizontalAlign = 'left';
-      }
-
-      if (this.lblProp.verticalAlign === 'top') {
-        this.verticalAlign = 'end';
-
-      }else if (this.lblProp.verticalAlign === 'center') {
-        this.verticalAlign = 'center';
-
-      }else if (this.lblProp.verticalAlign === 'bottom') {
-        this.verticalAlign = 'start';
-      }
-      
+      this.horizontalAlign = this.lblProp.horizontalAlign;
+      this.verticalAlign = this.lblProp.verticalAlign;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Label ID
