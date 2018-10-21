@@ -77,7 +77,7 @@ export class CheckboxComponent implements OnInit {
       this.symbolId = this.chkboxProp.symbolId;
       this.pfId = this.chkboxProp.pfId;
       this.varId = this.chkboxProp.varId;
-      this.comparison = this.chkboxProp.comparison;
+      this.comparison = `<${this.chkboxProp.comparison}>`;
       this.compareTo = this.chkboxProp.compareTo;
       
       this.position = {x: this.x, y: this.y};
