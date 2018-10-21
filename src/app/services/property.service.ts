@@ -389,13 +389,13 @@ export class PropertyService {
           if (str[0] === 'align') { 
             switch (str[1]) {
               case 'left':
-                lbl.horizontalAlign = 'right';
+                lbl.horizontalAlign = 'left';
                 break;
               case 'center':
                 lbl.horizontalAlign = 'center';
                 break;
               case 'right':
-                lbl.horizontalAlign = 'left';
+                lbl.horizontalAlign = 'right';
                 break;
               default:
                 lbl.horizontalAlign = 'right';
