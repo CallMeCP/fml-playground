@@ -654,7 +654,9 @@ export class PropertyService {
           chk.varId = tokens[index+7];
         }else {
           chk.symbolId = '';
-          chk.pfId = tokens[index+7];
+
+          const pfToks = tokens[index+7].split('.');
+          chk.pfId = pfToks[1];
           chk.varId = '';
         }
 
