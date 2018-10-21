@@ -105,6 +105,18 @@ export class AppComponent implements OnInit {
     {value: 'TOTITLE', viewValue: 'To Title'},
   ];
 
+  horizontalAligns = [
+    {value: 'left', viewValue: 'Left'},
+    {value: 'center', viewValue: 'Center'},
+    {value: 'right', viewValue: 'Right'}
+  ];
+
+  verticalAligns = [
+    {value: 'start', viewValue: 'Top'},
+    {value: 'center', viewValue: 'Center'},
+    {value: 'end', viewValue: 'Bottom'}
+  ];
+
   symControl = new FormControl();
   sym2Control = new FormControl();
   filteredSymbolOptions: Observable<string[]>;
@@ -235,6 +247,8 @@ export class AppComponent implements OnInit {
   textConv: string = '';
   comparison: string = '';
   compareTo: string = '';
+  horizontalAlign: string = '';
+  verticalAlign: string = '';
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -259,6 +273,8 @@ export class AppComponent implements OnInit {
   showTextConv: boolean = false;
   showComparison: boolean = false;
   showCompareTo: boolean  = false;
+  showHorizontalAlign: boolean = false;
+  showVerticalAlign: boolean = false;
 
   disabledPageProp: boolean = false;
 
@@ -296,6 +312,8 @@ export class AppComponent implements OnInit {
         this.textConv = properties.textConv || 'TOLOWER';
         this.comparison = properties.comparison || '';
         this.compareTo = properties.compareTo || '';
+        this.horizontalAlign = properties.horizontalAlign || 'center';
+        this.verticalAlign = properties.verticalAlign || 'center';
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -395,7 +413,9 @@ export class AppComponent implements OnInit {
       varId: this.varId,
       textConv: this.textConv,
       comparison: this.comparison,
-      compareTo: this.compareTo
+      compareTo: this.compareTo,
+      horizontalAlign: this.horizontalAlign,
+      verticalAlign: this.verticalAlign
     });
   }
 
@@ -422,6 +442,8 @@ export class AppComponent implements OnInit {
     this.showTextConv = false;
     this.showComparison = false;
     this.showCompareTo = false;
+    this.showHorizontalAlign = false;
+    this.showVerticalAlign = false;
   }
 
   showBodyProperties() {
@@ -465,6 +487,8 @@ export class AppComponent implements OnInit {
     this.showBold = true;
     this.showItalic = true;
     this.showDelete = true;
+    this.showHorizontalAlign = true;
+    this.showVerticalAlign = true;
   }
 
   showButtonProperties() {
@@ -601,7 +625,9 @@ export class AppComponent implements OnInit {
       fontSize: 0,
       bgColor: '',
       bold: false,
-      italic: false
+      italic: false,
+      horizontalAlign: '',
+      verticalAlign: ''
     });
 
     this.lblId++;

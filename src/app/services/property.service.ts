@@ -357,8 +357,8 @@ export class PropertyService {
       }
 
       // Construct LABEL
-      if (currentType === 'LABEL' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
-          && tokens[index+2].indexOf('x=') == -1 && tokens[index+2].indexOf('y=') == -1) {
+      if (currentType === 'LABEL' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 ) {
+          // && tokens[index+2].indexOf('x=') == -1 && tokens[index+2].indexOf('y=') == -1) {
         
         // Get Label Properties
         const el2 = el.split(' ');
@@ -380,26 +380,35 @@ export class PropertyService {
         lbl.componentId = `LABEL_${++lblId}`;
         lbl.deleted = false;
 
-    
-        if (tokens[index+2] === 'bo' && tokens[index+4] === 'i') {
+        // Parse align, and valign
+        const algmntToks = tokens[index+2].split(' ');
+        algmntToks.map(el => {
+          let str = el.split('=');
+          
+          if (str[0] === 'align') { lbl.horizontalAlign = str[1]; }
+          if (str[0] === 'valign') { lbl.verticalAlign = str[1]; }
+        });
+
+        // Parse bold, italic, and content
+        if (tokens[index+4] === 'bo' && tokens[index+6] === 'i') {
           lbl.bold = true;
           lbl.italic = true;
-          lbl.content = tokens[index+5];
+          lbl.content = tokens[index+7];
 
-        }else if (tokens[index+2] === 'bo') {
+        }else if (tokens[index+4] === 'bo') {
           lbl.bold = true;
           lbl.italic = false;
-          lbl.content = tokens[index+3];          
+          lbl.content = tokens[index+5];          
 
-        }else if (tokens[index+2] === 'i'){
+        }else if (tokens[index+4] === 'i'){
           lbl.bold = false;
           lbl.italic = true;
-          lbl.content = tokens[index+3];
+          lbl.content = tokens[index+5];
 
         }else {
           lbl.bold = false;
           lbl.italic = false;
-          lbl.content = tokens[index+1];
+          lbl.content = tokens[index+3];
         }
 
         this.fmlLabelProp.push({
@@ -416,7 +425,9 @@ export class PropertyService {
           bgColor: lbl.bgColor,
           fontColor: lbl.fontColor,
           fontFamily: lbl.fontFamily,
-          fontSize: lbl.fontSize
+          fontSize: lbl.fontSize,
+          horizontalAlign: lbl.horizontalAlign,
+          verticalAlign: lbl.verticalAlign
         });
       }
 
@@ -721,11 +732,41 @@ export class PropertyService {
             addedLblComment = true;
           }
 
+          // String for alignments
+          const hrztAlign: string = lbl.horizontalAlign;
+          const vAlign: string = lbl.verticalAlign;
+          let alignStr: string = ``;
+
+          if (hrztAlign === 'left') {
+            alignStr += `x=0 align=right `;
+          }else if (hrztAlign === 'center') {
+            alignStr += `x=${(lbl.width/2)*PP} align=center `;
+          }else if (hrztAlign === 'right') {
+            alignStr += `x=${lbl.width*PP} align=left `;
+          }
+
+          if (vAlign === 'start') {
+            alignStr += `y=0 valign=bottom`;
+          }else if (vAlign === 'center') {
+            alignStr += `y=${(lbl.height/2) * PP} valign=center`;
+          }else if (vAlign === 'end') {
+            alignStr += `y=${lbl.height*PP} valign=top`;
+          }
+
           const str: string =
-            `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} 
-                \tfont=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
-              \t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
+            `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
+            \t\t<t ${alignStr}>
+            \t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
+            \t\t</t>
             \t</t>\n\n`;
+
+            // Align left, center, right
+            // x=0 align=right || x=width/2 align=center || y=width align=left
+            // when reverse back, right is left in CSS, and left is right in CSS.
+
+            // Valign top, center, bottom
+            // y=0 valign=bottom || y=height/2 valign=center || y=height valign=top
+            // when reverse back, bottom is top is CSS, and top is bottom in CSS.
 
           finalFmlStr += str;
         }

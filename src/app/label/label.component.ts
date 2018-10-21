@@ -45,6 +45,8 @@ export class LabelComponent implements OnInit {
   bold: boolean = false;
   italic: boolean = false;
   deleted: boolean = false;
+  horizontalAlign: string = 'center';
+  verticalAlign: string = 'center';
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -74,6 +76,27 @@ export class LabelComponent implements OnInit {
       this.fontFamily = this.lblProp.fontFamily==='times_roman'?'times new roman':this.lblProp.fontFamily;
       this.bold = this.lblProp.bold;
       this.italic = this.lblProp.italic;
+
+      if (this.lblProp.horizontalAlign === 'left') {
+        this.horizontalAlign = 'right';
+
+      }else if (this.lblProp.horizontalAlign === 'center') {
+        this.horizontalAlign = 'center';
+
+      }else if (this.lblProp.horizontalAlign === 'right') {
+        this.horizontalAlign = 'left';
+      }
+
+      if (this.lblProp.verticalAlign === 'top') {
+        this.verticalAlign = 'end';
+
+      }else if (this.lblProp.verticalAlign === 'center') {
+        this.verticalAlign = 'center';
+
+      }else if (this.lblProp.verticalAlign === 'bottom') {
+        this.verticalAlign = 'start';
+      }
+      
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Label ID
@@ -106,7 +129,9 @@ export class LabelComponent implements OnInit {
       content: this.content,
       bold: this.bold,
       italic: this.italic,
-      deleted: this.deleted
+      deleted: this.deleted,
+      horizontalAlign: this.horizontalAlign,
+      verticalAlign: this.verticalAlign
     };
 
     this.propertyService.viewToProperty$.emit(fmlLabel);
@@ -151,6 +176,8 @@ export class LabelComponent implements OnInit {
             this.bold = properties.bold;
             this.italic = properties.italic;
             this.deleted = properties.deleted;
+            this.horizontalAlign = properties.horizontalAlign;
+            this.verticalAlign = properties.verticalAlign;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -214,6 +241,8 @@ export class LabelComponent implements OnInit {
         content: this.content,
         bold: this.bold,
         italic: this.italic,
+        horizontalAlign: this.horizontalAlign,
+        verticalAlign: this.verticalAlign,
         deleted: this.deleted
       }
     );

@@ -1,4 +1,5 @@
-<div style="border: 1px dotted black; position:absolute;"
+<div style="border: 1px dotted black; position:absolute;
+      display: flex;"
   *ngIf="!deleted"
   class ="unselectable"
   ngDraggable
@@ -7,6 +8,8 @@
   (mousedown)="onWindowPress($event)"
   (movingOffset)="onWindowDrag($event)"
   (mouseup)="onWindowUp($event)"
+  [style.justify-content] = "horizontalAlign"
+  [style.align-items] = "verticalAlign"
   [position] = "position"
   [style.width.px] = "width"
   [style.height.px] = "height"

@@ -13,4 +13,6 @@ export interface FmlLabel {
     bold: boolean;
     italic: boolean;
     deleted: boolean;
+    horizontalAlign: string;
+    verticalAlign: string;
 }

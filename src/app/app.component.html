@@ -205,15 +205,15 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showTextConv">
-              <mat-label>Text Conv: </mat-label>
-              <mat-form-field>
-                <mat-select [(ngModel)]="textConv" (selectionChange)="updateView()" [disabled]="deleted">
-                  <mat-option *ngFor="let conv of textTransforms" [value]="conv.value">
-                    {{conv.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </mat-list-item>
+            <mat-label>Text Conv: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="textConv" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let conv of textTransforms" [value]="conv.value">
+                  {{conv.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
 
           <mat-list-item *ngIf="showBold">
             <mat-label>Bold: </mat-label>
@@ -223,6 +223,28 @@
           <mat-list-item *ngIf="showItalic">
             <mat-label>Italic: </mat-label>
               <mat-checkbox [(ngModel)]="italic" (change)="updateView()" [disabled]="deleted"></mat-checkbox>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showHorizontalAlign">
+            <mat-label>Horizon Align: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="horizontalAlign" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let horz of horizontalAligns" [value]="horz.value">
+                  {{horz.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showVerticalAlign">
+            <mat-label>Vertical Align: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="verticalAlign" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let va of verticalAligns" [value]="va.value">
+                  {{va.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showContent">
