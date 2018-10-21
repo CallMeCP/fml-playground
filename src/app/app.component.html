@@ -76,28 +76,28 @@
           <mat-list-item>
             <mat-label>X: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="x" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page'">
+              <input matInput type="number" min="0" [(ngModel)]="x" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page'">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Y: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="y" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page' ">
+              <input matInput type="number" min="0" [(ngModel)]="y" (change)="updateView()" [disabled]="deleted || disabledPageProp || componentType==='Page' ">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>width: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="width" (change)="updateView()" [disabled]="deleted || disabledPageProp">
+              <input matInput type="number" min="0" [(ngModel)]="width" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item>
             <mat-label>Height: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="height" (change)="updateView()" [disabled]="deleted || disabledPageProp">
+              <input matInput type="number" min="0" [(ngModel)]="height" (change)="updateView()" [disabled]="deleted || disabledPageProp">
             </mat-form-field>
           </mat-list-item>
 
