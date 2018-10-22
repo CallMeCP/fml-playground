@@ -12,16 +12,33 @@
   [style.font-size.px] = "fontSize"
   [style.font-family] = "fontFamily"
 >
+  <!-- Grids using looping of div -->
   <!-- <div fxLayout="row wrap" *ngIf="showGrid">
       <div *ngFor="let aaa of gridArr" style="border: 1px dotted hsl(0, 0%, 75%); width: 8px; height: 8px;"></div>
   </div> -->
 
+
+  <!-- Grids using image  -->
+  <!-- <div 
+    *ngIf = "showGrid"
+    style="background-image: url('./assets/box03.svg'); position: absolute"
+    [style.width.px] = "width"
+    [style.height.px] = "height"
+  ></div> -->
+
+  <!-- Double layer grids -->
   <div 
     *ngIf = "showGrid"
-    style="background-image: url('./assets/box03.svg'); opacity: 0.9"
+    style="background-image: url('./assets/10px-black-line.svg'); opacity: 0.3; position: absolute"
     [style.width.px] = "width"
     [style.height.px] = "height"
     ></div>
+  <div 
+  *ngIf = "showGrid"
+  style="background-image: url('./assets/100px.svg'); opacity: 0.3; position: absolute;"
+  [style.width.px] = "width"
+  [style.height.px] = "height"
+  ></div>
 
 </div>
 
