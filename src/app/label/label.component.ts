@@ -35,7 +35,7 @@ export class LabelComponent implements OnInit {
   x: number = 10;
   y: number = 10;
   width: number = 100;
-  height: number = 50;
+  height: number = 25;
   bgColor: string = 'white';
   fontColor: string = 'black';
   fontSize: number = 12;
