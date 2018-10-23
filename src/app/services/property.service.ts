@@ -266,7 +266,13 @@ export class PropertyService {
     let currentPage: number = 1;
     let pgHgt: number = 0;         //  Page height to add on
 
-    this.fmlBodyProp = []; // Reset body array
+    // Reset to empty arrays
+    this.fmlBodyProp = [];
+    this.fmlButtonProp = [];
+    this.fmlCheckboxProp = [];
+    this.fmlLabelProp = [];
+    this.fmlSignatureProp = [];
+    this.fmlTextfieldProp = [];
 
     console.log(tokens);
 
