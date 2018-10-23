@@ -35,7 +35,7 @@ export class SignatureComponent implements OnInit {
   y: number = 10;
   width: number = 214;
   height: number = 63;
-  weight: number = 5;
+  weight: number = 2;
   bgColor: string = 'white';
   fontColor: string = 'black';  //  line color aka signature colour
   zIndex: number = 100;
