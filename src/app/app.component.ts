@@ -69,11 +69,11 @@ export class AppComponent implements OnInit {
     {value: 'helvetica', viewValue: 'Helvetica'},
   ];
 
-  lineWeights = [
-    {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
-    {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
-    {value: 7, viewValue: '7'}, {value: 8, viewValue: '8'}, {value: 9, viewValue: '9'},
-  ];
+  // lineWeights = [
+  //   {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
+  //   {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
+  //   {value: 7, viewValue: '7'}, {value: 8, viewValue: '8'}, {value: 9, viewValue: '9'},
+  // ];
 
   signatureIds = [
     {value: "NEW_APP_SIG_ID", viewValue: "NEW_APP_SIG_ID"}, 
@@ -93,11 +93,11 @@ export class AppComponent implements OnInit {
     {value: "PEP_RESET_ID", viewValue: "PEP_RESET_ID"}
   ]
 
-  borderSizes = [
-    {value: 0, viewValue: '0'},
-    {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
-    {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
-  ];
+  // borderSizes = [
+  //   {value: 0, viewValue: '0'},
+  //   {value: 1, viewValue: '1'}, {value: 2, viewValue: '2'}, {value: 3, viewValue: '3'},
+  //   {value: 4, viewValue: '4'}, {value: 5, viewValue: '5'}, {value: 6, viewValue: '6'},
+  // ];
 
   textTransforms = [
     {value: 'TOLOWER', viewValue: 'to lower'},

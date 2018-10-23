@@ -144,22 +144,24 @@
           <mat-list-item *ngIf="showWeight">
             <mat-label>Line Weight: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="weight" (selectionChange)="updateView()" [disabled]="deleted">
+                <input matInput type="number" min="1" [(ngModel)]="weight" (change)="updateView()" [disabled]="deleted">
+              <!-- <mat-select [(ngModel)]="weight" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let wht of lineWeights" [value]="wht.value">
                   {{wht.viewValue}}
                 </mat-option>
-              </mat-select>
+              </mat-select> -->
             </mat-form-field>
           </mat-list-item>
 
           <mat-list-item *ngIf="showBorderSize">
             <mat-label>BorderSize: </mat-label>
             <mat-form-field>
-              <mat-select [(ngModel)]="borderSize" (selectionChange)="updateView()" [disabled]="deleted">
+              <input matInput type="number" min="0" [(ngModel)]="borderSize" (change)="updateView()" [disabled]="deleted">
+              <!-- <mat-select [(ngModel)]="borderSize" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let bdsz of borderSizes" [value]="bdsz.value">
                   {{bdsz.viewValue}}
                 </mat-option>
-              </mat-select>
+              </mat-select> -->
             </mat-form-field>
           </mat-list-item>
 
