@@ -43,6 +43,7 @@ export class BodyComponent implements OnInit {
   fontColor: string = 'black';
   fontSize: number = 12;
   fontFamily: string = 'times new roman';
+  screenActivationNumber: string = 'NONE';
 
   // Observable
   propToSrv$: Subscription;
@@ -69,7 +70,7 @@ export class BodyComponent implements OnInit {
       this.fontColor = this.pageProp.fontColor;
       this.fontSize = this.pageProp.fontSize;
       this.fontFamily = this.pageProp.fontFamily==='times_roman'?'times new roman':this.pageProp.fontFamily;
-
+      this.screenActivationNumber = this.pageProp.screenActivationNumber;
     }else {
       // Set show grid
       this.showGrid = this.propertyService.showGrid;
@@ -121,6 +122,7 @@ export class BodyComponent implements OnInit {
       fontColor: this.fontColor,
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
+      screenActivationNumber: this.screenActivationNumber
     };
 
     this.propertyService.viewToProperty$.emit(fmlBody);
@@ -162,6 +164,7 @@ export class BodyComponent implements OnInit {
             this.fontColor = properties.fontColor;
             this.fontSize = properties.fontSize;
             this.fontFamily = properties.fontFamily;
+            this.screenActivationNumber = properties.screenActivationNumber;
 
             // Update final FML
             this.updateFinalFml();
@@ -213,6 +216,7 @@ export class BodyComponent implements OnInit {
         fontColor: this.fontColor,
         fontSize: this.fontSize,
         fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
+        screenActivationNumber: this.screenActivationNumber
       }
     );
 

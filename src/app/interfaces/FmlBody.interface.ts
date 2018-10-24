@@ -9,4 +9,5 @@ export interface FmlBody {
     fontColor: string;
     fontSize: number;
     fontFamily: string;
+    screenActivationNumber: string;
 }

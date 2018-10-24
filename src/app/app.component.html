@@ -141,6 +141,17 @@
             </mat-form-field>
           </mat-list-item>
 
+          <mat-list-item *ngIf="showScreenActivationNumber">
+            <mat-label>Screen Activation ID: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="screenActivationNumber" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let san of sans" [value]="san.value">
+                  {{san.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+
           <mat-list-item *ngIf="showWeight">
             <mat-label>Line Weight: </mat-label>
             <mat-form-field>

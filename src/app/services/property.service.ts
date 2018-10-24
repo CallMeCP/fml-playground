@@ -313,6 +313,20 @@ export class PropertyService {
         // Calculate page height to add on on every components
         pgHgt = ((currentPage-1)*body.height)+(10*(currentPage-1));
 
+        // Get Screen Activation Number, Page 1 and Page 2++ will have diff position
+        let sanLine: any;
+        if (++pageId == 1) {
+          sanLine = tokens[index+3];
+        }else {
+          sanLine = tokens[index+5];
+        }
+         
+        if (sanLine.indexOf('_SAN') !== -1) {
+          body.screenActivationNumber = sanLine;
+        }else {
+          body.screenActivationNumber = 'NONE';
+        }
+
         // Construct page
         this.fmlBodyProp.push({
           componentId: `PAGE_${++pageId}`,
@@ -324,7 +338,8 @@ export class PropertyService {
           bgColor: body.bgColor,
           fontColor: body.fontColor,
           fontSize: body.fontSize,
-          fontFamily: body.fontFamily
+          fontFamily: body.fontFamily,
+          screenActivationNumber: body.screenActivationNumber
         });
       }
 
@@ -725,11 +740,24 @@ export class PropertyService {
     finalFmlStr += `<fml>\n\t<body width=${page.width*PP} height=${page.height*PP} bgcolor=${page.bgColor} font=${page.fontFamily} \n\t\tsize=${page.fontSize*PP} color=${page.fontColor}>\n`;
 
     for (let index = 0; index < this.fmlBodyProp.length; index++) {
-      // Construct page tag
+      // Construct page tag and Screen Activation Number
       if (index !== 0) {
         finalFmlStr += `\n\t\t<!-- Page ${index+1} -->\n\t\t<page>\n`;
+
+        const actNo: string = this.fmlBodyProp[index].screenActivationNumber;
+
+        if (actNo !== 'NONE') {
+          finalFmlStr += `\t\t<if>${actNo}<then></if>\n`;
+        }
+
       }else if (index == 0) {
         finalFmlStr += `\n\t\t<!-- Page 1 -->\n`;
+
+        const actNo: string = this.fmlBodyProp[index].screenActivationNumber;
+
+        if (actNo !== 'NONE') {
+          finalFmlStr += `\t\t<if>${actNo}<then></if>\n`;
+        }
       }
 
       // Reference to Page Size, so that only create element that fall within the page size.
@@ -737,6 +765,9 @@ export class PropertyService {
       const pgYMax: number = this.fmlBodyProp[index].y + this.fmlBodyProp[index].height;
       const bodyX: number = this.fmlBodyProp[index].x;
       const bodyY: number = this.fmlBodyProp[index].y;
+
+      // Construct Screen Activation Number
+
 
       // Construct Signatures
       let addedSigComment: boolean = false;

@@ -177,6 +177,18 @@ export class AppComponent implements OnInit {
     {value:'<matches>', viewValue: 'Matches'},
   ];
 
+  sans = [    // Screen activation number
+    {value: 'NONE', viewValue: 'NONE'},
+    {value: 'BASIC_DATA_SAN', viewValue: 'BASIC_DATA_SAN'},
+    {value: 'ALT_EGOS_SAN', viewValue: 'ALT_EGOS_SAN'},
+    {value: 'CONTACTS_SAN', viewValue: 'CONTACTS_SAN'},
+    {value: 'APP_AND_PEP_SAN', viewValue: 'APP_AND_PEP_SAN'},
+    {value: 'PREF_FLAGS_SAN', viewValue: 'PREF_FLAGS_SAN'},
+    {value: 'DOCUMENTS_SAN', viewValue: 'DOCUMENTS_SAN'},
+    {value: 'PHOTO_PIC_SAN', viewValue: 'PHOTO_PIC_SAN'},
+    {value: 'SIGN_APP_SAN', viewValue: 'SIGN_APP_SAN'},
+  ];
+
 // ===================================================================================================
 // Settings
   showGrid: boolean = true;
@@ -249,6 +261,8 @@ export class AppComponent implements OnInit {
   compareTo: string = '';
   horizontalAlign: string = '';
   verticalAlign: string = '';
+  screenActivationNumber: string = '';
+
 
   //  Show in property Panel? 
   showX: boolean = false;
@@ -275,6 +289,7 @@ export class AppComponent implements OnInit {
   showCompareTo: boolean  = false;
   showHorizontalAlign: boolean = false;
   showVerticalAlign: boolean = false;
+  showScreenActivationNumber: boolean = false;
 
   disabledPageProp: boolean = false;
 
@@ -314,6 +329,7 @@ export class AppComponent implements OnInit {
         this.compareTo = properties.compareTo || '';
         this.horizontalAlign = properties.horizontalAlign || 'center';
         this.verticalAlign = properties.verticalAlign || 'center';
+        this.screenActivationNumber = properties.screenActivationNumber || 'NONE';
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -415,7 +431,8 @@ export class AppComponent implements OnInit {
       comparison: this.comparison,
       compareTo: this.compareTo,
       horizontalAlign: this.horizontalAlign,
-      verticalAlign: this.verticalAlign
+      verticalAlign: this.verticalAlign,
+      screenActivationNumber: this.screenActivationNumber
     });
   }
 
@@ -444,6 +461,7 @@ export class AppComponent implements OnInit {
     this.showCompareTo = false;
     this.showHorizontalAlign = false;
     this.showVerticalAlign = false;
+    this.showScreenActivationNumber = false;
   }
 
   showBodyProperties() {
@@ -455,6 +473,7 @@ export class AppComponent implements OnInit {
     this.showFontColor = true;
     this.showFontSize = true;
     this.showFontFamily = true;
+    this.showScreenActivationNumber = true;
 
     if (this.componentType === 'Page' && this.componentId != 'PAGE_1') {
       this.disabledPageProp = true;
@@ -695,6 +714,7 @@ export class AppComponent implements OnInit {
       fontColor: '',
       fontSize: 0,
       fontFamily: '',
+      screenActivationNumber: ''
     });
     this.pageId++;
     // this.pageArr.push(++this.pageId);
