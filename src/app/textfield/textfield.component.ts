@@ -48,7 +48,7 @@ export class TextfieldComponent implements OnInit {
   borderSize: number = 1;
   symbolId: string = '';
   pfId: string = '';
-  textConv: string = 'TOLOWER';
+  textConv: string = 'TOUPPER';
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
