@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule, MatAutocompleteModule, MatSliderModule, MatSlideToggleModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.compon
     MatDialogModule,
     MatCheckboxModule,
     MatAutocompleteModule,
+    MatTooltipModule,
     MatSlideToggleModule,
     AngularDraggableModule
   ],

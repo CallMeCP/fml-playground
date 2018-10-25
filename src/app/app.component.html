@@ -142,7 +142,9 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showScreenActivationNumber">
-            <mat-label>Screen Activation ID: </mat-label>
+            <mat-label 
+              matTooltip="Auto switch page according to GUI. Only support New Application form. Other forms like PEP, SENM ... are not supported" 
+              matTooltipPosition="above">Screen Activation ID: </mat-label>
             <mat-form-field>
               <mat-select [(ngModel)]="screenActivationNumber" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let san of sans" [value]="san.value">
@@ -199,7 +201,10 @@
           </mat-list-item>
           
           <mat-list-item *ngIf="showSymbolId">
-            <mat-label>Symbol ID: </mat-label>
+            <mat-label 
+              matTooltip="Enter either Symbol or Variable. Do not enter both."
+              matTooltipPosition="above"
+              >Symbol ID: </mat-label>
             <mat-form-field>
               <input matInput [formControl]="symControl" (change)="updateView()" [value]="symbolId" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
@@ -211,7 +216,10 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showPfId">
-            <mat-label>Pref Flag Id: </mat-label>
+            <mat-label
+              matTooltip="Enter either Symbol or Variable. Do not enter both."
+              matTooltipPosition="above"
+              >Pref Flag Id: </mat-label>
             <mat-form-field>
               <input matInput [(ngModel)]="pfId" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
@@ -272,7 +280,10 @@
             <mat-divider></mat-divider>
             <h3 mat-subheader>Conditions (Tick when)</h3>
             <mat-list-item>
-              <mat-label>Symbol ID: </mat-label>
+              <mat-label
+                matTooltip="Enter either Symbol, Pref Id, or Variable. Enter only one."
+                matTooltipPosition="above"
+                >Symbol ID: </mat-label>
               <mat-form-field>
                 <input matInput [formControl]="sym2Control" (change)="updateView()" [value]="symbolId" [matAutocomplete]="symAuto">
                 <mat-autocomplete #symAuto="matAutocomplete">
@@ -284,14 +295,20 @@
             </mat-list-item>
 
             <mat-list-item>
-              <mat-label>Pref Flag Id: </mat-label>
+              <mat-label
+                matTooltip="Enter either Symbol, Pref Id, or Variable. Enter only one."
+                matTooltipPosition="above"
+                >Pref Flag Id: </mat-label>
               <mat-form-field>
                 <input matInput [(ngModel)]="pfId" (change)="updateView()" [disabled]="deleted">
               </mat-form-field>
             </mat-list-item>
             
             <mat-list-item>
-              <mat-label>Variable ID: </mat-label>
+              <mat-label
+                matTooltip="Enter either Symbol, Pref Id, or Variable. Enter only one."
+                matTooltipPosition="above"
+                >Variable ID: </mat-label>
               <mat-form-field>
                 <input matInput [formControl]="varControl" (change)="updateView()" [value]="varId" [matAutocomplete]="varAuto">
                 <mat-autocomplete #varAuto="matAutocomplete">
