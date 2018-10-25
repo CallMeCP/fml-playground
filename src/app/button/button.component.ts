@@ -69,8 +69,9 @@ export class ButtonComponent implements OnInit {
       // Set Signature ID
       this.componentId = `BUTTON_${this.btnId}`;
 
-      // Set height based on current working page
-      this.y = this.propertyService.getCompStartY();
+      // Set new component position nearer to center
+      this.x = this.propertyService.getCompStartXY().x - this.width/2;
+      this.y = this.propertyService.getCompStartXY().y - this.height/2;
       this.position = {x: this.x, y: this.y};
 
       // Update final FML

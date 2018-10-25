@@ -18,7 +18,7 @@ import { FmlCheckbox } from '../checkbox/checkbox.interface';
 // updateFmlTextfield     Update global FmlTextfield properties
 // updateFmlCheckbox      Update global FmlCheckbox properties
 // updateCurrentPage      Update current working page, use to push new item to correct page
-// getCompStartY          Return where should a new component to place at Y position
+// getCompStartXY         Return where should a new component to place at XY position (currently it return center point)
 // updatedPageProp        Sync properties of all pages, and do a UI refresh
 // loadFml                Parse FmlScripts, create components, and do UI refresh
 // genFml                 Generate FmlScripts, and return it
@@ -198,8 +198,14 @@ export class PropertyService {
     this.currentWorkingPage = page;
   }
 
-  getCompStartY() {
-    return ((this.currentWorkingPage-1)*this.fmlBodyProp[0].height)+(10*(this.currentWorkingPage));
+  getCompStartXY() {
+    // return ((this.currentWorkingPage-1)*this.fmlBodyProp[0].height)+(10*(this.currentWorkingPage));
+
+    // Return Center coordinate of a page
+    const xPos:number = (this.fmlBodyProp[0].width/2)+10;
+    const yPos: number = ((this.currentWorkingPage)*this.fmlBodyProp[0].height)+(10*(this.currentWorkingPage))-this.fmlBodyProp[0].height/2;
+
+    return {x: xPos, y: yPos};
   }
 
   updatedPageProp() {
