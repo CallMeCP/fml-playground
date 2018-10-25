@@ -71,7 +71,7 @@ export class ButtonComponent implements OnInit {
 
       // Set new component position nearer to center
       this.x = this.propertyService.getCompStartXY().x - this.width/2;
-      this.y = this.propertyService.getCompStartXY().y - this.height/2;
+      this.y = this.propertyService.getCompStartXY().y - this.height/2 + 0.5;
       this.position = {x: this.x, y: this.y};
 
       // Update final FML
