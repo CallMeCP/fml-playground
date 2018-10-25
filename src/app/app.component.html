@@ -2,7 +2,12 @@
   <mat-toolbar-row>
     <span>FML Playground</span>
     <span style="flex: 1 1 auto"></span>
-    <button mat-button (click)="loadFml()">Load FML</button>
+    <button 
+      mat-button 
+      (click)="loadFml()"
+      matTooltip="Can only load FML generated from this site"
+      matTooltipPosition="left"
+      >Load FML</button>
     <!-- <button mat-button>Save</button> -->
   </mat-toolbar-row>
 </mat-toolbar>
