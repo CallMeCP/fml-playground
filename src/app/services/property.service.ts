@@ -816,19 +816,19 @@ export class PropertyService {
           let alignStr: string = ``;
 
           if (hrztAlign === 'left') {
-            alignStr += `x=0 align=right `;
+            alignStr += `x=${lbl.width*PP} align=right `;
           }else if (hrztAlign === 'center') {
             alignStr += `x=${(lbl.width/2)*PP} align=center `;
           }else if (hrztAlign === 'right') {
-            alignStr += `x=${lbl.width*PP} align=left `;
+            alignStr += `x=0 align=left `;
           }
 
           if (vAlign === 'start') {
-            alignStr += `y=0 valign=bottom`;
+            alignStr += `y=${lbl.height*PP} valign=bottom`;
           }else if (vAlign === 'center') {
             alignStr += `y=${(lbl.height/2) * PP} valign=center`;
           }else if (vAlign === 'end') {
-            alignStr += `y=${lbl.height*PP} valign=top`;
+            alignStr += `y=0 valign=top`;
           }
 
           const str: string =
