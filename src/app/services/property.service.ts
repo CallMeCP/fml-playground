@@ -560,8 +560,8 @@ export class PropertyService {
         line1Tokens.map(el => {
           let str = el.split('=');
 
-          if (el.indexOf('x=') !== -1) { txt.x = (((+str[1]) + txt.borderSize*0.75) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { txt.y = ((+str[1]) + txt.borderSize*0.75) / PP + 10 + pgHgt; }
+          if (el.indexOf('x=') !== -1) { txt.x = (((+str[1]) ) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { txt.y = ((+str[1]) ) / PP + 10 + pgHgt; }
           if (el.indexOf('w=') !== -1) { txt.width = ((+str[1]) - txt.borderSize*2*0.75)  / PP; }
           if (el.indexOf('h=') !== -1) { txt.height = ((+str[1] - txt.borderSize*2*0.75)) / PP; }
           if (el.indexOf('font=') !== -1) { txt.fontFamily = str[1]; }
@@ -862,7 +862,7 @@ export class PropertyService {
           }
 
           const str: string =
-            `\t\t<t x=${(txt.x-bodyX-BS)*PP} y=${(txt.y-bodyY-BS)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
+            `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
                 \t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
                   \t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
                     \t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
