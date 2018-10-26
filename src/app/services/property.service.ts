@@ -321,7 +321,7 @@ export class PropertyService {
 
         // Get Screen Activation Number, Page 1 and Page 2++ will have diff position
         let sanLine: any;
-        if (++pageId == 1) {
+        if (pageId+1 == 1) {
           sanLine = tokens[index+3];
         }else {
           sanLine = tokens[index+5];
