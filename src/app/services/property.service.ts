@@ -446,16 +446,16 @@ export class PropertyService {
           if (str[0] === 'align') { 
             switch (str[1]) {
               case 'left':
-                lbl.horizontalAlign = 'left';
+                lbl.horizontalAlign = 'right';
                 break;
               case 'center':
                 lbl.horizontalAlign = 'center';
                 break;
               case 'right':
-                lbl.horizontalAlign = 'right';
+                lbl.horizontalAlign = 'left';
                 break;
               default:
-                lbl.horizontalAlign = 'right';
+                lbl.horizontalAlign = 'left';
                 break;
             }
           }
@@ -857,19 +857,19 @@ export class PropertyService {
           let alignStr: string = ``;
 
           if (hrztAlign === 'left') {
-            alignStr += `x=${lbl.width*PP} align=right `;
+            alignStr += `x=0 align=right `;
           }else if (hrztAlign === 'center') {
             alignStr += `x=${(lbl.width/2)*PP} align=center `;
           }else if (hrztAlign === 'right') {
-            alignStr += `x=0 align=left `;
+            alignStr += `x=${lbl.width*PP} align=left `;
           }
 
           if (vAlign === 'start') {
-            alignStr += `y=${lbl.height*PP} valign=bottom`;
+            alignStr += `y=0 valign=bottom`;
           }else if (vAlign === 'center') {
             alignStr += `y=${(lbl.height/2) * PP} valign=center`;
           }else if (vAlign === 'end') {
-            alignStr += `y=0 valign=top`;
+            alignStr += `y=${lbl.height*PP} valign=top`;
           }
 
           const str: string =
