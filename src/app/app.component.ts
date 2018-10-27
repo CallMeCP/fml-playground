@@ -474,6 +474,7 @@ export class AppComponent implements OnInit {
     this.showFontSize = true;
     this.showFontFamily = true;
     this.showScreenActivationNumber = true;
+    this.showBorderSize = true;
 
     if (this.componentType === 'Page' && this.componentId != 'PAGE_1') {
       this.disabledPageProp = true;
@@ -714,7 +715,8 @@ export class AppComponent implements OnInit {
       fontColor: '',
       fontSize: 0,
       fontFamily: '',
-      screenActivationNumber: ''
+      screenActivationNumber: '',
+      borderSize: 0
     });
     this.pageId++;
     // this.pageArr.push(++this.pageId);

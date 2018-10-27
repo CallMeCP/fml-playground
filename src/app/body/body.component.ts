@@ -44,6 +44,7 @@ export class BodyComponent implements OnInit {
   fontSize: number = 12;
   fontFamily: string = 'times new roman';
   screenActivationNumber: string = 'NONE';
+  borderSize: number = 2;
 
   // Observable
   propToSrv$: Subscription;
@@ -71,6 +72,8 @@ export class BodyComponent implements OnInit {
       this.fontSize = this.pageProp.fontSize;
       this.fontFamily = this.pageProp.fontFamily==='times_roman'?'times new roman':this.pageProp.fontFamily;
       this.screenActivationNumber = this.pageProp.screenActivationNumber;
+      this.borderSize = this.pageProp.borderSize;
+
     }else {
       // Set show grid
       this.showGrid = this.propertyService.showGrid;
@@ -90,6 +93,7 @@ export class BodyComponent implements OnInit {
         this.bgColor = this.propertyService.fmlBodyProp[0].bgColor;
         this.fontColor = this.propertyService.fmlBodyProp[0].fontColor;
         this.fontFamily = this.propertyService.fmlBodyProp[0].fontFamily==='times_roman'?'times new roman':this.pageProp.fontFamily;
+        this.borderSize = this.propertyService.fmlBodyProp[0].borderSize;
 
       }
     }
@@ -122,7 +126,8 @@ export class BodyComponent implements OnInit {
       fontColor: this.fontColor,
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
-      screenActivationNumber: this.screenActivationNumber
+      screenActivationNumber: this.screenActivationNumber,
+      borderSize: this.borderSize
     };
 
     this.propertyService.viewToProperty$.emit(fmlBody);
@@ -165,6 +170,7 @@ export class BodyComponent implements OnInit {
             this.fontSize = properties.fontSize;
             this.fontFamily = properties.fontFamily;
             this.screenActivationNumber = properties.screenActivationNumber;
+            this.borderSize = properties.borderSize;
 
             // Update final FML
             this.updateFinalFml();
@@ -216,7 +222,8 @@ export class BodyComponent implements OnInit {
         fontColor: this.fontColor,
         fontSize: this.fontSize,
         fontFamily: this.fontFamily==='times new roman'?'times_roman':this.fontFamily,
-        screenActivationNumber: this.screenActivationNumber
+        screenActivationNumber: this.screenActivationNumber,
+        borderSize: this.borderSize
       }
     );
 

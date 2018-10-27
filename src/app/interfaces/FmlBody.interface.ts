@@ -10,4 +10,5 @@ export interface FmlBody {
     fontSize: number;
     fontFamily: string;
     screenActivationNumber: string;
+    borderSize: number;
 }

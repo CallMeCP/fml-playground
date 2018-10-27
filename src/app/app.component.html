@@ -146,19 +146,6 @@
             </mat-form-field>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showScreenActivationNumber">
-            <mat-label 
-              matTooltip="Auto switch page according to GUI. Only support New Application form. Other forms like PEP, SENM ... are not supported" 
-              matTooltipPosition="above">Screen Activation ID: </mat-label>
-            <mat-form-field>
-              <mat-select [(ngModel)]="screenActivationNumber" (selectionChange)="updateView()" [disabled]="deleted">
-                <mat-option *ngFor="let san of sans" [value]="san.value">
-                  {{san.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-list-item>
-
           <mat-list-item *ngIf="showWeight">
             <mat-label>Line Weight: </mat-label>
             <mat-form-field>
@@ -174,12 +161,25 @@
           <mat-list-item *ngIf="showBorderSize">
             <mat-label>BorderSize: </mat-label>
             <mat-form-field>
-              <input matInput type="number" min="0" [(ngModel)]="borderSize" (change)="updateView()" [disabled]="deleted">
+              <input matInput type="number" min="0" [(ngModel)]="borderSize" (change)="updateView()" [disabled]="deleted || disabledPageProp">
               <!-- <mat-select [(ngModel)]="borderSize" (selectionChange)="updateView()" [disabled]="deleted">
                 <mat-option *ngFor="let bdsz of borderSizes" [value]="bdsz.value">
                   {{bdsz.viewValue}}
                 </mat-option>
               </mat-select> -->
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showScreenActivationNumber">
+            <mat-label 
+              matTooltip="Auto switch page according to GUI. Only support New Application form. Other forms like PEP, SENM ... are not supported" 
+              matTooltipPosition="above">Screen Activation ID: </mat-label>
+            <mat-form-field>
+              <mat-select [(ngModel)]="screenActivationNumber" (selectionChange)="updateView()" [disabled]="deleted">
+                <mat-option *ngFor="let san of sans" [value]="san.value">
+                  {{san.viewValue}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </mat-list-item>
 

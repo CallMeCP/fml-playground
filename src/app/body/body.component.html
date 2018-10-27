@@ -1,7 +1,6 @@
-<div style="border: 1px solid black; position: absolute;"
+<div style="position: absolute;"
   class ="unselectable"
   (mousedown)="onWindowPress($event)"
-  
   (mouseup)="onWindowUp($event)"
   [style.top.px] = "y"
   [style.left.px] = "x"
@@ -26,18 +25,57 @@
     [style.height.px] = "height"
   ></div> -->
 
-  <!-- Double layer grids -->
+  <!-- 10px x 10px Grids -->
   <div 
     *ngIf = "showGrid"
     style="background-image: url('./assets/10px-black-line.svg'); opacity: 0.3; position: absolute"
     [style.width.px] = "width"
     [style.height.px] = "height"
     ></div>
+
+  <!-- 100px x 100px Grids -->
   <div 
-  *ngIf = "showGrid"
-  style="background-image: url('./assets/100px.svg'); opacity: 0.3; position: absolute;"
-  [style.width.px] = "width"
-  [style.height.px] = "height"
+    *ngIf = "showGrid"
+    style="background-image: url('./assets/100px.svg'); opacity: 0.3; position: absolute;"
+    [style.width.px] = "width"
+    [style.height.px] = "height"
+  ></div>
+
+  <!-- Borders -->
+  <!-- Top line -->
+  <div 
+    style="background-color:black; position: absolute;"
+    style.top.px = "0"
+    style.left.px = "0"
+    [style.width.px] = "width"
+    [style.height.px] = "borderSize"
+  ></div>
+
+  <!-- Left line -->
+  <div 
+    style="background-color:black; position: absolute;"
+    style.top.px = "0"
+    style.left.px = "0"
+    [style.width.px] = "borderSize"
+    [style.height.px] = "height"
+  ></div>
+
+  <!-- Right line -->
+  <div 
+    style="background-color:black; position: absolute;"
+    style.top.px = "0"
+    [style.left.px] = "width-borderSize"
+    [style.width.px] = "borderSize"
+    [style.height.px] = "height"
+  ></div>
+
+  <!-- Bottom line -->
+  <div 
+    style="background-color:black; position: absolute;"
+    [style.top.px] = "height-borderSize"
+    style.left.px = "0"
+    [style.width.px] = "width"
+    [style.height.px] = "borderSize"
   ></div>
 
 </div>

@@ -236,6 +236,7 @@ export class PropertyService {
       this.fmlBodyProp[index].width = this.fmlBodyProp[0].width;
       this.fmlBodyProp[index].x = this.fmlBodyProp[0].x;
       this.fmlBodyProp[index].y = ((index)*this.fmlBodyProp[0].height)+10*(index+1);
+      this.fmlBodyProp[index].borderSize = this.fmlBodyProp[0].borderSize;
     }
 
     // Notify subscriber to refresh all components
@@ -271,6 +272,7 @@ export class PropertyService {
     let currentType = '';
     let currentPage: number = 1;
     let pgHgt: number = 0;         //  Page height to add on
+    let borderAdded: boolean = false;
 
     // Reset to empty arrays
     this.fmlBodyProp = [];
@@ -293,7 +295,8 @@ export class PropertyService {
       else if (el.indexOf('Labels') !== -1) { currentType = 'LABEL'; }
       else if (el.indexOf('Textfields') !== -1) { currentType = 'TEXTFIELD'; }
       else if (el.indexOf('Buttons') !== -1) { currentType = 'BUTTON'; }
-
+      else if (el.indexOf('PG_BORDER') !== -1) { currentType = 'PG_BORDER';}
+      
       // Construct Body
       if (el.indexOf('body') !== -1) {
         // Get page properties
@@ -345,9 +348,36 @@ export class PropertyService {
           fontColor: body.fontColor,
           fontSize: body.fontSize,
           fontFamily: body.fontFamily,
-          screenActivationNumber: body.screenActivationNumber
+          screenActivationNumber: body.screenActivationNumber,
+          borderSize: 0 // **border size will be updated separately below
         });
       }
+
+      // Construct Page Border for Page 1, **Assume user will only need consistent page border on every forms
+      if (currentType === 'PG_BORDER' && borderAdded==false) { 
+        // Next 2 line is the TOP border definition
+        let topLine = tokens[index+2];
+        let topLineToks = topLine.split(' ');
+        topLineToks.map(tok => {
+          let str = tok.split('=');
+    
+          if (tok.indexOf('h=') !== -1) {
+            // for (let index = 0; index < this.fmlBodyProp.length; index++) {
+              this.fmlBodyProp[0].borderSize = +str[1] / PP;
+            // }
+
+            borderAdded = true;
+          };
+        });
+      }
+
+      // Construct page border for subsequence pages, just copy from first page
+      for (let index = 0; index < this.fmlBodyProp.length; index++) {
+        if (this.fmlBodyProp[index].componentId !== 'PAGE_1') {
+          this.fmlBodyProp[index].borderSize = this.fmlBodyProp[0].borderSize;
+        }        
+      }
+
 
       // Construct BUTTON
       if (currentType === 'BUTTON' && el.indexOf('button') !== -1 && el.indexOf('id=') !== -1) {
@@ -736,7 +766,7 @@ export class PropertyService {
     const pageX: number = this.fmlBodyProp[0].x;
     const pageY: number = this.fmlBodyProp[0].y;
     const page: FmlBody = this.fmlBodyProp[0];
-    const PP: number = 0.75;          // convert point? pixel?
+    const PP: number = 0.75;                        // convert point to pixel... 1pt = 0.75px
 
 
     // Final FML script
@@ -772,8 +802,19 @@ export class PropertyService {
       const bodyX: number = this.fmlBodyProp[index].x;
       const bodyY: number = this.fmlBodyProp[index].y;
 
-      // Construct Screen Activation Number
+      // Reference to page width, height, border size
+      const pgW: number = this.fmlBodyProp[0].width;
+      const pgH: number = this.fmlBodyProp[0].height;
+      const pgBs: number = this.fmlBodyProp[0].borderSize;
 
+      // Construct PAGE BORDER
+      finalFmlStr += `\n`;
+      finalFmlStr += `\t\t<!-- PG_BORDER -->\n`;
+      finalFmlStr += `\t\t<t x=0 y=0 w=${pgW*PP} h=${pgBs*PP} bgcol=BLACK></t>\n`;                 // Top line
+      finalFmlStr += `\t\t<t x=0 y=0 w=${pgBs*PP} h=${pgH*PP} bgcol=BLACK></t>\n`;                 // Left line
+      finalFmlStr += `\t\t<t x=${(pgW-pgBs)*PP} y=0 w=${pgBs*PP} h=${pgH*PP} bgcol=BLACK></t>\n`;  // Right line
+      finalFmlStr += `\t\t<t x=0 y=${(pgH-pgBs)*PP} w=${pgW*PP} h=${pgBs*PP} bgcol=BLACK></t>\n`;  // Bottom line
+      finalFmlStr += `\n`;
 
       // Construct Signatures
       let addedSigComment: boolean = false;
