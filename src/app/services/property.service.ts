@@ -7,6 +7,11 @@ import { FmlButton } from '../interfaces/FmlButton.interface';
 import { FmlTextField } from '../textfield/textfield.interface';
 import { FmlCheckbox } from '../checkbox/checkbox.interface';
 
+// TODO: 
+// Revamp logic in genFml
+// Revamp logic in loadFml
+// Revamp symbolIds and variables (currently copied from AppComponent)
+
 // MODULE INDEX
 // NAME                   CONTENTS
 // constructor            Empty
@@ -37,7 +42,8 @@ export class PropertyService {
     'OPCN_NAME[0]', 'OPCN_NAME[1]', 'OPCN_NAME[2]', 'OPCN_NAME[3]', 'OPCN_NAME[4]', 'OPCN_NAME[5]', 
     'OPCN_TITLE[0]', 'OPCN_TITLE[1]', 'OPCN_TITLE[2]', 'OPCN_TITLE[3]', 'OPCN_TITLE[4]', 'OPCN_TITLE[5]', 
     'OPCN_LANG[0]', 'OPCN_LANG[1]', 'OPCN_LANG[2]', 'OPCN_LANG[3]', 'OPCN_LANG[4]', 'OPCN_LANG[5]', 
-    'OPCN_TYPE[0]', 'OPCN_TYPE[1]', 'OPCN_TYPE[2]', 'OPCN_TYPE[3]', 'OPCN_TYPE[4]', 'OPCN_TYPE[5]',  
+    'OPCN_TYPE[0]', 'OPCN_TYPE[1]', 'OPCN_TYPE[2]', 'OPCN_TYPE[3]', 'OPCN_TYPE[4]', 'OPCN_TYPE[5]',
+    'IC', 'PASSPORT',
     'ID_DOC_NO[0]', 'ID_DOC_NO[1]', 'ID_DOC_NO[2]', 'ID_DOC_NO[3]', 
     'ID_TYPE[0]', 'ID_TYPE[1]', 'ID_TYPE[2]', 'ID_TYPE[3]', 
     'ID_ISS_AUTH[0]', 'ID_ISS_AUTH[1]', 'ID_ISS_AUTH[2]', 'ID_ISS_AUTH[3]', 
@@ -602,46 +608,89 @@ export class PropertyService {
         txt.componentId = `TEXTFIELD_${++txtId}`;
         txt.deleted = false;
 
-        // Get bold, italic, index of symbol position
-        if (tokens[index+6] === 'bo' && tokens[index+8] === 'i') {
-          txt.bold = true;
-          txt.italic = true;
-          txt.symPos = 10;
+        // 
+        if (tokens[index+6].indexOf('FIND_IC') !== -1 || tokens[index+6].indexOf('FIND_PASSPORT') !== -1) {
+         
+          // Get bold, italic, index of symbol position
+          if (tokens[index+14] === 'bo' && tokens[index+16] === 'i') {
+            txt.bold = true;
+            txt.italic = true;
+            txt.symPos = 18;
 
-        }else if (tokens[index+6] === 'bo') {
-          txt.bold = true;
-          txt.italic = false;
-          txt.symPos = 8;     
+          }else if (tokens[index+14] === 'bo') {
+            txt.bold = true;
+            txt.italic = false;
+            txt.symPos = 16;     
 
-        }else if (tokens[index+6] === 'i'){
-          txt.bold = false;
-          txt.italic = true;
-          txt.symPos = 8;
+          }else if (tokens[index+14] === 'i'){
+            txt.bold = false;
+            txt.italic = true;
+            txt.symPos = 16;
+
+          }else {
+            txt.bold = false;
+            txt.italic = false;
+            txt.symPos = 14;
+          }
+
+          // Set Symbol
+          if (tokens[index+6].indexOf('FIND_IC') !== -1) {
+            txt.symbolId = 'IC';
+          }else if (tokens[index+6].indexOf('FIND_PASSPORT') !== -1) {
+            txt.symbolId = 'PASSPORT';
+          }
+
+          // LINE 4 - Get conv
+          const line4Tokens = tokens[index+txt.symPos].split(' ');
+          line4Tokens.map (res => {
+            const tok = res.split('=');
+
+            if (res.indexOf('conv=') !== -1) { txt.conv = tok[1]; }
+          });
 
         }else {
-          txt.bold = false;
-          txt.italic = false;
-          txt.symPos = 6;
-        }
 
-        // LINE 4 - Get symbol, pref, conv
-        const line4Tokens = tokens[index+txt.symPos].split(' ');
-        line4Tokens.map (res => {
-          const tok = res.split('=');
+          // Get bold, italic, index of symbol position
+          if (tokens[index+6] === 'bo' && tokens[index+8] === 'i') {
+            txt.bold = true;
+            txt.italic = true;
+            txt.symPos = 10;
 
-          if (res.indexOf('sym=') !== -1) { 
-            txt.symbolId = tok[1];
-            txt.pfId = '';
-            
-            if (txt.symbolId.indexOf('PF.') !== -1) {
-              txt.symbolId = '';
+          }else if (tokens[index+6] === 'bo') {
+            txt.bold = true;
+            txt.italic = false;
+            txt.symPos = 8;     
 
-              const prefTok = tok[1].split('.');
-              txt.pfId = prefTok[1];
-            }
+          }else if (tokens[index+6] === 'i'){
+            txt.bold = false;
+            txt.italic = true;
+            txt.symPos = 8;
+
+          }else {
+            txt.bold = false;
+            txt.italic = false;
+            txt.symPos = 6;
           }
-          if (res.indexOf('conv=') !== -1) { txt.conv = tok[1]; }
-        });
+
+          // LINE 4 - Get symbol, pref, conv
+          const line4Tokens = tokens[index+txt.symPos].split(' ');
+          line4Tokens.map (res => {
+            const tok = res.split('=');
+
+            if (res.indexOf('sym=') !== -1) { 
+              txt.symbolId = tok[1];
+              txt.pfId = '';
+              
+              if (txt.symbolId.indexOf('PF.') !== -1) {
+                txt.symbolId = '';
+
+                const prefTok = tok[1].split('.');
+                txt.pfId = prefTok[1];
+              }
+            }
+            if (res.indexOf('conv=') !== -1) { txt.conv = tok[1]; }
+          });
+        }
 
         this.fmlTextfieldProp.push({
           componentId: txt.componentId,
@@ -902,16 +951,57 @@ export class PropertyService {
             addedTxtComment = true;
           }
 
-          const str: string =
-            `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
-                \t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
-                  \t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
-                    \t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
-                  \t\t</t>
-                \t</t>
-            \t</t>\n\n`;
+          // SAMPLE if-else statement for PP, IC,
+          // <if>ID_TYPE[0]<eq>"IC"<then> <ins sym=>
+          // <else><if>ID_TYPE[1]<eq>"IC"<then> <ins sym=>
+          // <else><if>ID_TYPE[2]<eq>"IC"<then> <ins sym=>
+          // <else><if>ID_TYPE[3]<eq>"IC"<then> <ins sym=>
+          // <else>
+          // </if></if></if></if>
 
-            finalFmlStr += str;
+
+          finalFmlStr += `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>\n`;
+          finalFmlStr += `\t\t\t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>\n`;
+          finalFmlStr += `\t\t\t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>\n`;
+          // finalFmlStr += `\t\t\t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}`;
+
+          // Loop to find symbols or just normal symbol
+          if (txt.symbolId === 'IC') {
+            // finalFmlStr += `\n`;
+            finalFmlStr += `\t\t\t\t\t<!-- FIND_IC -->\n`;
+            finalFmlStr += `\t\t\t\t\t<if>ID_TYPE[0]<eq>"IC"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[1]<eq>"IC"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[2]<eq>"IC"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[3]<eq>"IC"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
+            // finalFmlStr += `\n`;
+
+          } else if (txt.symbolId === 'PASSPORT') {
+            finalFmlStr += `\t\t\t\t\t<!-- FIND_PASSPORT -->\n`;
+            finalFmlStr += `\t\t\t\t\t<if>ID_TYPE[0]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[1]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[2]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[3]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
+          }else {
+            finalFmlStr += `\t\t\t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+          }
+          
+          // finalFmlStr += `${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+          finalFmlStr += `\t\t\t\t</t>\n`;
+          finalFmlStr += `\t\t\t</t>\n`;
+          finalFmlStr += `\t\t</t>\n\n`;
+
+          // const str: string =
+          //   `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>
+          //       \t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>
+          //         \t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>
+          //           \t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}
+          //         \t\t</t>
+          //       \t</t>
+          //   \t</t>\n\n`;
+
+          //   finalFmlStr += str;
         }
       });
 
