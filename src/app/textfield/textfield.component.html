@@ -20,5 +20,6 @@
   [style.font-weight] = "bold? 'bold': 'normal'"
   [style.border-width.px] = "borderSize"
 >
-  {{ symbolId }} {{ pfId }}
+  <span *ngIf="symbolId === 'MAN_ADDRESS'">ADDRESS LINE 1<br>ADDRESS LINE 2<br>ADDRESS LINE 3</span>
+  <span *ngIf="symbolId !== 'MAN_ADDRESS'">{{ symbolId }} {{ pfId }}</span>
 </div>

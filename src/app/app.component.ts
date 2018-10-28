@@ -142,7 +142,8 @@ export class AppComponent implements OnInit {
     'TEL_DESC[0]', 'TEL_DESC[1]', 'TEL_DESC[2]', 'TEL_DESC[3]', 'TEL_DESC[4]', 'TEL_DESC[5]', 
     'TEL_NO[0]', 'TEL_NO[1]', 'TEL_NO[2]', 'TEL_NO[3]', 'TEL_NO[4]', 'TEL_NO[5]', 
     'SMS_STATUS', 'VOICE_STATUS',
-    'AD_STATUS', 
+    'AD_STATUS',
+    'MAN_ADDRESS', 'MAN_CITY', 'MAN_STATE', 'MAN_POSTCODE', 'MAN_COUNTRY',  // Special purpose symbols
     'AD_DESC[0]', 'AD_DESC[1]', 'AD_DESC[2]', 'AD_DESC[3]', 
     'AD_1[0]', 'AD_1[1]', 'AD_1[2]', 'AD_1[3]',
     'AD_2[0]', 'AD_2[1]', 'AD_2[2]', 'AD_2[3]', 
