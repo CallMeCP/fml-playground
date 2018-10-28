@@ -39,6 +39,7 @@ export class PropertyService {
   symbolIds: string[] = [
     'REAL_DATE', 'REAL_TIME', 'REAL_DATE_TIME', 'CUST_DATE', 'USER_ID', 'USER_NAME', 'CUST_ID',
     'CUST_NAME', 'CUST_TITLE', 'VINYL_TYPE', 'CUST_TYPE', 'NAS_NAME', 'NAS_TITLE', 'NAS_LANG',
+    'OTHER_NAME', 'PREVIOUS_NAME',
     'OPCN_NAME[0]', 'OPCN_NAME[1]', 'OPCN_NAME[2]', 'OPCN_NAME[3]', 'OPCN_NAME[4]', 'OPCN_NAME[5]', 
     'OPCN_TITLE[0]', 'OPCN_TITLE[1]', 'OPCN_TITLE[2]', 'OPCN_TITLE[3]', 'OPCN_TITLE[4]', 'OPCN_TITLE[5]', 
     'OPCN_LANG[0]', 'OPCN_LANG[1]', 'OPCN_LANG[2]', 'OPCN_LANG[3]', 'OPCN_LANG[4]', 'OPCN_LANG[5]', 
@@ -609,7 +610,11 @@ export class PropertyService {
         txt.deleted = false;
 
         // 
-        if (tokens[index+6].indexOf('FIND_IC') !== -1 || tokens[index+6].indexOf('FIND_PASSPORT') !== -1) {
+        if (tokens[index+6].indexOf('FIND_IC') !== -1 || 
+            tokens[index+6].indexOf('FIND_PASSPORT') !== -1 ||
+            tokens[index+6].indexOf('FIND_OTHER_NAME') !== -1 ||
+            tokens[index+6].indexOf('FIND_PREVIOUS_NAME') !== -1 
+        ) {
          
           // Get bold, italic, index of symbol position
           if (tokens[index+14] === 'bo' && tokens[index+16] === 'i') {
@@ -638,6 +643,10 @@ export class PropertyService {
             txt.symbolId = 'IC';
           }else if (tokens[index+6].indexOf('FIND_PASSPORT') !== -1) {
             txt.symbolId = 'PASSPORT';
+          }else if (tokens[index+6].indexOf('FIND_OTHER_NAME') !== -1) {
+            txt.symbolId = 'OTHER_NAME';
+          }else if (tokens[index+6].indexOf('FIND_PREVIOUS_NAME') !== -1) {
+            txt.symbolId = 'PREVIOUS_NAME';
           }
 
           // LINE 4 - Get conv
@@ -951,7 +960,7 @@ export class PropertyService {
             addedTxtComment = true;
           }
 
-          // SAMPLE if-else statement for PP, IC,
+          // SAMPLE if-else statement for PP, IC, OTHER_NAME, PREVIOUS_NAME
           // <if>ID_TYPE[0]<eq>"IC"<then> <ins sym=>
           // <else><if>ID_TYPE[1]<eq>"IC"<then> <ins sym=>
           // <else><if>ID_TYPE[2]<eq>"IC"<then> <ins sym=>
@@ -983,6 +992,23 @@ export class PropertyService {
             finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[2]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t<else><if>ID_TYPE[3]<eq>"PP"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=ID_DOC_NO[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
+
+          } else if (txt.symbolId === 'OTHER_NAME') {
+            finalFmlStr += `\t\t\t\t\t<!-- FIND_OTHER_NAME -->\n`;
+            finalFmlStr += `\t\t\t\t\t<if>OPCN_TYPE[0]<eq>"OTHER"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[1]<eq>"OTHER"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[2]<eq>"OTHER"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[3]<eq>"OTHER"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
+
+          } else if (txt.symbolId === 'PREVIOUS_NAME') {
+            finalFmlStr += `\t\t\t\t\t<!-- FIND_PREVIOUS_NAME -->\n`;
+            finalFmlStr += `\t\t\t\t\t<if>OPCN_TYPE[0]<eq>"PREV"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[1]<eq>"PREV"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[2]<eq>"PREV"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>OPCN_TYPE[3]<eq>"PREV"<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=OPCN_NAME[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
+
           }else {
             finalFmlStr += `\t\t\t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=${txt.symbolId?`${txt.symbolId}`:`PF.${txt.pfId}`} conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
           }
