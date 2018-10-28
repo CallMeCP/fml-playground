@@ -744,8 +744,8 @@ export class PropertyService {
         line1Tokens.map(el => {
           let str = el.split('=');
 
-          if (el.indexOf('x=') !== -1) { chk.x = (((+str[1]) + chk.borderSize*0.75) / PP + 10);}
-          if (el.indexOf('y=') !== -1) { chk.y = ((+str[1]) + chk.borderSize*0.75) / PP + 10 + pgHgt; }
+          if (el.indexOf('x=') !== -1) { chk.x = ((+str[1]) / PP + 10);}
+          if (el.indexOf('y=') !== -1) { chk.y = ((+str[1])) / PP + 10 + pgHgt; }
           if (el.indexOf('w=') !== -1) { chk.width = ((+str[1]) - chk.borderSize*2*0.75)  / PP; }
           if (el.indexOf('h=') !== -1) { chk.height = ((+str[1] - chk.borderSize*2*0.75)) / PP; }
           if (el.indexOf('sz=') !== -1) { chk.fontSize = +str[1] / PP; }
@@ -1043,9 +1043,9 @@ export class PropertyService {
           }
 
           const str: string =
-            `\t\t<t x=${(chk.x-bodyX-BS)*PP} y=${(chk.y-bodyY-BS)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
+            `\t\t<t x=${(chk.x-bodyX)*PP} y=${(chk.y-bodyY)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
                 \t<t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>
-                  \t\t<t w=${chk.width*PP} x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
+                  \t\t<t x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
                     \t\t\t<if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>
                   \t\t</t>
                 \t</t>
