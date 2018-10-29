@@ -1021,7 +1021,7 @@ export class PropertyService {
 
           const str: string =
             `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
-            \t\t<t ${alignStr}>
+            \t\t<t w=${lbl.width*PP} h=${lbl.height*PP} ${alignStr}>
             \t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
             \t\t</t>
             \t</t>\n\n`;
