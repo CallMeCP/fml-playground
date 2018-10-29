@@ -454,13 +454,13 @@ export class PropertyService {
           if (str[0] === 'align') { 
             switch (str[1]) {
               case 'left':
-                lbl.horizontalAlign = 'right';
+                lbl.horizontalAlign = 'left';
                 break;
               case 'center':
                 lbl.horizontalAlign = 'center';
                 break;
               case 'right':
-                lbl.horizontalAlign = 'left';
+                lbl.horizontalAlign = 'right';
                 break;
               default:
                 lbl.horizontalAlign = 'left';
@@ -471,13 +471,13 @@ export class PropertyService {
           if (str[0] === 'valign') { 
             switch (str[1]) {
               case 'top':
-                lbl.verticalAlign = 'end';
+                lbl.verticalAlign = 'start';
                 break;
               case 'center':
                 lbl.verticalAlign = 'center';
                 break;
               case 'bottom':
-                lbl.verticalAlign = 'start';
+                lbl.verticalAlign = 'end';
                 break;
               default:
                 lbl.verticalAlign = 'start';
@@ -662,26 +662,28 @@ export class PropertyService {
         }else if (tokens[index+6].indexOf('FIND_MAN_ADDRESS') !== -1) {
           // 16->42, 18->44, 20->46
           // 16->48, 18->50, 20->52
+          // 16->14, 18->16, 20->18
+          // 14->20, 16->22, 18->26
           // Get bold, italic, index of symbol position
-          if (tokens[index+48] === 'bo' && tokens[index+50] === 'i') {
+          if (tokens[index+20] === 'bo' && tokens[index+22] === 'i') {
             txt.bold = true;
             txt.italic = true;
-            txt.symPos = 52;
+            txt.symPos = 24;
 
-          }else if (tokens[index+48] === 'bo') {
+          }else if (tokens[index+20] === 'bo') {
             txt.bold = true;
             txt.italic = false;
-            txt.symPos = 50;     
+            txt.symPos = 22;     
 
-          }else if (tokens[index+48] === 'i'){
+          }else if (tokens[index+20] === 'i'){
             txt.bold = false;
             txt.italic = true;
-            txt.symPos = 50;
+            txt.symPos = 22;
 
           }else {
             txt.bold = false;
             txt.italic = false;
-            txt.symPos = 48;
+            txt.symPos = 20;
           }
 
           // Set symbols
@@ -1002,19 +1004,19 @@ export class PropertyService {
           let alignStr: string = ``;
 
           if (hrztAlign === 'left') {
-            alignStr += `x=0 align=right `;
+            alignStr += `x=0 align=left `;
           }else if (hrztAlign === 'center') {
             alignStr += `x=${(lbl.width/2)*PP} align=center `;
           }else if (hrztAlign === 'right') {
-            alignStr += `x=${lbl.width*PP} align=left `;
+            alignStr += `x=${lbl.width*PP} align=right `;
           }
 
           if (vAlign === 'start') {
-            alignStr += `y=0 valign=bottom`;
+            alignStr += `y=0 valign=top`;
           }else if (vAlign === 'center') {
             alignStr += `y=${(lbl.height/2) * PP} valign=center`;
           }else if (vAlign === 'end') {
-            alignStr += `y=${lbl.height*PP} valign=top`;
+            alignStr += `y=${lbl.height*PP} valign=bottom`;
           }
 
           const str: string =
@@ -1055,6 +1057,12 @@ export class PropertyService {
           // <else>
           // </if></if></if></if>
 
+          if (txt.symbolId === 'MAN_ADDRESS') {
+            finalFmlStr += `\t\t<var id=i>0</var>\n`;
+            finalFmlStr += `\t\t<while>i<lt>AD_SIZE<and><not>AD_INTL_MAIL[i]<and><not>AD_DOM_MAIL[i]<and><not>AD_REGION_ID[i]<do>\n`;
+            finalFmlStr += `\t\t\t<var id=i>i + 1</var>\n`;
+            finalFmlStr += `\t\t</while>\n`;
+          }
 
           finalFmlStr += `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>\n`;
           finalFmlStr += `\t\t\t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>\n`;
@@ -1098,10 +1106,10 @@ export class PropertyService {
       
           }else if (txt.symbolId === 'MAN_ADDRESS') {
             finalFmlStr += `\t\t\t\t\t<!-- FIND_MAN_ADDRESS -->\n`;
-            finalFmlStr += `\t\t\t\t\t<var id=i>0</var>\n`;
-            finalFmlStr += `\t\t\t\t\t<while>i<lt>AD_SIZE<and><not>AD_INTL_MAIL[i]<and><not>AD_DOM_MAIL[i]<and><not>AD_REGION_MAIL[i]<do>\n`;
-            finalFmlStr += `\t\t\t\t\t\t<var id=i>i + 1</var>\n`;
-            finalFmlStr += `\t\t\t\t\t</while>\n`;
+            // finalFmlStr += `\t\t\t\t\t<var id=i>0</var>\n`;
+            // finalFmlStr += `\t\t\t\t\t<while>i<lt>AD_SIZE<and><not>AD_INTL_MAIL[i]<and><not>AD_DOM_MAIL[i]<and><not>AD_REGION_ID[i]<do>\n`;
+            // finalFmlStr += `\t\t\t\t\t\t<var id=i>i + 1</var>\n`;
+            // finalFmlStr += `\t\t\t\t\t</while>\n`;
             
             finalFmlStr += `\t\t\t\t\t<if> i <lt> AD_SIZE <then>\n`;
             finalFmlStr += `\t\t\t\t\t\t<if> AD_1[i] <ne> "" <then>\n`;
@@ -1120,34 +1128,34 @@ export class PropertyService {
 
           }else if (txt.symbolId === 'MAN_CITY') {
             finalFmlStr += `\t\t\t\t\t<!-- FIND_MAN_CITY -->\n`;
-            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_MAIL[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_MAIL[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_MAIL[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_MAIL[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_ID[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_ID[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_ID[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_ID[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_CITY[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
 
           }else if (txt.symbolId === 'MAN_STATE') {
             finalFmlStr += `\t\t\t\t\t<!-- FIND_MAN_STATE -->\n`;
-            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_MAIL[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_MAIL[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_MAIL[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_MAIL[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_ID[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_ID[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_ID[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_ID[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_STATE[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
 
           }else if (txt.symbolId === 'MAN_POSTCODE') {
             finalFmlStr += `\t\t\t\t\t<!-- FIND_MAN_POSTCODE -->\n`;
-            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_MAIL[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_MAIL[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_MAIL[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_MAIL[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_ID[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_ID[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_ID[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_ID[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_POSTCODE[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
 
           }else if (txt.symbolId === 'MAN_COUNTRY') {
             finalFmlStr += `\t\t\t\t\t<!-- FIND_MAN_COUNTRY -->\n`;
-            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_MAIL[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_MAIL[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_MAIL[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
-            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_MAIL[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<if>AD_INTL_MAIL[0]<and>AD_REGION_ID[0]<and>AD_DOM_MAIL[0]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[0] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[1]<and>AD_REGION_ID[1]<and>AD_DOM_MAIL[1]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[1] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[2]<and>AD_REGION_ID[2]<and>AD_DOM_MAIL[2]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[2] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t\t\t<else><if>AD_INTL_MAIL[3]<and>AD_REGION_ID[3]<and>AD_DOM_MAIL[3]<then>${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}<ins sym=AD_COUNTRY[3] conv=${txt.textConv}>${txt.italic?'</i>': ''}${txt.bold?'</bo>':''}\n`;
             finalFmlStr += `\t\t\t\t\t</if></if></if></if>\n`;
 
           }else{
