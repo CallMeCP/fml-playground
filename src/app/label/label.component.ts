@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { PropertyService } from '../services/property.service';
 import { Subscription } from 'rxjs';
 import { FmlLabel } from './label.interface';
@@ -15,6 +15,8 @@ import { FmlLabel } from './label.interface';
 // updateFinalFml     Update current properties to service
 // getBgColString     Return R.G.B string based on color name
 // getFontColString   Return R.G.B string based on color name
+// updatePos          Update display x and y position
+// keyEvent           Use keyboard up, down, left, and right key to move component
 
 @Component({
   selector: 'app-label',
@@ -131,6 +133,9 @@ export class LabelComponent implements OnInit {
   onWindowPress(event: MouseEvent) {
     this.zIndex = 999;
 
+    // Set current active component
+    this.propertyService.activeComponentId = this.componentId;
+
     // Emit new values
     this.emitNewValues();
 
@@ -236,6 +241,43 @@ export class LabelComponent implements OnInit {
 
   getFontColString(): string {
     return this.propertyService.getColourString(this.fontColor);
+  }
+
+  updatePos() {
+    this.position = {x: this.x, y: this.y};
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (this.propertyService.activeComponentId === this.componentId) {
+      // Left key
+      if (event.keyCode === 37) {
+        this.x--;
+        this.updatePos();
+        this.emitNewValues();
+      }
+
+      // Right key
+      if (event.keyCode === 39) {
+        this.x++;
+        this.updatePos();
+        this.emitNewValues();
+      }
+
+      // Up key
+      if (event.keyCode === 38) {
+        this.y--;
+        this.updatePos();
+        this.emitNewValues();
+      }
+
+      // Down key
+      if (event.keyCode === 40) {
+        this.y++;
+        this.updatePos();
+        this.emitNewValues();
+      }
+    }
   }
 
 }

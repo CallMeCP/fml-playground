@@ -88,6 +88,9 @@ export class PropertyService {
   // Notify subscriber to load components
   isLoadFml$: EventEmitter<boolean> = new EventEmitter();
 
+  // Current active component ID
+  activeComponentId: string = 'NONE';
+
   // Current page selected
   currentWorkingPage: number = 1;
 
