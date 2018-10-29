@@ -50,6 +50,7 @@ export class LabelComponent implements OnInit {
   horizontalAlign: string = 'center';
   verticalAlign: string = 'center';
   position: {x: number, y: number} = {x: this.x, y: this.y};
+  showDottedLine: boolean = true;
 
   // Observable
   propToSrv$: Subscription;
@@ -93,6 +94,10 @@ export class LabelComponent implements OnInit {
       // Update final FML
       // this.updateFinalFml();
     }
+
+    // Show dotted lines?
+    this.showDottedLine = this.propertyService.showGrid;
+    console.log('Show: ', this.showDottedLine);
 
     // Update final FML
     this.updateFinalFml();

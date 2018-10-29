@@ -1,4 +1,4 @@
-<div style="border: 1px dotted black; position:absolute;
+<div style="border-style: dotted; border-color: black;position:absolute;
       display: flex;"
   *ngIf="!deleted"
   class ="unselectable"
@@ -20,6 +20,7 @@
   [style.z-index] = "zIndex"
   [style.font-style] = "italic? 'italic': 'normal'"
   [style.font-weight] = "bold? 'bold': 'normal'"
+  [style.border-width.px] = "showDottedLine?'1':'0'"
 >
   {{ content }}
 </div>
