@@ -42,3 +42,7 @@ Thumbs.db
 
 # Firebase
 .firebase
+
+# zip files
+*.7z
+*.zip
