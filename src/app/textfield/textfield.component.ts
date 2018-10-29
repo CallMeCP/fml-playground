@@ -251,8 +251,6 @@ export class TextfieldComponent implements OnInit {
   increasePosY(event: any) {
     this.y ++;
     this.position = {x: this.x, y: this.y};
-    console.log(event);
-    console.log('+ posY');
 
     this.emitNewValues();
   }

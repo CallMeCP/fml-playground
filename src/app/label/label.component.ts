@@ -97,7 +97,6 @@ export class LabelComponent implements OnInit {
 
     // Show dotted lines?
     this.showDottedLine = this.propertyService.showGrid;
-    console.log('Show: ', this.showDottedLine);
 
     // Update final FML
     this.updateFinalFml();
