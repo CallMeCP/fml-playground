@@ -1022,22 +1022,24 @@ export class PropertyService {
             alignStr += `y=${lbl.height*PP} valign=bottom`;
           }
 
-          const str: string =
-            `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>
-            \t\t<t w=${lbl.width*PP} h=${lbl.height*PP} ${alignStr}>
-            \t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}
-            \t\t</t>
-            \t</t>\n\n`;
+          // const str: string =
+            finalFmlStr += `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>\n`;
+            finalFmlStr += `\t\t\t<t w=${lbl.width*PP} h=${lbl.height*PP} ${alignStr}>\n`;
+            finalFmlStr += `\t\t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}\n`;
+            finalFmlStr += `\t\t\t</t>\n`;
+            finalFmlStr += `\t\t</t>\n`;
+            finalFmlStr += `\n`;
+
 
             // Align left, center, right
-            // x=0 align=right || x=width/2 align=center || y=width align=left
+            // x=0 align=left || x=width/2 align=center || y=width align=right
             // when reverse back, right is left in CSS, and left is right in CSS.
 
             // Valign top, center, bottom
-            // y=0 valign=bottom || y=height/2 valign=center || y=height valign=top
+            // y=0 valign=top || y=height/2 valign=center || y=height valign=bottom
             // when reverse back, bottom is top is CSS, and top is bottom in CSS.
 
-          finalFmlStr += str;
+          // finalFmlStr += str;
         }
       });
 
