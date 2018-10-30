@@ -528,7 +528,9 @@ export class PropertyService {
           const str: string = tokens[cPos];
           cArr.push(str);
 
-          if(tokens[cPos+1].indexOf('/t') !== -1) {
+          if(tokens[cPos+1].indexOf('/t') !== -1 ||
+             tokens[cPos+1].indexOf('/bo') !== -1 || 
+             tokens[cPos+1].indexOf('/i') !== -1){
             contentEnd = true;
           }else {
             cPos++;
