@@ -491,25 +491,61 @@ export class PropertyService {
         });
 
         // Parse bold, italic, and content
+        let contentPos: number = 0;
         if (tokens[index+4] === 'bo' && tokens[index+6] === 'i') {
           lbl.bold = true;
           lbl.italic = true;
-          lbl.content = tokens[index+7];
+          // lbl.content = tokens[index+7];
+          contentPos = index+7;
 
         }else if (tokens[index+4] === 'bo') {
           lbl.bold = true;
           lbl.italic = false;
-          lbl.content = tokens[index+5];          
+          // lbl.content = tokens[index+5];  
+          contentPos = index+5;        
 
         }else if (tokens[index+4] === 'i'){
           lbl.bold = false;
           lbl.italic = true;
-          lbl.content = tokens[index+5];
+          // lbl.content = tokens[index+5];
+          contentPos = index+5;
 
         }else {
           lbl.bold = false;
           lbl.italic = false;
-          lbl.content = tokens[index+3];
+          // lbl.content = tokens[index+3];
+          contentPos = index+3;
+        }
+
+        // Parse Content
+        let contentEnd: boolean = false;
+        let cPos: number = contentPos;
+        let cArr: string[] = [];
+        lbl.content = '';
+
+        // Get all content into array
+        while (!contentEnd) {
+          const str: string = tokens[cPos];
+          cArr.push(str);
+
+          if(tokens[cPos+1].indexOf('/t') !== -1) {
+            contentEnd = true;
+          }else {
+            cPos++;
+          }
+        }
+
+        // Reverse the content into HTML read-able format
+        if(cArr.length === 1) {
+          lbl.content = cArr[0];
+        }else {
+          cArr.map(str => {
+            if (str === 'br') {
+              lbl.content += `\n`;
+            }else {
+              lbl.content += `${str}`;
+            }
+          });
         }
 
         this.fmlLabelProp.push({
@@ -1032,11 +1068,27 @@ export class PropertyService {
 
           finalFmlStr += `\t\t<t x=${(lbl.x-bodyX)*PP} y=${(lbl.y-bodyY)*PP} w=${lbl.width*PP} h=${lbl.height*PP} bgcol=${lbl.bgColor} col=${lbl.fontColor} font=${lbl.fontFamily} sz=${lbl.fontSize*PP}>\n`;
           finalFmlStr += `\t\t\t<t w=${lbl.width*PP} h=${lbl.height*PP} ${alignStr}>\n`;
-          finalFmlStr += `\t\t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}${lbl.content}${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}\n`;
+          finalFmlStr += `\t\t\t\t${lbl.bold?'<bo>': ''}${lbl.italic?'<i>':''}`;
+
+          // Content
+          const contentArr: string[] = lbl.content.split('\n');
+
+          if (contentArr.length === 1) {
+            finalFmlStr += `${lbl.content}`;
+
+          }else {
+            for (let index = 0; index < contentArr.length; index++) {
+              finalFmlStr += `${contentArr[index]}`;
+              if (index !== contentArr.length-1) {
+                finalFmlStr += `<br>`;
+              }
+            }
+          }
+
+          finalFmlStr += `${lbl.italic?'</i>': ''}${lbl.bold?'</bo>':''}\n`;
           finalFmlStr += `\t\t\t</t>\n`;
           finalFmlStr += `\t\t</t>\n`;
           finalFmlStr += `\n`;
-            
         }
       });
 

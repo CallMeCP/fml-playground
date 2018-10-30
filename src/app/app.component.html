@@ -276,7 +276,8 @@
           <mat-list-item *ngIf="showContent">
             <mat-label>Content: </mat-label>
             <mat-form-field>
-              <input matInput [(ngModel)]="content" (change)="updateView()" [disabled]="deleted">
+              <!-- <input matInput [(ngModel)]="content" (change)="updateView()" [disabled]="deleted"> -->
+              <textarea matInput [(ngModel)]="content" (change)="updateView()" [disabled]="deleted"></textarea>
             </mat-form-field>
           </mat-list-item>
 
