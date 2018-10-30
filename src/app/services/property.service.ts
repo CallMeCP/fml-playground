@@ -958,6 +958,13 @@ export class PropertyService {
     // Final FML script
     let finalFmlStr: string = ``;
 
+    // Add some comments
+    finalFmlStr += `\n`;
+    finalFmlStr += `<!-- SCRIPTS GENERATED FROM WEBAPP -->\n`;
+    finalFmlStr += `<!-- VERSION=1.0 -->\n`;
+    finalFmlStr += `<!-- **Modify manually may not be readable by the WEBAPP -->\n`;
+    finalFmlStr += `\n`;
+
     // Construct Start of body tag
     finalFmlStr += `<fml>\n\t<body width=${page.width*PP} height=${page.height*PP} bgcolor=${page.bgColor} font=${page.fontFamily} \n\t\tsize=${page.fontSize*PP} color=${page.fontColor}>\n`;
 
