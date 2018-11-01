@@ -51,6 +51,7 @@ export class LabelComponent implements OnInit {
   verticalAlign: string = 'center';
   position: {x: number, y: number} = {x: this.x, y: this.y};
   showDottedLine: boolean = true;
+  movable: boolean = true;
 
   // Observable
   propToSrv$: Subscription;
@@ -81,6 +82,7 @@ export class LabelComponent implements OnInit {
       this.italic = this.lblProp.italic;
       this.horizontalAlign = this.lblProp.horizontalAlign;
       this.verticalAlign = this.lblProp.verticalAlign;
+      this.movable = this.lblProp.movable;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Label ID
@@ -119,7 +121,8 @@ export class LabelComponent implements OnInit {
       italic: this.italic,
       deleted: this.deleted,
       horizontalAlign: this.horizontalAlign,
-      verticalAlign: this.verticalAlign
+      verticalAlign: this.verticalAlign,
+      movable: this.movable
     };
 
     this.propertyService.viewToProperty$.emit(fmlLabel);
@@ -169,6 +172,7 @@ export class LabelComponent implements OnInit {
             this.deleted = properties.deleted;
             this.horizontalAlign = properties.horizontalAlign;
             this.verticalAlign = properties.verticalAlign;
+            this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -234,7 +238,8 @@ export class LabelComponent implements OnInit {
         italic: this.italic,
         horizontalAlign: this.horizontalAlign,
         verticalAlign: this.verticalAlign,
-        deleted: this.deleted
+        deleted: this.deleted,
+        movable: this.movable
       }
     );
   }
@@ -253,7 +258,7 @@ export class LabelComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (this.propertyService.activeComponentId === this.componentId) {
+    if (this.propertyService.activeComponentId === this.componentId && this.movable==true) {
       // Left key
       if (event.keyCode === 37) {
         this.x--;

@@ -11,4 +11,5 @@ export interface FmlSignature {
     signatureId: string;
     borderSize: number;
     deleted: boolean;
+    movable: boolean;
 }

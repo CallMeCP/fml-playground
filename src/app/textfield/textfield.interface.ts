@@ -17,4 +17,5 @@ export interface FmlTextField {
     symbolId: string;
     pfId: string;
     textConv: string;
+    movable: boolean;
 }

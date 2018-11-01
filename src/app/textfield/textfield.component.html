@@ -2,8 +2,8 @@
     display: flex; align-items: center;"
   *ngIf="!deleted"
   class ="unselectable"
-  ngDraggable
-  ngResizable
+  [ngDraggable]="movable"
+  [ngResizable]="movable"
   (rzResizing)="onResizing($event)"
   (mousedown)="onWindowPress($event)"
   (movingOffset)="onWindowDrag($event)"

@@ -49,6 +49,7 @@ export class CheckboxComponent implements OnInit {
   varId: string = '';
   comparison: string = '';
   compareTo: string = '';
+  movable: boolean = true;
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -81,7 +82,7 @@ export class CheckboxComponent implements OnInit {
       this.varId = this.chkboxProp.varId;
       this.comparison = `<${this.chkboxProp.comparison}>`;
       this.compareTo = this.chkboxProp.compareTo;
-      
+      this.movable = this.chkboxProp.movable;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Checkbox ID
@@ -117,7 +118,8 @@ export class CheckboxComponent implements OnInit {
       symbolId: this.symbolId,
       varId: this.varId,
       comparison: this.comparison,
-      compareTo: this.compareTo
+      compareTo: this.compareTo,
+      movable: this.movable
     };
 
     this.propertyService.viewToProperty$.emit(fmlCheckbox);
@@ -159,6 +161,7 @@ export class CheckboxComponent implements OnInit {
             this.varId = properties.varId;
             this.comparison = properties.comparison;
             this.compareTo = properties.compareTo;
+            this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -224,7 +227,8 @@ export class CheckboxComponent implements OnInit {
         symbolId: this.symbolId,
         varId: this.varId,
         comparison: this.comparison,
-        compareTo: this.compareTo
+        compareTo: this.compareTo,
+        movable: this.movable
       }
     );
   }
@@ -243,7 +247,7 @@ export class CheckboxComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (this.propertyService.activeComponentId === this.componentId) {
+    if (this.propertyService.activeComponentId === this.componentId && this.movable==true) {
       // Left key
       if (event.keyCode === 37) {
         this.x--;

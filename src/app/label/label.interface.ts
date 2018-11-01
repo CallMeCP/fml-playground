@@ -15,4 +15,5 @@ export interface FmlLabel {
     deleted: boolean;
     horizontalAlign: string;
     verticalAlign: string;
+    movable: boolean;
 }

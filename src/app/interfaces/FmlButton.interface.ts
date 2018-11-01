@@ -8,4 +8,5 @@ export interface FmlButton {
     buttonId: string;
     content: string;
     deleted: boolean;
+    movable: boolean;
 }

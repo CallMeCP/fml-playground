@@ -44,6 +44,7 @@ export class SignatureComponent implements OnInit {
   signatureId: string = 'NEW_APP_SIG_ID';
   deleted: boolean = false;
   borderSize: number = 1;
+  movable: boolean = true;
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -72,6 +73,7 @@ export class SignatureComponent implements OnInit {
       this.weight = this.sigProp.weight;
       this.signatureId = this.sigProp.signatureId;
       this.borderSize = this.sigProp.borderSize;
+      this.movable = this.sigProp.movable;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Signature ID
@@ -103,7 +105,8 @@ export class SignatureComponent implements OnInit {
       fontColor: this.fontColor,
       signatureId: this.signatureId,
       borderSize: this.borderSize,
-      deleted: this.deleted
+      deleted: this.deleted,
+      movable: this.movable
     };
 
     this.propertyService.viewToProperty$.emit(fmlSignature);
@@ -141,6 +144,7 @@ export class SignatureComponent implements OnInit {
             this.signatureId = properties.signatureId;
             this.borderSize = +properties.borderSize;
             this.deleted = properties.deleted;
+            this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -202,7 +206,8 @@ export class SignatureComponent implements OnInit {
       fontColor: this.fontColor,
       signatureId: this.signatureId,
       borderSize: this.borderSize,
-      deleted: this.deleted
+      deleted: this.deleted,
+      movable: this.movable
     });
   }
 
@@ -220,7 +225,7 @@ export class SignatureComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (this.propertyService.activeComponentId === this.componentId) {
+    if (this.propertyService.activeComponentId === this.componentId && this.movable==true) {
       // Left key
       if (event.keyCode === 37) {
         this.x--;

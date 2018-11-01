@@ -44,6 +44,8 @@ export class ButtonComponent implements OnInit {
   tx: number = 0;
   deleted: boolean = false;
   position: {x: number, y: number} = {x: this.x, y: this.y};
+  movable: boolean = true;
+
   // Observable
   propToSrv$: Subscription;
 
@@ -66,6 +68,7 @@ export class ButtonComponent implements OnInit {
       this.buttonId = this.btnProp.buttonId;
       this.content = this.btnProp.content;
       this.deleted = this.btnProp.deleted;
+      this.movable = this.btnProp.movable;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Signature ID
@@ -94,7 +97,8 @@ export class ButtonComponent implements OnInit {
       height: this.height,
       buttonId: this.buttonId,
       content: this.content,
-      deleted: this.deleted
+      deleted: this.deleted,
+      movable: this.movable
     };
 
     this.propertyService.viewToProperty$.emit(fmlButton);
@@ -136,6 +140,7 @@ export class ButtonComponent implements OnInit {
             this.buttonId = properties.buttonId;
             this.content = properties.content;
             this.deleted = properties.deleted;
+            this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -193,7 +198,8 @@ export class ButtonComponent implements OnInit {
         height: this.height,
         buttonId: this.buttonId,
         content: this.content,
-        deleted: this.deleted
+        deleted: this.deleted,
+        movable: this.movable
       }
     );
   }
@@ -204,7 +210,7 @@ export class ButtonComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (this.propertyService.activeComponentId === this.componentId) {
+    if (this.propertyService.activeComponentId === this.componentId && this.movable==true) {
       // Left key
       if (event.keyCode === 37) {
         this.x--;

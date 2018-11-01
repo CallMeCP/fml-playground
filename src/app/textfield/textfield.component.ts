@@ -51,6 +51,7 @@ export class TextfieldComponent implements OnInit {
   symbolId: string = '';
   pfId: string = '';
   textConv: string = 'TOUPPER';
+  movable: boolean = true;
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -86,6 +87,7 @@ export class TextfieldComponent implements OnInit {
       this.symbolId = this.txtProp.symbolId;
       this.pfId = this.txtProp.pfId;
       this.textConv = this.txtProp.textConv;
+      this.movable = this.txtProp.movable;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Textfield ID
@@ -123,7 +125,8 @@ export class TextfieldComponent implements OnInit {
       borderSize: this.borderSize,
       pfId: this.pfId,
       symbolId: this.symbolId,
-      textConv: this.textConv
+      textConv: this.textConv,
+      movable: this.movable
     };
 
     this.propertyService.viewToProperty$.emit(fmlTextfield);
@@ -168,6 +171,7 @@ export class TextfieldComponent implements OnInit {
             this.pfId = properties.pfId;
             this.symbolId = properties.symbolId;
             this.textConv = properties.textConv;
+            this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -235,7 +239,8 @@ export class TextfieldComponent implements OnInit {
         borderSize: this.borderSize,
         pfId: this.pfId,
         symbolId: this.symbolId,
-        textConv: this.textConv
+        textConv: this.textConv,
+        movable: this.movable
       }
     );
   }
@@ -261,7 +266,7 @@ export class TextfieldComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (this.propertyService.activeComponentId === this.componentId) {
+    if (this.propertyService.activeComponentId === this.componentId && this.movable==true) {
       // Left key
       if (event.keyCode === 37) {
         this.x--;

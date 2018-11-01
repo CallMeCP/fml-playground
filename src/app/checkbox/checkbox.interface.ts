@@ -15,4 +15,5 @@ export interface FmlCheckbox {
     varId: string;
     comparison: string;
     compareTo: string;
+    movable: boolean;
 }

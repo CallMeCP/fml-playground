@@ -1,8 +1,8 @@
 <div style="position: absolute; border-style: solid; border-color: black"
   *ngIf="!deleted"
   class ="unselectable"
-  ngDraggable
-  ngResizable
+  [ngDraggable]="movable"
+  [ngResizable]="movable"
   (rzResizing)="onResizing($event)"
   (mousedown)="onWindowPress($event)"
   (movingOffset)="onWindowDrag($event)"

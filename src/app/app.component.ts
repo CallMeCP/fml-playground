@@ -265,6 +265,7 @@ export class AppComponent implements OnInit {
   horizontalAlign: string = '';
   verticalAlign: string = '';
   screenActivationNumber: string = '';
+  movable: boolean = true;
 
 
   //  Show in property Panel? 
@@ -293,6 +294,7 @@ export class AppComponent implements OnInit {
   showHorizontalAlign: boolean = false;
   showVerticalAlign: boolean = false;
   showScreenActivationNumber: boolean = false;
+  showMovable: boolean = false;
 
   disabledPageProp: boolean = false;
 
@@ -304,7 +306,7 @@ export class AppComponent implements OnInit {
   ) {
     this.propertyService.viewToProperty$.subscribe(
       properties => {
-
+        
         // Set properties
         this.componentId = properties.componentId || "";
         this.componentType = properties.componentType || "";
@@ -333,6 +335,7 @@ export class AppComponent implements OnInit {
         this.horizontalAlign = properties.horizontalAlign || 'center';
         this.verticalAlign = properties.verticalAlign || 'center';
         this.screenActivationNumber = properties.screenActivationNumber || 'NONE';
+        this.movable = properties.movable;
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -435,7 +438,8 @@ export class AppComponent implements OnInit {
       compareTo: this.compareTo,
       horizontalAlign: this.horizontalAlign,
       verticalAlign: this.verticalAlign,
-      screenActivationNumber: this.screenActivationNumber
+      screenActivationNumber: this.screenActivationNumber,
+      movable: this.movable
     });
   }
 
@@ -465,6 +469,7 @@ export class AppComponent implements OnInit {
     this.showHorizontalAlign = false;
     this.showVerticalAlign = false;
     this.showScreenActivationNumber = false;
+    this.showMovable = false;
   }
 
   showBodyProperties() {
@@ -495,6 +500,7 @@ export class AppComponent implements OnInit {
     this.showSignatureId = true;
     this.showBorderSize = true;
     this.showDelete = true;
+    this.showMovable = true;
   }
 
   showLabelProperties() {
@@ -512,6 +518,7 @@ export class AppComponent implements OnInit {
     this.showDelete = true;
     this.showHorizontalAlign = true;
     this.showVerticalAlign = true;
+    this.showMovable = true;
   }
 
   showButtonProperties() {
@@ -522,6 +529,7 @@ export class AppComponent implements OnInit {
     this.showButtonId = true;
     this.showContent = true;
     this.showDelete = true;
+    this.showMovable = true;
   }
 
   showTextfieldProperties() {
@@ -541,6 +549,7 @@ export class AppComponent implements OnInit {
     this.showPfId = true;
     this.showSymbolId = true;
     this.showTextConv = true;
+    this.showMovable = true;
 
     // Symbol control subscription
     this.symControlSub = this.symControl.valueChanges.subscribe(sym => {
@@ -571,6 +580,7 @@ export class AppComponent implements OnInit {
     // this.showSymbolId = true;
     this.showComparison = true;
     this.showCompareTo = true;
+    this.showMovable = true;
 
     // Symbol control subscription
     this.sym2ControlSub = this.sym2Control.valueChanges.subscribe(sym => {
@@ -609,7 +619,8 @@ export class AppComponent implements OnInit {
       height: 0,
       width: 0,
       x: 0,
-      y: 0
+      y: 0,
+      movable: true
     });
     this.btnId++;
   }
@@ -627,7 +638,8 @@ export class AppComponent implements OnInit {
       fontColor: '',
       signatureId: '',
       borderSize: 0,
-      deleted: false
+      deleted: false,
+      movable: true
     });
     this.sigId++;
     // this.sigArr.push(++this.sigId);
@@ -650,7 +662,8 @@ export class AppComponent implements OnInit {
       bold: false,
       italic: false,
       horizontalAlign: '',
-      verticalAlign: ''
+      verticalAlign: '',
+      movable: true
     });
 
     this.lblId++;
@@ -676,7 +689,8 @@ export class AppComponent implements OnInit {
       pfId: '',
       textConv: '',
       bold: false,
-      italic: false
+      italic: false,
+      movable: true
     });
 
     this.txtId++;
@@ -700,7 +714,8 @@ export class AppComponent implements OnInit {
       pfId: '',
       varId: '',
       compareTo: '',
-      comparison: ''
+      comparison: '',
+      movable: true
     });
 
     this.chkboxId++;
@@ -774,6 +789,11 @@ export class AppComponent implements OnInit {
 
   updateGlobalFontFamily() {
     this.propertyService.updateGlobalFontFamily(this.globalFontFamily);
+  }
+
+  setMovable(movable: boolean) {
+    this.movable = movable;
+    this.updateView();
   }
 
 }

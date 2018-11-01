@@ -281,6 +281,14 @@
             </mat-form-field>
           </mat-list-item>
 
+          <mat-list-item *ngIf="showMovable">
+              <mat-label>Locked: </mat-label>
+              <mat-button-toggle-group>
+                <mat-button-toggle [ngClass]="{'red':!movable}" [checked]="!movable" (click)="setMovable(false)" [disabled]="deleted">Lock</mat-button-toggle>
+                <mat-button-toggle [ngClass]="{'green':movable}" [checked]="movable" (click)="setMovable(true)" [disabled]="deleted">Unlock</mat-button-toggle>
+              </mat-button-toggle-group>              
+          </mat-list-item>
+
           <!-- Conditions -->
           <div *ngIf="showComparison">
             <mat-divider></mat-divider>

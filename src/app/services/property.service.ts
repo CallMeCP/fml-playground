@@ -420,7 +420,8 @@ export class PropertyService {
           height: btn.height,
           width: btn.width,
           x: btn.x,
-          y: btn.y
+          y: btn.y,
+          movable: true
         });
       }
 
@@ -566,7 +567,8 @@ export class PropertyService {
           fontFamily: lbl.fontFamily,
           fontSize: lbl.fontSize,
           horizontalAlign: lbl.horizontalAlign,
-          verticalAlign: lbl.verticalAlign
+          verticalAlign: lbl.verticalAlign,
+          movable: true
         });
       }
 
@@ -616,7 +618,8 @@ export class PropertyService {
           weight: sig.weight,
           bgColor: sig.bgColor,
           fontColor: sig.fontColor,
-          borderSize: sig.borderSize
+          borderSize: sig.borderSize,
+          movable: true
         });
       }
 
@@ -849,7 +852,8 @@ export class PropertyService {
           symbolId: txt.symbolId,
           pfId: txt.pfId,
           textConv: txt.conv,
-          borderSize: txt.borderSize
+          borderSize: txt.borderSize,
+          movable: true
         });
       }
 
@@ -932,7 +936,8 @@ export class PropertyService {
           varId: chk.varId,
           compareTo: chk.compareTo,
           comparison: chk.comparison,
-          borderSize: chk.borderSize
+          borderSize: chk.borderSize,
+          movable: true
         });
       }
 
