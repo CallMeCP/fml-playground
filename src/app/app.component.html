@@ -41,9 +41,11 @@
       </mat-list-item>
 
       <!-- Settings -->
+      <mat-divider></mat-divider>
       <h3 mat-subheader>Settings</h3>
       <mat-list-item>
-        <mat-slide-toggle [checked]="showGrid" (change)="toggleGrids($event)">Grid</mat-slide-toggle>
+        <mat-label>Grids: </mat-label>
+        <mat-slide-toggle [checked]="showGrid" (change)="toggleGrids($event)"></mat-slide-toggle>
       </mat-list-item>
 
       <mat-list-item>
