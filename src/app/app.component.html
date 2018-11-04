@@ -289,6 +289,10 @@
               </mat-button-toggle-group>              
           </mat-list-item>
 
+          <mat-list-item *ngIf="showDelete">
+            <button mat-stroked-button color="warn" (click)="delete()" [disabled]="deleted">Delete</button>
+          </mat-list-item>
+
           <!-- Conditions -->
           <div *ngIf="showComparison">
             <mat-divider></mat-divider>
@@ -377,10 +381,6 @@
             </mat-list-item>
             
           </div>
-
-          <mat-list-item *ngIf="showDelete">
-            <button mat-stroked-button color="warn" (click)="delete()" [disabled]="deleted">Delete</button>
-          </mat-list-item>
       </mat-list>
   </mat-sidenav>
 
