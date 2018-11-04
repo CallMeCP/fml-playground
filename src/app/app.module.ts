@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule, MatAutocompleteModule, MatSliderModule, MatSlideToggleModule, MatButtonToggleModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule, MatAutocompleteModule, MatSliderModule, MatSlideToggleModule, MatButtonToggleModule, MatChipsModule, MatIconModule } from '@angular/material';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { TextfieldComponent } from './textfield/textfield.component';
@@ -49,6 +49,8 @@ import { LoadFmlDialogComponent } from './load-fml-dialog/load-fml-dialog.compon
     MatTooltipModule,
     MatSlideToggleModule,
     MatButtonToggleModule,
+    MatChipsModule,
+    MatIconModule,
     AngularDraggableModule
   ],
   entryComponents: [

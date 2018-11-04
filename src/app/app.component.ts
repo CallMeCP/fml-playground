@@ -39,6 +39,8 @@ import { FmlCheckbox } from './checkbox/checkbox.interface';
 // toggleGrids                Show or hide page grids
 // updateGlobalFontSize       Set all components with same font size
 // updateGlobalFontFamily     Set all components with same font family
+// addCondition               Add condition for checkbox (when it should tick)
+// removeCondition            Remove condition for checkbox
 
 @Component({
   selector: 'app-root',
@@ -170,6 +172,7 @@ export class AppComponent implements OnInit {
   ];
 
   comparisons = [
+    {value:'', viewValue: ''},
     {value:'<eq>', viewValue: 'Equal to'},
     {value:'<ne>', viewValue: 'Not equal to'},
     {value:'<gt>', viewValue: 'Greater than'},
@@ -191,6 +194,12 @@ export class AppComponent implements OnInit {
     {value: 'PHOTO_PIC_SAN', viewValue: 'PHOTO_PIC_SAN'},
     {value: 'SIGN_APP_SAN', viewValue: 'SIGN_APP_SAN'},
   ];
+
+  chainConditions = [
+    {value: '', viewValue: ''},
+    {value: 'AND', viewValue: 'AND'},
+    {value: 'OR', viewValue: 'OR'}
+  ]
 
 // ===================================================================================================
 // Settings
@@ -266,6 +275,8 @@ export class AppComponent implements OnInit {
   verticalAlign: string = '';
   screenActivationNumber: string = '';
   movable: boolean = true;
+  conditions: string[] = [];
+  chainCondition: string = '';    // AND or OR
 
 
   //  Show in property Panel? 
@@ -336,6 +347,7 @@ export class AppComponent implements OnInit {
         this.verticalAlign = properties.verticalAlign || 'center';
         this.screenActivationNumber = properties.screenActivationNumber || 'NONE';
         this.movable = properties.movable;
+        this.conditions = properties.conditions;
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -439,7 +451,8 @@ export class AppComponent implements OnInit {
       horizontalAlign: this.horizontalAlign,
       verticalAlign: this.verticalAlign,
       screenActivationNumber: this.screenActivationNumber,
-      movable: this.movable
+      movable: this.movable,
+      conditions: this.conditions
     });
   }
 
@@ -710,12 +723,13 @@ export class AppComponent implements OnInit {
       fontSize: 0,
       bgColor: '',
       borderSize: 0,
-      symbolId: '',
-      pfId: '',
-      varId: '',
-      compareTo: '',
-      comparison: '',
-      movable: true
+      // symbolId: '',
+      // pfId: '',
+      // varId: '',
+      // compareTo: '',
+      // comparison: '',
+      movable: true,
+      conditions: []
     });
 
     this.chkboxId++;
@@ -794,6 +808,60 @@ export class AppComponent implements OnInit {
   setMovable(movable: boolean) {
     this.movable = movable;
     this.updateView();
+  }
+
+  addCondition() {
+    // Validations
+    // Odd condition must be IF-ELSE
+    if ((this.conditions.length+1) % 2 !== 0) {
+      if ((this.symbolId == '' && this.pfId == '' && this.varId == '') || this.comparison == '' || this.compareTo == '') {
+        alert('Invalid condition');
+        return;
+      }
+    }
+    // Even condition must be AND or OR
+    else {
+      if (this.symbolId !== '' || this.pfId !== '' || this.varId !== '' || this.comparison !== '' || this.compareTo !== '') {
+        alert('Invalid condition2');
+        return;
+      }
+    }
+
+    // Add condition
+    if (this.symbolId !== '' || this.pfId !== '' || this.varId !== '') {
+      let cond: string= ``;
+      // cond += '<if>';
+      cond += `${this.symbolId}${this.pfId}${this.varId}${this.comparison}${this.varId!==''?'':'"'}${this.compareTo}${this.varId!==''?'':'"'}`;
+      // cond += `</if>`;
+
+      this.conditions.push(cond);
+    }
+
+    // Add chaining condition
+    if (this.chainCondition !== '') 
+      this.conditions.push(this.chainCondition);
+
+    // Update final FML
+    this.updateView();
+    
+    // Reset fields
+    this.sym2Control.reset('');
+    this.symbolId = '';
+    this.varControl.reset('');
+    this.varId = '';
+    this.pfId = '';
+    this.compareTo = '';
+    this.comparison = '';
+    this.chainCondition = '';
+  }
+
+  removeCondition(index: number) {
+    // Remove condition from array
+    this.conditions.splice(index, 1);
+
+    // Update final FML
+    this.updateView();
+    
   }
 
 }

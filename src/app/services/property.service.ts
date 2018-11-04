@@ -890,34 +890,67 @@ export class PropertyService {
         chk.deleted = false;
         
         // Check is Symbol, Variable, or Pref Id
-        let isSymbol = this.symbolIds.includes(tokens[index+7]);
-        let isVar = this.variables.includes(tokens[index+7]);
+        // let isSymbol = this.symbolIds.includes(tokens[index+7]);
+        // let isVar = this.variables.includes(tokens[index+7]);
 
-        if (isSymbol) {
-          chk.symbolId = tokens[index+7];
-          chk.pfId = '';
-          chk.varId = '';
-        }else if (isVar) {
-          chk.symbolId = '';
-          chk.pfId = '';
-          chk.varId = tokens[index+7];
-        }else {
-          chk.symbolId = '';
+        // if (isSymbol) {
+        //   chk.symbolId = tokens[index+7];
+        //   chk.pfId = '';
+        //   chk.varId = '';
+        // }else if (isVar) {
+        //   chk.symbolId = '';
+        //   chk.pfId = '';
+        //   chk.varId = tokens[index+7];
+        // }else {
+        //   chk.symbolId = '';
 
-          const pfToks = tokens[index+7].split('.');
-          chk.pfId = pfToks[1];
-          chk.varId = '';
-        }
+        //   const pfToks = tokens[index+7].split('.');
+        //   chk.pfId = pfToks[1];
+        //   chk.varId = '';
+        // }
 
         // Set Comparison
-        chk.comparison = tokens[index+8];
+        // chk.comparison = tokens[index+8];
 
         // Set CompareTo
-        if (isVar) {
-          chk.compareTo = tokens[index+9];  
-        }else {
-          const compTok = tokens[index+9].split('"');
-          chk.compareTo = compTok[1];
+        // if (isVar) {
+        //   chk.compareTo = tokens[index+9];  
+        // }else {
+        //   const compTok = tokens[index+9].split('"');
+        //   chk.compareTo = compTok[1];
+        // }
+
+        let ifTokPos: number = index+6;
+        let counter: number = 0;
+        let cond: string = ``;
+        chk.conditions = [];
+        while(tokens[ifTokPos+1] !== 'then') {
+          
+          const tok: string = tokens[ifTokPos+1];
+          
+          // If token is AND or OR, just push it to array
+          if (tok === 'AND' || tok === 'OR') {
+            chk.conditions.push(`<${tokens[ifTokPos+1]}>`);
+          }else {
+            counter++;
+
+            // Assume it is valid string, 2nd token always is comparison token. e.g.<eq>, <ne>, ...
+            if (counter==2) {
+              cond += `<${tok}>`;
+            }else {
+              cond += tok;
+            }
+            
+          }
+
+          // Assume the token passed in are valid order. 3 tokens form a valid condition. e.g. CUST_TITLE<eq>"111"
+          if (counter === 3) {
+            chk.conditions.push(cond);
+            counter = 0;
+            cond = '';
+          }
+
+          ifTokPos++;
         }
 
         this.fmlCheckboxProp.push({
@@ -931,13 +964,14 @@ export class PropertyService {
           bgColor: chk.bgcol,
           fontColor: chk.col,
           fontSize: chk.fontSize,
-          symbolId: chk.symbolId,
-          pfId: chk.pfId,
-          varId: chk.varId,
-          compareTo: chk.compareTo,
-          comparison: chk.comparison,
+          // symbolId: chk.symbolId,
+          // pfId: chk.pfId,
+          // varId: chk.varId,
+          // compareTo: chk.compareTo,
+          // comparison: chk.comparison,
           borderSize: chk.borderSize,
-          movable: true
+          movable: true,
+          conditions: chk.conditions
         });
       }
 
@@ -1259,16 +1293,27 @@ export class PropertyService {
             addedChkComment = true;
           }
 
-          const str: string =
-            `\t\t<t x=${(chk.x-bodyX)*PP} y=${(chk.y-bodyY)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>
-                \t<t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>
-                  \t\t<t x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>
-                    \t\t\t<if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>
-                  \t\t</t>
-                \t</t>
-            \t</t>\n\n`;
+          finalFmlStr += `\t\t<t x=${(chk.x-bodyX)*PP} y=${(chk.y-bodyY)*PP} w=${(chk.width+BS*2)*PP} h=${(chk.height+BS*2)*PP} bgcol=BLACK sz=${chk.fontSize*PP}>\n`;
+          finalFmlStr += `\t\t\t<t x=${BS*PP} y=${BS*PP} w=${chk.width*PP} h=${chk.height*PP} bgcol=${chk.bgColor} col=${chk.fontColor}>\n`;
+          finalFmlStr += `\t\t\t\t<t x=${(chk.width/2)*PP} y=${(chk.height/2)*PP} valign=CENTER align=CENTER>\n`;
+          // finalFmlStr +=  `\t\t\t\t\t<if>${chk.symbolId?`${chk.symbolId}`: ''}${chk.pfId?`PF.${chk.pfId}`: ''}${chk.varId?`${chk.varId}`: ''}${chk.comparison}${chk.varId?'':'"'}${chk.compareTo}${chk.varId?'':'"'}<then>✔</if>\n`;
+          finalFmlStr += `\t\t\t\t\t<if>\n`;
 
-          finalFmlStr += str;
+          for (let index = 0; index < chk.conditions.length; index++) {
+            let cond: string = chk.conditions[index];
+            
+            if (cond === 'AND' || cond === 'OR'){
+              finalFmlStr += `\t\t\t\t\t\t<${cond}>\n`;
+            }else {
+              finalFmlStr += `\t\t\t\t\t\t${cond}\n`;
+            }
+      
+          }
+          finalFmlStr += `\t\t\t\t\t<then>✔</if>\n`;
+          finalFmlStr += `\t\t\t\t</t>\n`;
+          finalFmlStr += `\t\t\t</t>\n`;
+          finalFmlStr += `\t\t</t>\n\n`;
+
         }
       });
 

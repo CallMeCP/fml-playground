@@ -10,10 +10,11 @@ export interface FmlCheckbox {
     fontSize: number;
     deleted: boolean;
     borderSize: number;
-    symbolId: string;
-    pfId: string;
-    varId: string;
-    comparison: string;
-    compareTo: string;
+    // symbolId: string;
+    // pfId: string;
+    // varId: string;
+    // comparison: string;
+    // compareTo: string;
     movable: boolean;
+    conditions: string[];
 }

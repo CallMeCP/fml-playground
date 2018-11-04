@@ -44,13 +44,14 @@ export class CheckboxComponent implements OnInit {
   zIndex: number = 100;
   deleted: boolean = false;
   borderSize: number = 1;
-  symbolId: string = '';
-  pfId: string = '';
-  varId: string = '';
-  comparison: string = '';
-  compareTo: string = '';
+  // symbolId: string = '';
+  // pfId: string = '';
+  // varId: string = '';
+  // comparison: string = '';
+  // compareTo: string = '';
   movable: boolean = true;
   position: {x: number, y: number} = {x: this.x, y: this.y};
+  conditions: string[] = [];
 
   // Observable
   propToSrv$: Subscription;
@@ -77,13 +78,14 @@ export class CheckboxComponent implements OnInit {
       this.fontSize = this.chkboxProp.fontSize;
       this.deleted = this.chkboxProp.deleted;
       this.borderSize = this.chkboxProp.borderSize;
-      this.symbolId = this.chkboxProp.symbolId;
-      this.pfId = this.chkboxProp.pfId;
-      this.varId = this.chkboxProp.varId;
-      this.comparison = `<${this.chkboxProp.comparison}>`;
-      this.compareTo = this.chkboxProp.compareTo;
+      // this.symbolId = this.chkboxProp.symbolId;
+      // this.pfId = this.chkboxProp.pfId;
+      // this.varId = this.chkboxProp.varId;
+      // this.comparison = `<${this.chkboxProp.comparison}>`;
+      // this.compareTo = this.chkboxProp.compareTo;
       this.movable = this.chkboxProp.movable;
       this.position = {x: this.x, y: this.y};
+      this.conditions = this.chkboxProp.conditions;
     }else {
       // Set Checkbox ID
       this.componentId = `CHECKBOX_${this.chkboxId}`;
@@ -114,12 +116,13 @@ export class CheckboxComponent implements OnInit {
       fontSize: this.fontSize,
       deleted: this.deleted,
       borderSize: this.borderSize,
-      pfId: this.pfId,
-      symbolId: this.symbolId,
-      varId: this.varId,
-      comparison: this.comparison,
-      compareTo: this.compareTo,
-      movable: this.movable
+      // pfId: this.pfId,
+      // symbolId: this.symbolId,
+      // varId: this.varId,
+      // comparison: this.comparison,
+      // compareTo: this.compareTo,
+      movable: this.movable,
+      conditions: this.conditions
     };
 
     this.propertyService.viewToProperty$.emit(fmlCheckbox);
@@ -156,13 +159,14 @@ export class CheckboxComponent implements OnInit {
             this.fontSize = properties.fontSize;
             this.deleted = properties.deleted;
             this.borderSize = properties.borderSize;
-            this.pfId = properties.pfId;
-            this.symbolId = properties.symbolId;
-            this.varId = properties.varId;
-            this.comparison = properties.comparison;
-            this.compareTo = properties.compareTo;
+            // this.pfId = properties.pfId;
+            // this.symbolId = properties.symbolId;
+            // this.varId = properties.varId;
+            // this.comparison = properties.comparison;
+            // this.compareTo = properties.compareTo;
             this.movable = properties.movable;
             this.position = {x: this.x, y: this.y};
+            this.conditions = properties.conditions;
 
             // Update final FML
             this.updateFinalFml();
@@ -223,12 +227,13 @@ export class CheckboxComponent implements OnInit {
         fontSize: this.fontSize,
         deleted: this.deleted,
         borderSize: this.borderSize,
-        pfId: this.pfId,
-        symbolId: this.symbolId,
-        varId: this.varId,
-        comparison: this.comparison,
-        compareTo: this.compareTo,
-        movable: this.movable
+        // pfId: this.pfId,
+        // symbolId: this.symbolId,
+        // varId: this.varId,
+        // comparison: this.comparison,
+        // compareTo: this.compareTo,
+        movable: this.movable,
+        conditions: this.conditions
       }
     );
   }
