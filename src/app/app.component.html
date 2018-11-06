@@ -49,6 +49,11 @@
       </mat-list-item>
 
       <mat-list-item>
+        <mat-label>Lock: </mat-label>
+        <mat-slide-toggle [checked]="lockAll" (change)="toggleLockAll($event)"></mat-slide-toggle>
+      </mat-list-item>
+
+      <mat-list-item>
         <mat-label>Font Size: </mat-label>
         <mat-form-field>
           <input matInput type="number" min="1" [(ngModel)]="globalFontSize" (change)="updateGlobalFontSize()">

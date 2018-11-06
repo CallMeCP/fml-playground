@@ -37,6 +37,7 @@ import { FmlCheckbox } from './checkbox/checkbox.interface';
 // _filterSymbols             Helper to filter symbols
 // _filterVariables           Helper to filter variables
 // toggleGrids                Show or hide page grids
+// toggleLockAll              Lock or unlock all components
 // updateGlobalFontSize       Set all components with same font size
 // updateGlobalFontFamily     Set all components with same font family
 // addCondition               Add condition for checkbox (when it should tick)
@@ -204,6 +205,7 @@ export class AppComponent implements OnInit {
 // ===================================================================================================
 // Settings
   showGrid: boolean = true;
+  lockAll: boolean = false;
   globalFontSize: number = 0;
   globalFontFamily: string = 'times new roman';
 
@@ -795,6 +797,10 @@ export class AppComponent implements OnInit {
 
   toggleGrids(event) {
     this.propertyService.toggleGrid(event.checked);
+  }
+
+  toggleLockAll(event) {
+    this.propertyService.toggleLockAll(event.checked);
   }
 
   updateGlobalFontSize() {

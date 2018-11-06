@@ -28,6 +28,7 @@ import { FmlCheckbox } from '../checkbox/checkbox.interface';
 // loadFml                Parse FmlScripts, create components, and do UI refresh
 // genFml                 Generate FmlScripts, and return it
 // toggleGrid             Update showGrid status, and do UI refresh
+// toggleLockAll          Lock or unlock all components, and do UI refresh
 // updateGlobalFontSize   Set all components with same font size, and do UI refresh
 // updateGlobalFontFamily Set all components with same font family, and do UI refresh
 
@@ -96,6 +97,7 @@ export class PropertyService {
 
   // Settings
   showGrid: boolean = true;
+  moveable: boolean = false;
 
   // Final FML Components Property
   fmlBodyProp: FmlBody[] = [];
@@ -1348,6 +1350,39 @@ export class PropertyService {
   toggleGrid(showGrid: boolean) {
     this.showGrid = showGrid;
 
+    this.isLoadFml$.next(true);
+  }
+
+  toggleLockAll(locked: boolean) {
+
+    // If Lock = true; then movable = false
+
+    // Update Labels
+    for (let index = 0; index < this.fmlLabelProp.length; index++) {
+      this.fmlLabelProp[index].movable = !locked;
+    }
+
+    // Update Textfields
+    for (let index = 0; index < this.fmlTextfieldProp.length; index++) {
+      this.fmlTextfieldProp[index].movable = !locked;
+    }
+
+    // Update Button
+    for (let index = 0; index < this.fmlButtonProp.length; index++) {
+      this.fmlButtonProp[index].movable = !locked;
+    }
+
+    // Update Signature
+    for (let index = 0; index < this.fmlSignatureProp.length; index++) {
+      this.fmlSignatureProp[index].movable = !locked;
+    }
+
+    // Update Checkbox
+    for (let index = 0; index < this.fmlCheckboxProp.length; index++) {
+      this.fmlCheckboxProp[index].movable = !locked;
+    }
+
+    // Notify subscriber to reload components
     this.isLoadFml$.next(true);
   }
 
