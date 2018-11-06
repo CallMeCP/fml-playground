@@ -890,68 +890,39 @@ export class PropertyService {
         chk.componentType = 'Checkbox';
         chk.componentId = `CHECKBOX_${++chkId}`;
         chk.deleted = false;
-        
-        // Check is Symbol, Variable, or Pref Id
-        // let isSymbol = this.symbolIds.includes(tokens[index+7]);
-        // let isVar = this.variables.includes(tokens[index+7]);
-
-        // if (isSymbol) {
-        //   chk.symbolId = tokens[index+7];
-        //   chk.pfId = '';
-        //   chk.varId = '';
-        // }else if (isVar) {
-        //   chk.symbolId = '';
-        //   chk.pfId = '';
-        //   chk.varId = tokens[index+7];
-        // }else {
-        //   chk.symbolId = '';
-
-        //   const pfToks = tokens[index+7].split('.');
-        //   chk.pfId = pfToks[1];
-        //   chk.varId = '';
-        // }
-
-        // Set Comparison
-        // chk.comparison = tokens[index+8];
-
-        // Set CompareTo
-        // if (isVar) {
-        //   chk.compareTo = tokens[index+9];  
-        // }else {
-        //   const compTok = tokens[index+9].split('"');
-        //   chk.compareTo = compTok[1];
-        // }
 
         let ifTokPos: number = index+6;
-        let counter: number = 0;
         let cond: string = ``;
         chk.conditions = [];
-        while(tokens[ifTokPos+1] !== 'then') {
-          
-          const tok: string = tokens[ifTokPos+1];
-          
-          // If token is AND or OR, just push it to array
-          if (tok === 'AND' || tok === 'OR') {
-            chk.conditions.push(`<${tokens[ifTokPos+1]}>`);
-          }else {
-            counter++;
 
-            // Assume it is valid string, 2nd token always is comparison token. e.g.<eq>, <ne>, ...
-            if (counter==2) {
+        while(tokens[ifTokPos+1] !== 'then') {
+          // Reference to current string token
+          const tok: string = tokens[ifTokPos+1];
+
+          // Concatenate all string tokens if token does not encounter <!-- FLAG -->
+          // The word FLAG is used to seperate each individual condition.
+          if (tok.indexOf('FLAG') == -1) {
+
+            // Add '<' and '>' if the token is comparison word
+            if (
+              tok === 'eq' || tok === 'ne' || tok === 'gt' || tok === 'ge' ||
+              tok === 'lt' || tok === 'le' || tok === 'not' || tok === 'matches') {
+              
               cond += `<${tok}>`;
             }else {
-              cond += tok;
-            }
-            
-          }
 
-          // Assume the token passed in are valid order. 3 tokens form a valid condition. e.g. CUST_TITLE<eq>"111"
-          if (counter === 3) {
+              if (tok !== '' && tok !== ' ') {
+                cond += `${tok}`;
+              }
+            }
+          
+          // Encountered 'FLAG', then push condition into array, and reset condition concatenation string
+          }else {
             chk.conditions.push(cond);
-            counter = 0;
             cond = '';
           }
-
+          
+          // Get next token
           ifTokPos++;
         }
 
@@ -1305,9 +1276,9 @@ export class PropertyService {
             let cond: string = chk.conditions[index];
             
             if (cond === 'AND' || cond === 'OR'){
-              finalFmlStr += `\t\t\t\t\t\t<${cond}>\n`;
+              finalFmlStr += `\t\t\t\t\t\t<${cond}> <!-- FLAG -->\n`;
             }else {
-              finalFmlStr += `\t\t\t\t\t\t${cond}\n`;
+              finalFmlStr += `\t\t\t\t\t\t${cond} <!-- FLAG -->\n`;
             }
       
           }

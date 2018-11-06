@@ -817,23 +817,7 @@ export class AppComponent implements OnInit {
   }
 
   addCondition() {
-    // Validations
-    // Odd condition must be IF-ELSE
-    if ((this.conditions.length+1) % 2 !== 0) {
-      if ((this.symbolId == '' && this.pfId == '' && this.varId == '') || this.comparison == '' || this.compareTo == '') {
-        alert('Invalid condition');
-        return;
-      }
-    }
-    // Even condition must be AND or OR
-    else {
-      if (this.symbolId !== '' || this.pfId !== '' || this.varId !== '' || this.comparison !== '' || this.compareTo !== '') {
-        alert('Invalid condition2');
-        return;
-      }
-    }
-
-    // Add condition
+    // Add condition (assume a proper condition e.g. CUST_ID<eq>"1000010")
     if (this.symbolId !== '' || this.pfId !== '' || this.varId !== '') {
       let cond: string= ``;
       // cond += '<if>';
@@ -841,6 +825,11 @@ export class AppComponent implements OnInit {
       // cond += `</if>`;
 
       this.conditions.push(cond);
+    }
+
+    // Allow comparison only (e.g. to add only <NOT> as condition)
+    if ((this.symbolId == '' && this.pfId == '' && this.varId == '') && this.comparison !== '') { 
+      this.conditions.push(`${this.comparison}`);
     }
 
     // Add chaining condition
