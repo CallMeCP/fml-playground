@@ -831,7 +831,7 @@ export class AppComponent implements OnInit {
     if (this.symbolId !== '' || this.pfId !== '' || this.varId !== '') {
       let cond: string= ``;
       // cond += '<if>';
-      cond += `${this.symbolId}${this.pfId}${this.varId}${this.comparison}${this.varId!==''?'':'"'}${this.compareTo}${this.varId!==''?'':'"'}`;
+      cond += `${this.symbolId}${this.pfId!==''?'PF.':''}${this.pfId}${this.varId}${this.comparison}${this.varId!==''?'':'"'}${this.compareTo}${this.varId!==''?'':'"'}`;
       // cond += `</if>`;
 
       this.conditions.push(cond);
