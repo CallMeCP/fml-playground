@@ -180,7 +180,7 @@ export class AppComponent implements OnInit {
     {value:'<ge>', viewValue: 'Greater or equal than'},
     {value:'<lt>', viewValue: 'Less than'},
     {value:'<le>', viewValue: 'Less or equal than'},
-    // {value:'<not>', viewValue: 'Not'},
+    {value:'<not>', viewValue: 'Not'},
     {value:'<matches>', viewValue: 'Matches'},
   ];
 
