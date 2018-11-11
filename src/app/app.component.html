@@ -166,7 +166,7 @@
           </mat-list-item>
 
           <mat-list-item *ngIf="showBorderSize">
-            <mat-label>BorderSize: </mat-label>
+            <mat-label>Border Size: </mat-label>
             <mat-form-field>
               <input matInput type="number" min="0" [(ngModel)]="borderSize" (change)="updateView()" [disabled]="deleted || disabledPageProp">
               <!-- <mat-select [(ngModel)]="borderSize" (selectionChange)="updateView()" [disabled]="deleted">
@@ -174,6 +174,13 @@
                   {{bdsz.viewValue}}
                 </mat-option>
               </mat-select> -->
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showTextPadding">
+            <mat-label>Text Padding: </mat-label>
+            <mat-form-field>
+              <input matInput type="number" min="0" [(ngModel)]="textPadding" (change)="updateView()" [disabled]="deleted">
             </mat-form-field>
           </mat-list-item>
 

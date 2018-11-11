@@ -52,6 +52,7 @@ export class TextfieldComponent implements OnInit {
   pfId: string = '';
   textConv: string = 'TOUPPER';
   movable: boolean = true;
+  textPadding: number = 0;
   position: {x: number, y: number} = {x: this.x, y: this.y};
 
   // Observable
@@ -88,6 +89,7 @@ export class TextfieldComponent implements OnInit {
       this.pfId = this.txtProp.pfId;
       this.textConv = this.txtProp.textConv;
       this.movable = this.txtProp.movable;
+      this.textPadding = this.txtProp.textPadding;
       this.position = {x: this.x, y: this.y};
     }else {
       // Set Textfield ID
@@ -126,7 +128,8 @@ export class TextfieldComponent implements OnInit {
       pfId: this.pfId,
       symbolId: this.symbolId,
       textConv: this.textConv,
-      movable: this.movable
+      movable: this.movable,
+      textPadding: this.textPadding
     };
 
     this.propertyService.viewToProperty$.emit(fmlTextfield);
@@ -172,6 +175,7 @@ export class TextfieldComponent implements OnInit {
             this.symbolId = properties.symbolId;
             this.textConv = properties.textConv;
             this.movable = properties.movable;
+            this.textPadding = properties.textPadding;
             this.position = {x: this.x, y: this.y};
 
             // Update final FML
@@ -240,7 +244,8 @@ export class TextfieldComponent implements OnInit {
         pfId: this.pfId,
         symbolId: this.symbolId,
         textConv: this.textConv,
-        movable: this.movable
+        movable: this.movable,
+        textPadding: this.textPadding
       }
     );
   }

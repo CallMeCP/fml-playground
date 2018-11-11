@@ -18,4 +18,5 @@ export interface FmlTextField {
     pfId: string;
     textConv: string;
     movable: boolean;
+    textPadding: number;
 }

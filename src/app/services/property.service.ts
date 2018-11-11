@@ -629,6 +629,14 @@ export class PropertyService {
       if (currentType === 'TEXTFIELD' && el.indexOf('t') !== -1 && el.indexOf('x=') !== -1 && el.indexOf('y=') !== -1 && el.indexOf('font=') !== -1 
           && tokens[index+2].indexOf('x=') !== -1 && tokens[index+2].indexOf('y=') !== -1 ) {
         
+        // LINE 3 - Get text padding
+        const line3Tokens = tokens[index+4].split(' ');
+        line3Tokens.map(res => {
+          const tok = res.split('=');
+
+          if (res.indexOf('x=') !== -1) { txt.textPadding = +tok[1] / PP }
+        });
+
         // LINE 2 - Get border size, bgcolor, color
         const line2Tokens = tokens[index+2].split(' ');
         line2Tokens.map(res => {
@@ -855,7 +863,8 @@ export class PropertyService {
           pfId: txt.pfId,
           textConv: txt.conv,
           borderSize: txt.borderSize,
-          movable: true
+          movable: true,
+          textPadding: txt.textPadding
         });
       }
 
@@ -1141,7 +1150,7 @@ export class PropertyService {
 
           finalFmlStr += `\t\t<t x=${(txt.x-bodyX)*PP} y=${(txt.y-bodyY)*PP} w=${(txt.width+BS*2)*PP} h=${(txt.height+BS*2)*PP} bgcol=BLACK font=${txt.fontFamily} sz=${txt.fontSize*PP}>\n`;
           finalFmlStr += `\t\t\t<t x=${BS*PP} y=${BS*PP} w=${txt.width*PP} h=${txt.height*PP} bgcol=${txt.bgColor} col=${txt.fontColor}>\n`;
-          finalFmlStr += `\t\t\t\t<t w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>\n`;
+          finalFmlStr += `\t\t\t\t<t x=${txt.textPadding*PP} w=${txt.width*PP} y=${(txt.height/2)*PP} valign=CENTER>\n`;
           // finalFmlStr += `\t\t\t\t\t${txt.bold?'<bo>': ''}${txt.italic?'<i>':''}`;
 
           // Loop to find symbols or just normal symbol

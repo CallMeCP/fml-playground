@@ -279,6 +279,7 @@ export class AppComponent implements OnInit {
   movable: boolean = true;
   conditions: string[] = [];
   chainCondition: string = '';    // AND or OR
+  textPadding: number = 0;
 
 
   //  Show in property Panel? 
@@ -308,6 +309,7 @@ export class AppComponent implements OnInit {
   showVerticalAlign: boolean = false;
   showScreenActivationNumber: boolean = false;
   showMovable: boolean = false;
+  showTextPadding: boolean = false;
 
   disabledPageProp: boolean = false;
 
@@ -350,6 +352,7 @@ export class AppComponent implements OnInit {
         this.screenActivationNumber = properties.screenActivationNumber || 'NONE';
         this.movable = properties.movable;
         this.conditions = properties.conditions;
+        this.textPadding = properties.textPadding;
 
         // Reset Symbol controls
         if (this.symControlSub != null) {
@@ -454,7 +457,8 @@ export class AppComponent implements OnInit {
       verticalAlign: this.verticalAlign,
       screenActivationNumber: this.screenActivationNumber,
       movable: this.movable,
-      conditions: this.conditions
+      conditions: this.conditions,
+      textPadding: this.textPadding
     });
   }
 
@@ -485,6 +489,7 @@ export class AppComponent implements OnInit {
     this.showVerticalAlign = false;
     this.showScreenActivationNumber = false;
     this.showMovable = false;
+    this.showTextPadding = false;
   }
 
   showBodyProperties() {
@@ -565,6 +570,7 @@ export class AppComponent implements OnInit {
     this.showSymbolId = true;
     this.showTextConv = true;
     this.showMovable = true;
+    this.showTextPadding = true;
 
     // Symbol control subscription
     this.symControlSub = this.symControl.valueChanges.subscribe(sym => {
@@ -705,7 +711,8 @@ export class AppComponent implements OnInit {
       textConv: '',
       bold: false,
       italic: false,
-      movable: true
+      movable: true,
+      textPadding: 0
     });
 
     this.txtId++;
